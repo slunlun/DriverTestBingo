@@ -9,11 +9,16 @@
 /* Begin PBXBuildFile section */
 		5E8047851C19243600B0587A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E8047841C19243600B0587A /* main.m */; };
 		5E8047881C19243600B0587A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E8047871C19243600B0587A /* AppDelegate.m */; };
-		5E80478B1C19243600B0587A /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E80478A1C19243600B0587A /* ViewController.m */; };
 		5E80478E1C19243600B0587A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5E80478C1C19243600B0587A /* Main.storyboard */; };
 		5E8047911C19243600B0587A /* SWDriverTestBingo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5E80478F1C19243600B0587A /* SWDriverTestBingo.xcdatamodeld */; };
 		5E8047931C19243600B0587A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5E8047921C19243600B0587A /* Assets.xcassets */; };
 		5E8047961C19243600B0587A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5E8047941C19243600B0587A /* LaunchScreen.storyboard */; };
+		5E8047A41C194FCD00B0587A /* SWDrag2ShowMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E8047A31C194FCD00B0587A /* SWDrag2ShowMenuViewController.m */; settings = {ASSET_TAGS = (); }; };
+		5E8047B11C197CAC00B0587A /* SWRootNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E8047B01C197CAC00B0587A /* SWRootNavigationController.m */; settings = {ASSET_TAGS = (); }; };
+		5E8047C81C197E7C00B0587A /* SWSideMenuContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E8047C71C197E7C00B0587A /* SWSideMenuContentViewController.m */; settings = {ASSET_TAGS = (); }; };
+		5E8047CE1C197F0500B0587A /* SWMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E8047CD1C197F0500B0587A /* SWMainViewController.m */; settings = {ASSET_TAGS = (); }; };
+		5E8047D11C19851800B0587A /* SWMainContentTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E8047D01C19851800B0587A /* SWMainContentTabBarController.m */; settings = {ASSET_TAGS = (); }; };
+		5E8047D51C1987B400B0587A /* SWDriverTestMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E8047D41C1987B400B0587A /* SWDriverTestMainViewController.m */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,13 +26,23 @@
 		5E8047841C19243600B0587A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		5E8047861C19243600B0587A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		5E8047871C19243600B0587A /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		5E8047891C19243600B0587A /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		5E80478A1C19243600B0587A /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		5E80478D1C19243600B0587A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		5E8047901C19243600B0587A /* SWDriverTestBingo.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SWDriverTestBingo.xcdatamodel; sourceTree = "<group>"; };
 		5E8047921C19243600B0587A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5E8047951C19243600B0587A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5E8047971C19243600B0587A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5E8047A21C194FCD00B0587A /* SWDrag2ShowMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SWDrag2ShowMenuViewController.h; path = SWDriverTestBingo/SWUILib/Drag2ShowMenu/SWDrag2ShowMenuViewController.h; sourceTree = "<group>"; };
+		5E8047A31C194FCD00B0587A /* SWDrag2ShowMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SWDrag2ShowMenuViewController.m; path = SWDriverTestBingo/SWUILib/Drag2ShowMenu/SWDrag2ShowMenuViewController.m; sourceTree = "<group>"; };
+		5E8047AF1C197CAC00B0587A /* SWRootNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRootNavigationController.h; sourceTree = "<group>"; };
+		5E8047B01C197CAC00B0587A /* SWRootNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRootNavigationController.m; sourceTree = "<group>"; };
+		5E8047C61C197E7C00B0587A /* SWSideMenuContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWSideMenuContentViewController.h; sourceTree = "<group>"; };
+		5E8047C71C197E7C00B0587A /* SWSideMenuContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWSideMenuContentViewController.m; sourceTree = "<group>"; };
+		5E8047CC1C197F0500B0587A /* SWMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWMainViewController.h; sourceTree = "<group>"; };
+		5E8047CD1C197F0500B0587A /* SWMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWMainViewController.m; sourceTree = "<group>"; };
+		5E8047CF1C19851800B0587A /* SWMainContentTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWMainContentTabBarController.h; sourceTree = "<group>"; };
+		5E8047D01C19851800B0587A /* SWMainContentTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWMainContentTabBarController.m; sourceTree = "<group>"; };
+		5E8047D31C1987B400B0587A /* SWDriverTestMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SWDriverTestMainViewController.h; path = MainContentTabOne/SWDriverTestMainViewController.h; sourceTree = "<group>"; };
+		5E8047D41C1987B400B0587A /* SWDriverTestMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SWDriverTestMainViewController.m; path = MainContentTabOne/SWDriverTestMainViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -44,6 +59,7 @@
 		5E8047771C19243500B0587A = {
 			isa = PBXGroup;
 			children = (
+				5E80479D1C194C1500B0587A /* SWUILib */,
 				5E8047821C19243600B0587A /* SWDriverTestBingo */,
 				5E8047811C19243600B0587A /* Products */,
 			);
@@ -60,16 +76,23 @@
 		5E8047821C19243600B0587A /* SWDriverTestBingo */ = {
 			isa = PBXGroup;
 			children = (
+				5E8047D21C19870800B0587A /* MainContentTabOne */,
 				5E8047861C19243600B0587A /* AppDelegate.h */,
 				5E8047871C19243600B0587A /* AppDelegate.m */,
-				5E8047891C19243600B0587A /* ViewController.h */,
-				5E80478A1C19243600B0587A /* ViewController.m */,
 				5E80478C1C19243600B0587A /* Main.storyboard */,
 				5E8047921C19243600B0587A /* Assets.xcassets */,
 				5E8047941C19243600B0587A /* LaunchScreen.storyboard */,
 				5E8047971C19243600B0587A /* Info.plist */,
 				5E80478F1C19243600B0587A /* SWDriverTestBingo.xcdatamodeld */,
 				5E8047831C19243600B0587A /* Supporting Files */,
+				5E8047AF1C197CAC00B0587A /* SWRootNavigationController.h */,
+				5E8047B01C197CAC00B0587A /* SWRootNavigationController.m */,
+				5E8047C61C197E7C00B0587A /* SWSideMenuContentViewController.h */,
+				5E8047C71C197E7C00B0587A /* SWSideMenuContentViewController.m */,
+				5E8047CC1C197F0500B0587A /* SWMainViewController.h */,
+				5E8047CD1C197F0500B0587A /* SWMainViewController.m */,
+				5E8047CF1C19851800B0587A /* SWMainContentTabBarController.h */,
+				5E8047D01C19851800B0587A /* SWMainContentTabBarController.m */,
 			);
 			path = SWDriverTestBingo;
 			sourceTree = "<group>";
@@ -80,6 +103,32 @@
 				5E8047841C19243600B0587A /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		5E80479D1C194C1500B0587A /* SWUILib */ = {
+			isa = PBXGroup;
+			children = (
+				5E80479E1C194E6500B0587A /* Drag2ShowMenu */,
+			);
+			name = SWUILib;
+			sourceTree = "<group>";
+		};
+		5E80479E1C194E6500B0587A /* Drag2ShowMenu */ = {
+			isa = PBXGroup;
+			children = (
+				5E8047A21C194FCD00B0587A /* SWDrag2ShowMenuViewController.h */,
+				5E8047A31C194FCD00B0587A /* SWDrag2ShowMenuViewController.m */,
+			);
+			name = Drag2ShowMenu;
+			sourceTree = "<group>";
+		};
+		5E8047D21C19870800B0587A /* MainContentTabOne */ = {
+			isa = PBXGroup;
+			children = (
+				5E8047D31C1987B400B0587A /* SWDriverTestMainViewController.h */,
+				5E8047D41C1987B400B0587A /* SWDriverTestMainViewController.m */,
+			);
+			name = MainContentTabOne;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -108,6 +157,7 @@
 		5E8047781C19243500B0587A /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				CLASSPREFIX = SW;
 				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = Eren;
 				TargetAttributes = {
@@ -152,10 +202,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5E80478B1C19243600B0587A /* ViewController.m in Sources */,
+				5E8047B11C197CAC00B0587A /* SWRootNavigationController.m in Sources */,
 				5E8047881C19243600B0587A /* AppDelegate.m in Sources */,
+				5E8047D51C1987B400B0587A /* SWDriverTestMainViewController.m in Sources */,
 				5E8047851C19243600B0587A /* main.m in Sources */,
+				5E8047A41C194FCD00B0587A /* SWDrag2ShowMenuViewController.m in Sources */,
+				5E8047CE1C197F0500B0587A /* SWMainViewController.m in Sources */,
+				5E8047D11C19851800B0587A /* SWMainContentTabBarController.m in Sources */,
 				5E8047911C19243600B0587A /* SWDriverTestBingo.xcdatamodeld in Sources */,
+				5E8047C81C197E7C00B0587A /* SWSideMenuContentViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -268,6 +323,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = SWDriverTestBingo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.eren.SWDriverTestBingo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -279,6 +335,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = SWDriverTestBingo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.eren.SWDriverTestBingo;
 				PRODUCT_NAME = "$(TARGET_NAME)";

@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  SWSideMenuContentViewController.h
 //  SWDriverTestBingo
 //
 //  Created by EShi on 12/10/15.
@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
-
+@interface SWSideMenuContentViewController : UITableViewController
 
 @end
-
