@@ -20,6 +20,8 @@
 		5E8047D51C1987B400B0587A /* SWDriverTestMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E8047D41C1987B400B0587A /* SWDriverTestMainViewController.m */; settings = {ASSET_TAGS = (); }; };
 		5EEF42921C1A69800050B91B /* SWRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EEF42911C1A69800050B91B /* SWRootViewController.m */; settings = {ASSET_TAGS = (); }; };
 		5EEF42961C1A6CF10050B91B /* SWDriverTestApplyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EEF42951C1A6CF10050B91B /* SWDriverTestApplyViewController.m */; settings = {ASSET_TAGS = (); }; };
+		5EEF42991C1A74350050B91B /* SWDriverTestMainCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EEF42981C1A74350050B91B /* SWDriverTestMainCollectionViewCell.m */; settings = {ASSET_TAGS = (); }; };
+		5EEF429C1C1A756D0050B91B /* CollectionLayoutForDriverTestMain.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EEF429B1C1A756D0050B91B /* CollectionLayoutForDriverTestMain.m */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +48,10 @@
 		5EEF42911C1A69800050B91B /* SWRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRootViewController.m; sourceTree = "<group>"; };
 		5EEF42941C1A6CF10050B91B /* SWDriverTestApplyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SWDriverTestApplyViewController.h; path = MainContentTabTwo/SWDriverTestApplyViewController.h; sourceTree = "<group>"; };
 		5EEF42951C1A6CF10050B91B /* SWDriverTestApplyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SWDriverTestApplyViewController.m; path = MainContentTabTwo/SWDriverTestApplyViewController.m; sourceTree = "<group>"; };
+		5EEF42981C1A74350050B91B /* SWDriverTestMainCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWDriverTestMainCollectionViewCell.m; sourceTree = "<group>"; };
+		5EEF429A1C1A743D0050B91B /* SWDriverTestMainCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWDriverTestMainCollectionViewCell.h; sourceTree = "<group>"; };
+		5EEF429B1C1A756D0050B91B /* CollectionLayoutForDriverTestMain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionLayoutForDriverTestMain.m; sourceTree = "<group>"; };
+		5EEF429D1C1A75730050B91B /* CollectionLayoutForDriverTestMain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionLayoutForDriverTestMain.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +118,7 @@
 		5E80479D1C194C1500B0587A /* SWUILib */ = {
 			isa = PBXGroup;
 			children = (
+				5EEF42971C1A73630050B91B /* Layout */,
 				5E80479E1C194E6500B0587A /* Drag2ShowMenu */,
 			);
 			name = SWUILib;
@@ -142,6 +149,17 @@
 				5EEF42951C1A6CF10050B91B /* SWDriverTestApplyViewController.m */,
 			);
 			name = MainContentTabTwo;
+			sourceTree = "<group>";
+		};
+		5EEF42971C1A73630050B91B /* Layout */ = {
+			isa = PBXGroup;
+			children = (
+				5EEF429D1C1A75730050B91B /* CollectionLayoutForDriverTestMain.h */,
+				5EEF429B1C1A756D0050B91B /* CollectionLayoutForDriverTestMain.m */,
+				5EEF429A1C1A743D0050B91B /* SWDriverTestMainCollectionViewCell.h */,
+				5EEF42981C1A74350050B91B /* SWDriverTestMainCollectionViewCell.m */,
+			);
+			name = Layout;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -215,10 +233,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5EEF429C1C1A756D0050B91B /* CollectionLayoutForDriverTestMain.m in Sources */,
 				5EEF42921C1A69800050B91B /* SWRootViewController.m in Sources */,
 				5E8047881C19243600B0587A /* AppDelegate.m in Sources */,
 				5E8047D51C1987B400B0587A /* SWDriverTestMainViewController.m in Sources */,
 				5E8047851C19243600B0587A /* main.m in Sources */,
+				5EEF42991C1A74350050B91B /* SWDriverTestMainCollectionViewCell.m in Sources */,
 				5E8047A41C194FCD00B0587A /* SWDrag2ShowMenuViewController.m in Sources */,
 				5E8047CE1C197F0500B0587A /* SWMainViewController.m in Sources */,
 				5E8047D11C19851800B0587A /* SWMainContentTabBarController.m in Sources */,

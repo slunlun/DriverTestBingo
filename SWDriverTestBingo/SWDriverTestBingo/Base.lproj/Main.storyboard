@@ -5,7 +5,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
     </dependencies>
     <scenes>
-        <!--Item 2-->
+        <!--报驾校-->
         <scene sceneID="HNO-al-YiH">
             <objects>
                 <viewController id="xAE-WP-p1q" customClass="SWDriverTestApplyViewController" sceneMemberID="viewController">
@@ -18,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item 2" id="3DV-eM-cBb"/>
+                    <tabBarItem key="tabBarItem" title="报驾校" id="3DV-eM-cBb"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LNL-tj-6ab" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -42,11 +42,11 @@
             </objects>
             <point key="canvasLocation" x="-628" y="229"/>
         </scene>
-        <!--Item-->
+        <!--考驾照-->
         <scene sceneID="C4Y-CP-vp5">
             <objects>
                 <navigationController id="MZb-GL-bUf" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="aqS-yu-3Up"/>
+                    <tabBarItem key="tabBarItem" title="考驾照" id="aqS-yu-3Up"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="dYX-kH-Xgh">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
