@@ -6,7 +6,7 @@
 //  Copyright (c) 2015年 ShiTeng. All rights reserved.
 //
 
-#import "FlowLayoutForPageTest.h"
+#import "CollectionLayoutForDriverTestMain.h"
 #define MAIN_CELL_WIDTH   ([UIScreen mainScreen].bounds.size.width - 4)/3
 #define MAIN_CELL_HEIGHT  ([UIScreen mainScreen].bounds.size.width - 4)/3
 
@@ -18,10 +18,10 @@
 
 #define SECTION_HEIGHT 40
 
-@interface FlowLayoutForPageTest()
+@interface CollectionLayoutForDriverTestMain()
 @property(nonatomic, strong) NSMutableDictionary *cellLayoutAttrDic;
 @end
-@implementation FlowLayoutForPageTest
+@implementation CollectionLayoutForDriverTestMain
 
 #pragma SETTER/GETTER
 -(NSMutableDictionary *) cellLayoutAttrDic
