@@ -101,7 +101,7 @@
 {
     return self.collectionView.frame.size;
 }
-//返回cell的布局信息，如果忽略传入的rect一次性将所有的cell布局信息返回，图片过多时性能会很差
+
 - (NSArray *)layoutAttributesForElementsInRect:(CGRect)rect{
     NSLog(@"layoutAttributesForElementsInRect");
     [super layoutAttributesForElementsInRect:rect];
