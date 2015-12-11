@@ -1,33 +1,35 @@
 //
-//  SWRootNavigationController.m
+//  SWRootViewController.m
 //  SWDriverTestBingo
 //
-//  Created by EShi on 12/10/15.
+//  Created by EShi on 12/11/15.
 //  Copyright © 2015 Eren. All rights reserved.
 //
 
-#import "SWRootNavigationController.h"
+#import "SWRootViewController.h"
 #import "SWMainContentTabBarController.h"
 #import "SWSideMenuContentViewController.h"
 #import "SWMainViewController.h"
-@interface SWRootNavigationController ()
+
+@interface SWRootViewController ()
 
 @end
 
-@implementation SWRootNavigationController
+@implementation SWRootViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     UIViewController *sideMenuVC = [[UIViewController alloc] init];
     sideMenuVC.view.backgroundColor = [UIColor grayColor];
     UIStoryboard *mainStoryBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-
+    
     SWMainContentTabBarController *mainContentVC = [mainStoryBoard instantiateViewControllerWithIdentifier:@"MAIN_CONTENT_VC"];
     mainContentVC.view.backgroundColor = [UIColor greenColor];
     
     SWMainViewController *mainVC = [[SWMainViewController alloc] initWithContentView:mainContentVC sideMenuView:sideMenuVC];
-    self.viewControllers = @[mainVC];
-    // Do any additional setup after loading the view.
+    [self addChildViewController:mainVC];
+    [self.view addSubview:mainVC.view];
+
 }
 
 - (void)didReceiveMemoryWarning {

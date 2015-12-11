@@ -1,29 +1,22 @@
 //
-//  SWMainContentTabBarController.m
+//  SWDriverTestApplyViewController.m
 //  SWDriverTestBingo
 //
-//  Created by EShi on 12/10/15.
+//  Created by EShi on 12/11/15.
 //  Copyright © 2015 Eren. All rights reserved.
 //
 
-#import "SWMainContentTabBarController.h"
-#import "SWDriverTestMainViewController.h"
 #import "SWDriverTestApplyViewController.h"
 
-@interface SWMainContentTabBarController ()
+@interface SWDriverTestApplyViewController ()
 
 @end
 
-@implementation SWMainContentTabBarController
+@implementation SWDriverTestApplyViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-}
-
-- (void) viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -40,7 +33,5 @@
     // Pass the selected object to the new view controller.
 }
 */
-
-#pragma mark INIT/GETTER/SETTER
 
 @end
