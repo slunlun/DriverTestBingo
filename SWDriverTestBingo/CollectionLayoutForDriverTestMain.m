@@ -7,14 +7,11 @@
 //
 
 #import "CollectionLayoutForDriverTestMain.h"
-#define MAIN_CELL_WIDTH   ([UIScreen mainScreen].bounds.size.width - 4)/3
-#define MAIN_CELL_HEIGHT  ([UIScreen mainScreen].bounds.size.width - 4)/3
+#define MAIN_CELL_WIDTH   ([UIScreen mainScreen].bounds.size.width - 3)/2
+#define MAIN_CELL_HEIGHT  ([UIScreen mainScreen].bounds.size.width - 3)/3
 
-#define SUB_CELL_WIDTH   ([UIScreen mainScreen].bounds.size.width - 4)/3
-#define SUB_CELL_HEIGHT  MAIN_CELL_HEIGHT / 2 - 0.5
-
-#define NORMAL_CELL_WIDTH  ([UIScreen mainScreen].bounds.size.width - 4)/3
-#define NORMAL_CELL_HEIGHT ([UIScreen mainScreen].bounds.size.width - 4)/3
+#define NORMAL_CELL_WIDTH  ([UIScreen mainScreen].bounds.size.width - 3)/2
+#define NORMAL_CELL_HEIGHT ([UIScreen mainScreen].bounds.size.width - 3)/3
 
 #define SECTION_HEIGHT 40
 
@@ -36,42 +33,34 @@
 -(void) initCellAttrArray
 {
     CGRect cellFrame;
+    //Cell 0,0 (section, row)
     NSIndexPath *mainCellIndex = [NSIndexPath indexPathForItem:0 inSection:0];
     cellFrame = CGRectMake(1, SECTION_HEIGHT + 1, MAIN_CELL_WIDTH,MAIN_CELL_HEIGHT);
     [self.cellLayoutAttrDic setObject:mainCellIndex forKey:NSStringFromCGRect(cellFrame)];
     
+    //Cell 0,1
     NSIndexPath *subCellOneIndex = [NSIndexPath indexPathForItem:1 inSection:0];
-    cellFrame = CGRectMake(MAIN_CELL_WIDTH + 2, SECTION_HEIGHT + 1, SUB_CELL_WIDTH, SUB_CELL_HEIGHT);
+    cellFrame = CGRectMake(MAIN_CELL_WIDTH + 2, SECTION_HEIGHT + 1, MAIN_CELL_WIDTH, MAIN_CELL_HEIGHT);
     [self.cellLayoutAttrDic setObject:subCellOneIndex forKey:NSStringFromCGRect(cellFrame)];
     
-    // subCell 0,2
-    NSIndexPath *subCellTwoIndex = [NSIndexPath indexPathForItem:2 inSection:0];
-    cellFrame = CGRectMake(MAIN_CELL_WIDTH + SUB_CELL_WIDTH + 3, SECTION_HEIGHT + 1, SUB_CELL_WIDTH, SUB_CELL_HEIGHT);
-    [self.cellLayoutAttrDic setObject:subCellTwoIndex forKey:NSStringFromCGRect(cellFrame)];
-    
-    // subCell 0, 3
-    NSIndexPath *subCellThreeIndex = [NSIndexPath indexPathForItem:3 inSection:0];
-    cellFrame = CGRectMake(MAIN_CELL_WIDTH + 2, SECTION_HEIGHT + SUB_CELL_HEIGHT + 2, SUB_CELL_WIDTH, SUB_CELL_HEIGHT);
+    //Cell 0, 2
+    NSIndexPath *subCellThreeIndex = [NSIndexPath indexPathForItem:2 inSection:0];
+    cellFrame = CGRectMake(1, SECTION_HEIGHT + MAIN_CELL_HEIGHT + 2, MAIN_CELL_WIDTH, MAIN_CELL_HEIGHT);
     [self.cellLayoutAttrDic setObject:subCellThreeIndex forKey:NSStringFromCGRect(cellFrame)];
     
-    // subCell 0,4
-    NSIndexPath *subCellFourIndex = [NSIndexPath indexPathForItem:4 inSection:0];
-    cellFrame = CGRectMake(MAIN_CELL_WIDTH + SUB_CELL_WIDTH + 3, SECTION_HEIGHT + SUB_CELL_HEIGHT + 2, SUB_CELL_WIDTH, SUB_CELL_HEIGHT);
+    //Cell 0,3
+    NSIndexPath *subCellFourIndex = [NSIndexPath indexPathForItem:3 inSection:0];
+    cellFrame = CGRectMake(MAIN_CELL_WIDTH + 2, SECTION_HEIGHT + MAIN_CELL_HEIGHT + 2, MAIN_CELL_WIDTH, MAIN_CELL_HEIGHT);
     [self.cellLayoutAttrDic setObject:subCellFourIndex forKey:NSStringFromCGRect(cellFrame)];
     
     // normal cell 1
     NSIndexPath *normalCellOneIndex = [NSIndexPath indexPathForItem:0 inSection:1];
-    cellFrame = CGRectMake(1, SECTION_HEIGHT * 2 + MAIN_CELL_WIDTH + 4, NORMAL_CELL_WIDTH, NORMAL_CELL_HEIGHT);
+    cellFrame = CGRectMake(1, SECTION_HEIGHT * 2 + MAIN_CELL_HEIGHT*2+ 1, NORMAL_CELL_WIDTH, NORMAL_CELL_HEIGHT);
     [self.cellLayoutAttrDic setObject:normalCellOneIndex forKey:NSStringFromCGRect(cellFrame)];
     // normal cell 2
     NSIndexPath *normalCellTowIndex = [NSIndexPath indexPathForItem:1 inSection:1];
-    cellFrame = CGRectMake(NORMAL_CELL_WIDTH + 2, SECTION_HEIGHT * 2 + MAIN_CELL_WIDTH + 4, NORMAL_CELL_WIDTH, NORMAL_CELL_HEIGHT);
+    cellFrame = CGRectMake(NORMAL_CELL_WIDTH + 2, SECTION_HEIGHT * 2 + MAIN_CELL_HEIGHT*2 + 1, NORMAL_CELL_WIDTH, NORMAL_CELL_HEIGHT);
     [self.cellLayoutAttrDic setObject:normalCellTowIndex forKey:NSStringFromCGRect(cellFrame)];
-    // normal cell 3
-    NSIndexPath *normalCellThreeIndex = [NSIndexPath indexPathForItem:2 inSection:1];
-    cellFrame = CGRectMake(NORMAL_CELL_WIDTH*2 + 3, SECTION_HEIGHT * 2 + MAIN_CELL_WIDTH + 4, NORMAL_CELL_WIDTH, NORMAL_CELL_HEIGHT);
-    [self.cellLayoutAttrDic setObject:normalCellThreeIndex forKey:NSStringFromCGRect(cellFrame)];
-
 }
 
 - (NSArray *)indexPathsOfItem:(CGRect)rect{

@@ -13,15 +13,16 @@
 		5E8047911C19243600B0587A /* SWDriverTestBingo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5E80478F1C19243600B0587A /* SWDriverTestBingo.xcdatamodeld */; };
 		5E8047931C19243600B0587A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5E8047921C19243600B0587A /* Assets.xcassets */; };
 		5E8047961C19243600B0587A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5E8047941C19243600B0587A /* LaunchScreen.storyboard */; };
-		5E8047A41C194FCD00B0587A /* SWDrag2ShowMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E8047A31C194FCD00B0587A /* SWDrag2ShowMenuViewController.m */; settings = {ASSET_TAGS = (); }; };
-		5E8047C81C197E7C00B0587A /* SWSideMenuContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E8047C71C197E7C00B0587A /* SWSideMenuContentViewController.m */; settings = {ASSET_TAGS = (); }; };
-		5E8047CE1C197F0500B0587A /* SWMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E8047CD1C197F0500B0587A /* SWMainViewController.m */; settings = {ASSET_TAGS = (); }; };
-		5E8047D11C19851800B0587A /* SWMainContentTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E8047D01C19851800B0587A /* SWMainContentTabBarController.m */; settings = {ASSET_TAGS = (); }; };
-		5E8047D51C1987B400B0587A /* SWDriverTestMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E8047D41C1987B400B0587A /* SWDriverTestMainViewController.m */; settings = {ASSET_TAGS = (); }; };
-		5EEF42921C1A69800050B91B /* SWRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EEF42911C1A69800050B91B /* SWRootViewController.m */; settings = {ASSET_TAGS = (); }; };
-		5EEF42961C1A6CF10050B91B /* SWDriverTestApplyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EEF42951C1A6CF10050B91B /* SWDriverTestApplyViewController.m */; settings = {ASSET_TAGS = (); }; };
-		5EEF42991C1A74350050B91B /* SWDriverTestMainCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EEF42981C1A74350050B91B /* SWDriverTestMainCollectionViewCell.m */; settings = {ASSET_TAGS = (); }; };
-		5EEF429C1C1A756D0050B91B /* CollectionLayoutForDriverTestMain.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EEF429B1C1A756D0050B91B /* CollectionLayoutForDriverTestMain.m */; settings = {ASSET_TAGS = (); }; };
+		5E8047A41C194FCD00B0587A /* SWDrag2ShowMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E8047A31C194FCD00B0587A /* SWDrag2ShowMenuViewController.m */; };
+		5E8047C81C197E7C00B0587A /* SWSideMenuContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E8047C71C197E7C00B0587A /* SWSideMenuContentViewController.m */; };
+		5E8047CE1C197F0500B0587A /* SWMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E8047CD1C197F0500B0587A /* SWMainViewController.m */; };
+		5E8047D11C19851800B0587A /* SWMainContentTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E8047D01C19851800B0587A /* SWMainContentTabBarController.m */; };
+		5E8047D51C1987B400B0587A /* SWDriverTestMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E8047D41C1987B400B0587A /* SWDriverTestMainViewController.m */; };
+		5EEF42921C1A69800050B91B /* SWRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EEF42911C1A69800050B91B /* SWRootViewController.m */; };
+		5EEF42961C1A6CF10050B91B /* SWDriverTestApplyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EEF42951C1A6CF10050B91B /* SWDriverTestApplyViewController.m */; };
+		5EEF42991C1A74350050B91B /* SWDriverTestMainCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EEF42981C1A74350050B91B /* SWDriverTestMainCollectionViewCell.m */; };
+		5EEF429C1C1A756D0050B91B /* CollectionLayoutForDriverTestMain.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EEF429B1C1A756D0050B91B /* CollectionLayoutForDriverTestMain.m */; };
+		80CE62FD1C1BD32B0076816A /* SWDriverTestCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 80CE62FC1C1BD32B0076816A /* SWDriverTestCellView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +53,8 @@
 		5EEF429A1C1A743D0050B91B /* SWDriverTestMainCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWDriverTestMainCollectionViewCell.h; sourceTree = "<group>"; };
 		5EEF429B1C1A756D0050B91B /* CollectionLayoutForDriverTestMain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionLayoutForDriverTestMain.m; sourceTree = "<group>"; };
 		5EEF429D1C1A75730050B91B /* CollectionLayoutForDriverTestMain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionLayoutForDriverTestMain.h; sourceTree = "<group>"; };
+		80CE62FB1C1BD32B0076816A /* SWDriverTestCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWDriverTestCellView.h; sourceTree = "<group>"; };
+		80CE62FC1C1BD32B0076816A /* SWDriverTestCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWDriverTestCellView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,6 +161,8 @@
 				5EEF429B1C1A756D0050B91B /* CollectionLayoutForDriverTestMain.m */,
 				5EEF429A1C1A743D0050B91B /* SWDriverTestMainCollectionViewCell.h */,
 				5EEF42981C1A74350050B91B /* SWDriverTestMainCollectionViewCell.m */,
+				80CE62FB1C1BD32B0076816A /* SWDriverTestCellView.h */,
+				80CE62FC1C1BD32B0076816A /* SWDriverTestCellView.m */,
 			);
 			name = Layout;
 			sourceTree = "<group>";
@@ -245,6 +250,7 @@
 				5EEF42961C1A6CF10050B91B /* SWDriverTestApplyViewController.m in Sources */,
 				5E8047911C19243600B0587A /* SWDriverTestBingo.xcdatamodeld in Sources */,
 				5E8047C81C197E7C00B0587A /* SWSideMenuContentViewController.m in Sources */,
+				80CE62FD1C1BD32B0076816A /* SWDriverTestCellView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
