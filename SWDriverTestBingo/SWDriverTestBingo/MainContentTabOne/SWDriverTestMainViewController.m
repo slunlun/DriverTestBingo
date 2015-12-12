@@ -74,10 +74,58 @@ static NSString *IMG_COL_CELL_IDENTITY = @"IMG_COL_CELL_IDENTITY";
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     SWDriverTestMainCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:IMG_COL_CELL_IDENTITY forIndexPath:indexPath];
-    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"List"]];
+    UIImageView *imageView = [[UIImageView alloc] init];
     UILabel *titleLab = [[UILabel alloc] init];
-    titleLab.text = @"顺序答题";
-    titleLab.textColor = [UIColor blackColor];
+    
+    if (indexPath.section == 0) {
+        switch (indexPath.row) {
+            case 0:
+            {
+                imageView.image = [UIImage imageNamed:@"list"];
+                titleLab.text = NSLocalizedString(@"SequenAnswer", nil);
+            }
+                break;
+            case 1:
+            {
+                imageView.image = [UIImage imageNamed:@"exam"];
+                titleLab.text = NSLocalizedString(@"SimExam", nil);
+            }
+                break;
+            case 2:
+            {
+                imageView.image = [UIImage imageNamed:@"study"];
+                titleLab.text = NSLocalizedString(@"ScanQuestions", nil);
+            }
+                break;
+            case 3:
+            {
+                imageView.image = [UIImage imageNamed:@"wrongQuestions"];
+                titleLab.text = NSLocalizedString(@"WrongAnswers", nil);
+            }
+                break;
+            default:
+                break;
+        }
+    }else if(indexPath.section == 1)
+    {
+        switch (indexPath.row) {
+            case 0:
+            {
+                imageView.image = [UIImage imageNamed:@"markQuestions"];
+                titleLab.text = NSLocalizedString(@"MarkQuestions", nil);
+            }
+                break;
+            case 1:
+            {
+                imageView.image = [UIImage imageNamed:@"statistics"];
+                titleLab.text = NSLocalizedString(@"MyStatistics", nil);
+            }
+                break;
+            default:
+                break;
+        }
+
+    }
     
     SWDriverTestCellView * cellView = [[SWDriverTestCellView alloc] initWithCellImage:imageView cellTitle:titleLab];
     cellView.tag = SW_DRIVER_TEST_CELL_VIEW_TAG;

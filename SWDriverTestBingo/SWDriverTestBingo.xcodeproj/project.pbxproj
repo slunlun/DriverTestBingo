@@ -22,6 +22,7 @@
 		5EEF42961C1A6CF10050B91B /* SWDriverTestApplyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EEF42951C1A6CF10050B91B /* SWDriverTestApplyViewController.m */; };
 		5EEF42991C1A74350050B91B /* SWDriverTestMainCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EEF42981C1A74350050B91B /* SWDriverTestMainCollectionViewCell.m */; };
 		5EEF429C1C1A756D0050B91B /* CollectionLayoutForDriverTestMain.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EEF429B1C1A756D0050B91B /* CollectionLayoutForDriverTestMain.m */; };
+		805109101C1C5B8300CB1D18 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 805109121C1C5B8300CB1D18 /* Localizable.strings */; };
 		80CE62FD1C1BD32B0076816A /* SWDriverTestCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 80CE62FC1C1BD32B0076816A /* SWDriverTestCellView.m */; };
 /* End PBXBuildFile section */
 
@@ -53,6 +54,7 @@
 		5EEF429A1C1A743D0050B91B /* SWDriverTestMainCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWDriverTestMainCollectionViewCell.h; sourceTree = "<group>"; };
 		5EEF429B1C1A756D0050B91B /* CollectionLayoutForDriverTestMain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionLayoutForDriverTestMain.m; sourceTree = "<group>"; };
 		5EEF429D1C1A75730050B91B /* CollectionLayoutForDriverTestMain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionLayoutForDriverTestMain.h; sourceTree = "<group>"; };
+		805109111C1C5B8300CB1D18 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		80CE62FB1C1BD32B0076816A /* SWDriverTestCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWDriverTestCellView.h; sourceTree = "<group>"; };
 		80CE62FC1C1BD32B0076816A /* SWDriverTestCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWDriverTestCellView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -106,6 +108,7 @@
 				5E8047D01C19851800B0587A /* SWMainContentTabBarController.m */,
 				5EEF42901C1A69800050B91B /* SWRootViewController.h */,
 				5EEF42911C1A69800050B91B /* SWRootViewController.m */,
+				805109121C1C5B8300CB1D18 /* Localizable.strings */,
 			);
 			path = SWDriverTestBingo;
 			sourceTree = "<group>";
@@ -226,6 +229,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5E8047961C19243600B0587A /* LaunchScreen.storyboard in Resources */,
+				805109101C1C5B8300CB1D18 /* Localizable.strings in Resources */,
 				5E8047931C19243600B0587A /* Assets.xcassets in Resources */,
 				5E80478E1C19243600B0587A /* Main.storyboard in Resources */,
 			);
@@ -271,6 +275,14 @@
 				5E8047951C19243600B0587A /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		805109121C1C5B8300CB1D18 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				805109111C1C5B8300CB1D18 /* Base */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

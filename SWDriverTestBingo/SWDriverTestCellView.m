@@ -25,9 +25,9 @@
     _imageView.translatesAutoresizingMaskIntoConstraints = NO;
     _titleLab.translatesAutoresizingMaskIntoConstraints = NO;
     _titleLab.font = [UIFont systemFontOfSize:15.0f];
-    _imageView.backgroundColor = [UIColor yellowColor];
-    _titleLab.backgroundColor = [UIColor redColor];
-    self.backgroundColor = [UIColor orangeColor];
+//    _imageView.backgroundColor = [UIColor yellowColor];
+//    _titleLab.backgroundColor = [UIColor redColor];
+    self.backgroundColor = [UIColor whiteColor];
     [self addSubview:_imageView];
     [self addSubview:_titleLab];
     [self addConstraint:[NSLayoutConstraint constraintWithItem:_imageView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0.0]];
