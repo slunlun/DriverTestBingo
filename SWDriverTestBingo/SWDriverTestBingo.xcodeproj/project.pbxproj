@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5E1CC4391C1FBD9E0025B4F5 /* SWPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E1CC4381C1FBD9E0025B4F5 /* SWPageViewController.m */; settings = {ASSET_TAGS = (); }; };
 		5E8047851C19243600B0587A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E8047841C19243600B0587A /* main.m */; };
 		5E8047881C19243600B0587A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E8047871C19243600B0587A /* AppDelegate.m */; };
 		5E80478E1C19243600B0587A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5E80478C1C19243600B0587A /* Main.storyboard */; };
@@ -27,6 +28,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5E1CC4371C1FBD970025B4F5 /* SWPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SWPageViewController.h; path = SWDriverTestBingo/SWUILib/PageViewController/SWPageViewController.h; sourceTree = "<group>"; };
+		5E1CC4381C1FBD9E0025B4F5 /* SWPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SWPageViewController.m; path = SWDriverTestBingo/SWUILib/PageViewController/SWPageViewController.m; sourceTree = "<group>"; };
 		5E8047801C19243600B0587A /* SWDriverTestBingo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SWDriverTestBingo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E8047841C19243600B0587A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		5E8047861C19243600B0587A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -70,6 +73,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5E1CC4361C1FBD500025B4F5 /* PageViewController */ = {
+			isa = PBXGroup;
+			children = (
+				5E1CC4371C1FBD970025B4F5 /* SWPageViewController.h */,
+				5E1CC4381C1FBD9E0025B4F5 /* SWPageViewController.m */,
+			);
+			name = PageViewController;
+			sourceTree = "<group>";
+		};
 		5E8047771C19243500B0587A = {
 			isa = PBXGroup;
 			children = (
@@ -124,6 +136,7 @@
 		5E80479D1C194C1500B0587A /* SWUILib */ = {
 			isa = PBXGroup;
 			children = (
+				5E1CC4361C1FBD500025B4F5 /* PageViewController */,
 				5EEF42971C1A73630050B91B /* Layout */,
 				5E80479E1C194E6500B0587A /* Drag2ShowMenu */,
 			);
@@ -243,6 +256,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5EEF429C1C1A756D0050B91B /* CollectionLayoutForDriverTestMain.m in Sources */,
+				5E1CC4391C1FBD9E0025B4F5 /* SWPageViewController.m in Sources */,
 				5EEF42921C1A69800050B91B /* SWRootViewController.m in Sources */,
 				5E8047881C19243600B0587A /* AppDelegate.m in Sources */,
 				5E8047D51C1987B400B0587A /* SWDriverTestMainViewController.m in Sources */,
