@@ -52,6 +52,32 @@
     return self;
 }
 
+-(instancetype) init
+{
+    self = [super init];
+    if (self) {
+        _isInit = YES;
+        _scrollView = [[UIScrollView alloc] init];
+        _scrollView.showsHorizontalScrollIndicator = NO;
+        _scrollView.showsVerticalScrollIndicator = NO;
+        _scrollView.pagingEnabled = YES;
+        _scrollView.translatesAutoresizingMaskIntoConstraints = NO;
+        _scrollView.delaysContentTouches = YES;
+        _scrollView.canCancelContentTouches = YES;
+        [self.view addSubview:_scrollView];
+        [self makeUpScrollViews];
+    }
+    return self;
+}
+
+-(NSMutableArray *) contentViewsArray
+{
+    if (_contentViewsArray == nil) {
+        _contentViewsArray = [[NSMutableArray alloc] init];
+    }
+    return _contentViewsArray;
+}
+
 #pragma mark Layout
 -(void) makeUpScrollViews
 {
@@ -84,8 +110,8 @@
         }
         self.isInit = NO;
     }
-  
-
+    
+    
 }
 
 #pragma mark public method
@@ -97,7 +123,7 @@
 -(void) nextPage
 {
     NSInteger currentPageNum = [self currentPageNum];
-    if (currentPageNum < self.contentViewsArray.count) {
+    if (currentPageNum < self.contentViewsArray.count - 1) {
         currentPageNum++;
         [UIView animateWithDuration:0.3 animations:^{
             self.scrollView.contentOffset = CGPointMake(self.scrollView.frame.size.width * currentPageNum, self.scrollView.contentOffset.y);
@@ -127,9 +153,8 @@
 
 -(void) addPageView:(UIView *) pageView
 {
-    [self.scrollView addSubview:pageView];
     pageView.translatesAutoresizingMaskIntoConstraints = NO;
-    
+    [self.scrollView addSubview:pageView];
     if (self.contentViewsArray.count > 0) {
         [self.scrollView addConstraint:[NSLayoutConstraint constraintWithItem:pageView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.scrollView attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.0]];
         [self.scrollView addConstraint:[NSLayoutConstraint constraintWithItem:pageView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.scrollView attribute:NSLayoutAttributeWidth multiplier:1.0 constant:0.0]];
@@ -143,6 +168,7 @@
         [self.scrollView addConstraint:[NSLayoutConstraint constraintWithItem:pageView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:self.scrollView attribute:NSLayoutAttributeHeight multiplier:1.0 constant:0.0]];
         [self.scrollView addConstraint:[NSLayoutConstraint constraintWithItem:pageView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.scrollView attribute:NSLayoutAttributeLeading multiplier:1.0 constant:0.0]];
     }
+    [self.contentViewsArray addObject:pageView];
 }
 
 #pragma mark private method
