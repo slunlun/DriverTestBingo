@@ -20,7 +20,7 @@
 @end
 
 const CGFloat defaultSlideInWidth = 30;
-const CGFloat defaultMenuWidth = 240;
+const CGFloat defaultMenuWidth = 200;
 
 
 const NSInteger menuViewTag = 3000;
@@ -71,12 +71,11 @@ const NSInteger contentViewTag = 3001;
         _panGestureRec = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(moveViewWithGesture:)];
         [_contentViewController.view addGestureRecognizer:_panGestureRec];
         
-        //为contentView设置阴影
-        [[_contentViewController.view layer] setShadowOffset:CGSizeMake(1, 1)];
-        [[_contentViewController.view  layer] setShadowRadius:5];
-        [[_contentViewController.view  layer] setShadowOpacity:1];
-        [[_contentViewController.view  layer] setShadowColor:[UIColor blackColor].CGColor];
-        
+        //为contentView设置阴影   
+//        [[_contentViewController.view layer] setShadowOffset:CGSizeMake(1, 1)];
+//        [[_contentViewController.view  layer] setShadowRadius:5];
+//        [[_contentViewController.view  layer] setShadowOpacity:1];
+//        [[_contentViewController.view  layer] setShadowColor:[UIColor blackColor].CGColor];
         
         [self setMenuContentView:_menuContentViewController.view];
         

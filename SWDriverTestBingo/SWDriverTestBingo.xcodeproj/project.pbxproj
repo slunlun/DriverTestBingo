@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5E1CC4391C1FBD9E0025B4F5 /* SWPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E1CC4381C1FBD9E0025B4F5 /* SWPageViewController.m */; settings = {ASSET_TAGS = (); }; };
+		5E1CC4391C1FBD9E0025B4F5 /* SWPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E1CC4381C1FBD9E0025B4F5 /* SWPageViewController.m */; };
 		5E8047851C19243600B0587A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E8047841C19243600B0587A /* main.m */; };
 		5E8047881C19243600B0587A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E8047871C19243600B0587A /* AppDelegate.m */; };
 		5E80478E1C19243600B0587A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5E80478C1C19243600B0587A /* Main.storyboard */; };
@@ -25,6 +25,7 @@
 		5EEF429C1C1A756D0050B91B /* CollectionLayoutForDriverTestMain.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EEF429B1C1A756D0050B91B /* CollectionLayoutForDriverTestMain.m */; };
 		805109101C1C5B8300CB1D18 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 805109121C1C5B8300CB1D18 /* Localizable.strings */; };
 		80CE62FD1C1BD32B0076816A /* SWDriverTestCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 80CE62FC1C1BD32B0076816A /* SWDriverTestCellView.m */; };
+		80ECE7921C2040FB00B6EBF5 /* SWQuestionPagesViewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 80ECE7911C2040FB00B6EBF5 /* SWQuestionPagesViewViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -49,7 +50,6 @@
 		5E8047D01C19851800B0587A /* SWMainContentTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWMainContentTabBarController.m; sourceTree = "<group>"; };
 		5E8047D31C1987B400B0587A /* SWDriverTestMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SWDriverTestMainViewController.h; path = MainContentTabOne/SWDriverTestMainViewController.h; sourceTree = "<group>"; };
 		5E8047D41C1987B400B0587A /* SWDriverTestMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SWDriverTestMainViewController.m; path = MainContentTabOne/SWDriverTestMainViewController.m; sourceTree = "<group>"; };
-		5EEF42901C1A69800050B91B /* SWRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRootViewController.h; sourceTree = "<group>"; };
 		5EEF42911C1A69800050B91B /* SWRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRootViewController.m; sourceTree = "<group>"; };
 		5EEF42941C1A6CF10050B91B /* SWDriverTestApplyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SWDriverTestApplyViewController.h; path = MainContentTabTwo/SWDriverTestApplyViewController.h; sourceTree = "<group>"; };
 		5EEF42951C1A6CF10050B91B /* SWDriverTestApplyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SWDriverTestApplyViewController.m; path = MainContentTabTwo/SWDriverTestApplyViewController.m; sourceTree = "<group>"; };
@@ -60,6 +60,9 @@
 		805109111C1C5B8300CB1D18 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		80CE62FB1C1BD32B0076816A /* SWDriverTestCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWDriverTestCellView.h; sourceTree = "<group>"; };
 		80CE62FC1C1BD32B0076816A /* SWDriverTestCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWDriverTestCellView.m; sourceTree = "<group>"; };
+		80ECE7901C2040FB00B6EBF5 /* SWQuestionPagesViewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWQuestionPagesViewViewController.h; sourceTree = "<group>"; };
+		80ECE7911C2040FB00B6EBF5 /* SWQuestionPagesViewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWQuestionPagesViewViewController.m; sourceTree = "<group>"; };
+		80ECE7931C204EBE00B6EBF5 /* SWRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRootViewController.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,9 +121,11 @@
 				5E8047C71C197E7C00B0587A /* SWSideMenuContentViewController.m */,
 				5E8047CF1C19851800B0587A /* SWMainContentTabBarController.h */,
 				5E8047D01C19851800B0587A /* SWMainContentTabBarController.m */,
-				5EEF42901C1A69800050B91B /* SWRootViewController.h */,
+				80ECE7931C204EBE00B6EBF5 /* SWRootViewController.h */,
 				5EEF42911C1A69800050B91B /* SWRootViewController.m */,
 				805109121C1C5B8300CB1D18 /* Localizable.strings */,
+				80ECE7901C2040FB00B6EBF5 /* SWQuestionPagesViewViewController.h */,
+				80ECE7911C2040FB00B6EBF5 /* SWQuestionPagesViewViewController.m */,
 			);
 			path = SWDriverTestBingo;
 			sourceTree = "<group>";
@@ -259,6 +264,7 @@
 				5E1CC4391C1FBD9E0025B4F5 /* SWPageViewController.m in Sources */,
 				5EEF42921C1A69800050B91B /* SWRootViewController.m in Sources */,
 				5E8047881C19243600B0587A /* AppDelegate.m in Sources */,
+				80ECE7921C2040FB00B6EBF5 /* SWQuestionPagesViewViewController.m in Sources */,
 				5E8047D51C1987B400B0587A /* SWDriverTestMainViewController.m in Sources */,
 				5E8047851C19243600B0587A /* main.m in Sources */,
 				5EEF42991C1A74350050B91B /* SWDriverTestMainCollectionViewCell.m in Sources */,
