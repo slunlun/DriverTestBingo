@@ -10,6 +10,7 @@
 #import "CollectionLayoutForDriverTestMain.h"
 #import "SWDriverTestMainCollectionViewCell.h"
 #import "SWDriverTestCellView.h"
+#import "SWQuestionPagesViewViewController.h"
 #define NAV_BAR_HEIGHT 60
 static NSString *IMG_COL_CELL_IDENTITY = @"IMG_COL_CELL_IDENTITY";
 
@@ -26,7 +27,6 @@ static NSString *IMG_COL_CELL_IDENTITY = @"IMG_COL_CELL_IDENTITY";
     [self makeUpCollectionView];
     // makeup navigationbar
     [self makeUpNavigationBar];
-    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -42,16 +42,24 @@ static NSString *IMG_COL_CELL_IDENTITY = @"IMG_COL_CELL_IDENTITY";
 -(void) makeUpCollectionView
 {
     CollectionLayoutForDriverTestMain *layout = [[CollectionLayoutForDriverTestMain alloc] init];
-    _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) collectionViewLayout:layout];
+    
+    _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, 0, 0) collectionViewLayout:layout];
+    _collectionView.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addSubview:_collectionView];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_collectionView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.bottomLayoutGuide attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.0]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_collectionView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.topLayoutGuide attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_collectionView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeWidth multiplier:1.0 constant:0.0]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_collectionView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1.0 constant:0.0]];
     _collectionView.dataSource =self;
     _collectionView.delegate = self;
-    _collectionView.backgroundColor = [UIColor lightGrayColor];
+    _collectionView.backgroundColor = [UIColor blueColor];
     [_collectionView registerClass:[SWDriverTestMainCollectionViewCell class] forCellWithReuseIdentifier:IMG_COL_CELL_IDENTITY];
-    [self.view addSubview:_collectionView];
+    
 }
 
 -(void) makeUpNavigationBar
 {
+    
 }
 
 #pragma mark UICollectionViewDataSource
@@ -144,6 +152,51 @@ static NSString *IMG_COL_CELL_IDENTITY = @"IMG_COL_CELL_IDENTITY";
 #pragma mark UICollectionViewDelegate
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (indexPath.section == 0) {
+        switch (indexPath.row) {
+            case 0:  // 顺序答题
+            {
+             
+                UIView *redView = [[UIView alloc] init];
+                redView.backgroundColor = [UIColor redColor];
+                UIView *yellowView = [[UIView alloc] init];
+                yellowView.backgroundColor = [UIColor yellowColor];
+                UIView *greenView = [[UIView alloc] init];
+                greenView.backgroundColor = [UIColor greenColor];
+                NSMutableArray *questionItemViews = [[NSMutableArray alloc] init];
+                [questionItemViews addObject:redView];
+                [questionItemViews addObject:yellowView];
+                [questionItemViews addObject:greenView];
+                SWPageViewController *pagesVC = [[SWPageViewController alloc] initWithContentViews:questionItemViews];
+                
+                [self.navigationController pushViewController:pagesVC animated:YES];
+            }
+                break;
+            case 1:  // 模拟练习
+            {}
+                break;
+            case 2:  // 浏览题库
+            {}
+                break;
+            case 3:  // 错题集
+            {}
+                break;
+            default:
+                break;
+        }
+    }else if(indexPath.section == 1)
+    {
+        switch (indexPath.row) {
+            case 0:  // 我的收藏
+            {}
+                break;
+            case 1:  // 做题统计
+            {}
+                break;
+            default:
+                break;
+        }
+    }
     NSLog(@"Now select %@", indexPath);
 }
 

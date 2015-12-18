@@ -20,13 +20,15 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     UIViewController *sideMenuVC = [[UIViewController alloc] init];
-    sideMenuVC.view.backgroundColor = [UIColor grayColor];
+    sideMenuVC.view.backgroundColor = [UIColor yellowColor];
     UIStoryboard *mainStoryBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     
-    SWMainContentTabBarController *mainContentVC = [mainStoryBoard instantiateViewControllerWithIdentifier:@"MAIN_CONTENT_VC"];
-    mainContentVC.view.backgroundColor = [UIColor greenColor];
+
+    UINavigationController *navigationVC = [mainStoryBoard instantiateViewControllerWithIdentifier:@"MAIN_CONTENT_NAV"];
+//    SWMainContentTabBarController *mainContentVC = [mainStoryBoard instantiateViewControllerWithIdentifier:@"MAIN_CONTENT_VC"];
+//    mainContentVC.view.backgroundColor = [UIColor greenColor];
     
-    SWMainViewController *mainVC = [[SWMainViewController alloc] initWithContentView:mainContentVC sideMenuView:sideMenuVC];
+    SWMainViewController *mainVC = [[SWMainViewController alloc] initWithContentView:navigationVC sideMenuView:sideMenuVC];
     [self addChildViewController:mainVC];
     [self.view addSubview:mainVC.view];
 
