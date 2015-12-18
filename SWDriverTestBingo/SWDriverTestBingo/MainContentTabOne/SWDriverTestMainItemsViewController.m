@@ -12,6 +12,8 @@
 #import "SWDriverTestCellView.h"
 #import "SWQuestionPagesViewViewController.h"
 
+#import "SWDriverTestQuestionView.h"
+
 static NSString *IMG_COL_CELL_IDENTITY = @"IMG_COL_CELL_IDENTITY";
 @interface SWDriverTestMainItemsViewController () <UICollectionViewDataSource, UICollectionViewDelegate>
 @property(nonatomic, strong) UICollectionView *collectionView;
@@ -146,16 +148,18 @@ static NSString *IMG_COL_CELL_IDENTITY = @"IMG_COL_CELL_IDENTITY";
             case 0:  // 顺序答题
             {
                 
-                UIView *redView = [[UIView alloc] init];
-                redView.backgroundColor = [UIColor redColor];
-                UIView *yellowView = [[UIView alloc] init];
-                yellowView.backgroundColor = [UIColor yellowColor];
-                UIView *greenView = [[UIView alloc] init];
-                greenView.backgroundColor = [UIColor greenColor];
+                SWDriverTestQuestionView *question1 = [[SWDriverTestQuestionView alloc] init];
+                question1.backgroundColor = [UIColor yellowColor];
+                SWDriverTestQuestionView *question2 = [[SWDriverTestQuestionView alloc] init];
+                question2.backgroundColor = [UIColor redColor];
+                SWDriverTestQuestionView *question3 = [[SWDriverTestQuestionView alloc] init];
+                question3.backgroundColor = [UIColor brownColor];
+
+                
                 NSMutableArray *questionItemViews = [[NSMutableArray alloc] init];
-                [questionItemViews addObject:redView];
-                [questionItemViews addObject:yellowView];
-                [questionItemViews addObject:greenView];
+                [questionItemViews addObject:question1];
+                [questionItemViews addObject:question2];
+                [questionItemViews addObject:question3];
                 SWPageViewController *pagesVC = [[SWPageViewController alloc] initWithContentViews:questionItemViews];
                 
                 [self.navigationController pushViewController:pagesVC animated:YES];
