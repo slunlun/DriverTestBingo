@@ -72,10 +72,10 @@ const NSInteger contentViewTag = 3001;
         [_contentViewController.view addGestureRecognizer:_panGestureRec];
         
         //为contentView设置阴影   
-//        [[_contentViewController.view layer] setShadowOffset:CGSizeMake(1, 1)];
-//        [[_contentViewController.view  layer] setShadowRadius:5];
-//        [[_contentViewController.view  layer] setShadowOpacity:1];
-//        [[_contentViewController.view  layer] setShadowColor:[UIColor blackColor].CGColor];
+        [[_contentViewController.view layer] setShadowOffset:CGSizeMake(1, 1)];
+        [[_contentViewController.view  layer] setShadowRadius:5];
+        [[_contentViewController.view  layer] setShadowOpacity:1];
+        [[_contentViewController.view  layer] setShadowColor:[UIColor blackColor].CGColor];
         
         [self setMenuContentView:_menuContentViewController.view];
         

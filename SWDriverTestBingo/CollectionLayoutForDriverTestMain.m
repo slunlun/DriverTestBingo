@@ -29,6 +29,8 @@
     
     return _cellLayoutAttrDic;
 }
+
+
 #pragma mark layout support method
 -(void) initCellAttrArray
 {
@@ -86,10 +88,10 @@
     
 }
 // In ios7 and below , we must imply collectionViewContentSize, to tell IOS the content size of collectionview
-- (CGSize)collectionViewContentSize
-{
-    return self.collectionView.frame.size;
-}
+//- (CGSize)collectionViewContentSize
+//{
+//    return self.collectionView.frame.size;
+//}
 
 - (NSArray *)layoutAttributesForElementsInRect:(CGRect)rect{
     NSLog(@"layoutAttributesForElementsInRect");

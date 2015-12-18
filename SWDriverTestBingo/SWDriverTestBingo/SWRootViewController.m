@@ -24,11 +24,11 @@
     UIStoryboard *mainStoryBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     
 
-    UINavigationController *navigationVC = [mainStoryBoard instantiateViewControllerWithIdentifier:@"MAIN_CONTENT_NAV"];
+    SWMainContentTabBarController *tabBarController = [mainStoryBoard instantiateViewControllerWithIdentifier:@"MAIN_CONTENT_VC"];
 //    SWMainContentTabBarController *mainContentVC = [mainStoryBoard instantiateViewControllerWithIdentifier:@"MAIN_CONTENT_VC"];
 //    mainContentVC.view.backgroundColor = [UIColor greenColor];
     
-    SWMainViewController *mainVC = [[SWMainViewController alloc] initWithContentView:navigationVC sideMenuView:sideMenuVC];
+    SWMainViewController *mainVC = [[SWMainViewController alloc] initWithContentView:tabBarController sideMenuView:sideMenuVC];
     [self addChildViewController:mainVC];
     [self.view addSubview:mainVC.view];
 
