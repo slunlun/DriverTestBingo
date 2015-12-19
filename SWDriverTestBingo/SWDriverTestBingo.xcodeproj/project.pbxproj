@@ -29,6 +29,7 @@
 		805109101C1C5B8300CB1D18 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 805109121C1C5B8300CB1D18 /* Localizable.strings */; };
 		80CE62FD1C1BD32B0076816A /* SWDriverTestCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 80CE62FC1C1BD32B0076816A /* SWDriverTestCellView.m */; };
 		80F6C7651C25307E00A7E9DB /* SWQuestionPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 80F6C7641C25307E00A7E9DB /* SWQuestionPageViewController.m */; };
+		80F6C76A1C25363C00A7E9DB /* UIButton+SWUIButtonExt.m in Sources */ = {isa = PBXBuildFile; fileRef = 80F6C7691C25363C00A7E9DB /* UIButton+SWUIButtonExt.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -72,6 +73,8 @@
 		80ECE7931C204EBE00B6EBF5 /* SWRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRootViewController.h; sourceTree = "<group>"; };
 		80F6C7631C25307E00A7E9DB /* SWQuestionPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SWQuestionPageViewController.h; path = MainContentTabOne/SWQuestionPageViewController.h; sourceTree = "<group>"; };
 		80F6C7641C25307E00A7E9DB /* SWQuestionPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SWQuestionPageViewController.m; path = MainContentTabOne/SWQuestionPageViewController.m; sourceTree = "<group>"; };
+		80F6C7681C25363400A7E9DB /* UIButton+SWUIButtonExt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIButton+SWUIButtonExt.h"; path = "SWDriverTestBingo/SWUILib/UIButtonExt/UIButton+SWUIButtonExt.h"; sourceTree = "<group>"; };
+		80F6C7691C25363C00A7E9DB /* UIButton+SWUIButtonExt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIButton+SWUIButtonExt.m"; path = "SWDriverTestBingo/SWUILib/UIButtonExt/UIButton+SWUIButtonExt.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,6 +161,7 @@
 		5E80479D1C194C1500B0587A /* SWUILib */ = {
 			isa = PBXGroup;
 			children = (
+				80F6C7671C2535E300A7E9DB /* UIButtonExt */,
 				5E1CC4361C1FBD500025B4F5 /* PageViewController */,
 				5EEF42971C1A73630050B91B /* Layout */,
 				5E80479E1C194E6500B0587A /* Drag2ShowMenu */,
@@ -209,6 +213,15 @@
 				80CE62FC1C1BD32B0076816A /* SWDriverTestCellView.m */,
 			);
 			name = Layout;
+			sourceTree = "<group>";
+		};
+		80F6C7671C2535E300A7E9DB /* UIButtonExt */ = {
+			isa = PBXGroup;
+			children = (
+				80F6C7681C25363400A7E9DB /* UIButton+SWUIButtonExt.h */,
+				80F6C7691C25363C00A7E9DB /* UIButton+SWUIButtonExt.m */,
+			);
+			name = UIButtonExt;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -300,6 +313,7 @@
 				5E0E8C5E1C23E09E005DDB00 /* SWDriverTestQuestionView.m in Sources */,
 				5E0E8C621C23E48F005DDB00 /* SWDriverTestQuestion.m in Sources */,
 				5E8047C81C197E7C00B0587A /* SWSideMenuContentViewController.m in Sources */,
+				80F6C76A1C25363C00A7E9DB /* UIButton+SWUIButtonExt.m in Sources */,
 				80CE62FD1C1BD32B0076816A /* SWDriverTestCellView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
