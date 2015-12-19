@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5E0E8C581C23AC65005DDB00 /* SWDriverTestMainItemsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E0E8C571C23AC65005DDB00 /* SWDriverTestMainItemsViewController.m */; settings = {ASSET_TAGS = (); }; };
-		5E0E8C5E1C23E09E005DDB00 /* SWDriverTestQuestionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E0E8C5D1C23E09E005DDB00 /* SWDriverTestQuestionView.m */; settings = {ASSET_TAGS = (); }; };
-		5E0E8C621C23E48F005DDB00 /* SWDriverTestQuestion.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E0E8C611C23E48F005DDB00 /* SWDriverTestQuestion.m */; settings = {ASSET_TAGS = (); }; };
+		5E0E8C581C23AC65005DDB00 /* SWDriverTestMainItemsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E0E8C571C23AC65005DDB00 /* SWDriverTestMainItemsViewController.m */; };
+		5E0E8C5E1C23E09E005DDB00 /* SWDriverTestQuestionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E0E8C5D1C23E09E005DDB00 /* SWDriverTestQuestionView.m */; };
+		5E0E8C621C23E48F005DDB00 /* SWDriverTestQuestion.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E0E8C611C23E48F005DDB00 /* SWDriverTestQuestion.m */; };
 		5E1CC4391C1FBD9E0025B4F5 /* SWPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E1CC4381C1FBD9E0025B4F5 /* SWPageViewController.m */; };
 		5E8047851C19243600B0587A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E8047841C19243600B0587A /* main.m */; };
 		5E8047881C19243600B0587A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E8047871C19243600B0587A /* AppDelegate.m */; };
@@ -28,7 +28,7 @@
 		5EEF429C1C1A756D0050B91B /* CollectionLayoutForDriverTestMain.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EEF429B1C1A756D0050B91B /* CollectionLayoutForDriverTestMain.m */; };
 		805109101C1C5B8300CB1D18 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 805109121C1C5B8300CB1D18 /* Localizable.strings */; };
 		80CE62FD1C1BD32B0076816A /* SWDriverTestCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 80CE62FC1C1BD32B0076816A /* SWDriverTestCellView.m */; };
-		80ECE7921C2040FB00B6EBF5 /* SWQuestionPagesViewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 80ECE7911C2040FB00B6EBF5 /* SWQuestionPagesViewViewController.m */; };
+		80F6C7651C25307E00A7E9DB /* SWQuestionPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 80F6C7641C25307E00A7E9DB /* SWQuestionPageViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -69,9 +69,9 @@
 		805109111C1C5B8300CB1D18 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		80CE62FB1C1BD32B0076816A /* SWDriverTestCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWDriverTestCellView.h; sourceTree = "<group>"; };
 		80CE62FC1C1BD32B0076816A /* SWDriverTestCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWDriverTestCellView.m; sourceTree = "<group>"; };
-		80ECE7901C2040FB00B6EBF5 /* SWQuestionPagesViewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWQuestionPagesViewViewController.h; sourceTree = "<group>"; };
-		80ECE7911C2040FB00B6EBF5 /* SWQuestionPagesViewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWQuestionPagesViewViewController.m; sourceTree = "<group>"; };
 		80ECE7931C204EBE00B6EBF5 /* SWRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRootViewController.h; sourceTree = "<group>"; };
+		80F6C7631C25307E00A7E9DB /* SWQuestionPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SWQuestionPageViewController.h; path = MainContentTabOne/SWQuestionPageViewController.h; sourceTree = "<group>"; };
+		80F6C7641C25307E00A7E9DB /* SWQuestionPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SWQuestionPageViewController.m; path = MainContentTabOne/SWQuestionPageViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -143,8 +143,6 @@
 				80ECE7931C204EBE00B6EBF5 /* SWRootViewController.h */,
 				5EEF42911C1A69800050B91B /* SWRootViewController.m */,
 				805109121C1C5B8300CB1D18 /* Localizable.strings */,
-				80ECE7901C2040FB00B6EBF5 /* SWQuestionPagesViewViewController.h */,
-				80ECE7911C2040FB00B6EBF5 /* SWQuestionPagesViewViewController.m */,
 			);
 			path = SWDriverTestBingo;
 			sourceTree = "<group>";
@@ -185,6 +183,8 @@
 				5E0E8C571C23AC65005DDB00 /* SWDriverTestMainItemsViewController.m */,
 				5E0E8C5C1C23E09E005DDB00 /* SWDriverTestQuestionView.h */,
 				5E0E8C5D1C23E09E005DDB00 /* SWDriverTestQuestionView.m */,
+				80F6C7631C25307E00A7E9DB /* SWQuestionPageViewController.h */,
+				80F6C7641C25307E00A7E9DB /* SWQuestionPageViewController.m */,
 			);
 			name = MainContentTabOne;
 			sourceTree = "<group>";
@@ -287,8 +287,8 @@
 				5E1CC4391C1FBD9E0025B4F5 /* SWPageViewController.m in Sources */,
 				5EEF42921C1A69800050B91B /* SWRootViewController.m in Sources */,
 				5E8047881C19243600B0587A /* AppDelegate.m in Sources */,
-				80ECE7921C2040FB00B6EBF5 /* SWQuestionPagesViewViewController.m in Sources */,
 				5E8047D51C1987B400B0587A /* SWDriverTestMainViewController.m in Sources */,
+				80F6C7651C25307E00A7E9DB /* SWQuestionPageViewController.m in Sources */,
 				5E8047851C19243600B0587A /* main.m in Sources */,
 				5EEF42991C1A74350050B91B /* SWDriverTestMainCollectionViewCell.m in Sources */,
 				5E8047A41C194FCD00B0587A /* SWDrag2ShowMenuViewController.m in Sources */,
