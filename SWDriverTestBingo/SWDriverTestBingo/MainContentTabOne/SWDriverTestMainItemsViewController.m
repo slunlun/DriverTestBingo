@@ -10,9 +10,10 @@
 #import "CollectionLayoutForDriverTestMain.h"
 #import "SWDriverTestMainCollectionViewCell.h"
 #import "SWDriverTestCellView.h"
-#import "SWQuestionPagesViewViewController.h"
+#import "SWQuestionPageViewController.h"
 
 #import "SWDriverTestQuestionView.h"
+#import "SWDriverTestQuestion.h"
 
 static NSString *IMG_COL_CELL_IDENTITY = @"IMG_COL_CELL_IDENTITY";
 @interface SWDriverTestMainItemsViewController () <UICollectionViewDataSource, UICollectionViewDelegate>
@@ -147,20 +148,19 @@ static NSString *IMG_COL_CELL_IDENTITY = @"IMG_COL_CELL_IDENTITY";
         switch (indexPath.row) {
             case 0:  // 顺序答题
             {
-                
-                SWDriverTestQuestionView *question1 = [[SWDriverTestQuestionView alloc] init];
-                question1.backgroundColor = [UIColor yellowColor];
-                SWDriverTestQuestionView *question2 = [[SWDriverTestQuestionView alloc] init];
-                question2.backgroundColor = [UIColor redColor];
-                SWDriverTestQuestionView *question3 = [[SWDriverTestQuestionView alloc] init];
-                question3.backgroundColor = [UIColor brownColor];
+                NSArray *answers = @[@"A.这是错误答案", @"B.也许我是对的？我是对的就没错的了", @"C.我才是正宗的答案",@"D.别听他们胡叨叨"];
+                NSArray *justAnswers =@[@"A.正确", @"B.错误"];
+                SWDriverTestQuestion *questionOne = [[SWDriverTestQuestion alloc]initWithQuestionImage:[UIImage imageNamed:@"qImg1"] questionDescp:@"当行人在穿越人行横道时，司机可以加速行驶来躲开行人，这是可行的，哈哈哈哈哈哈哈哈哈，李逍遥弥月大家好，我是夜月神" answers:answers rightIndex:2];
+                SWDriverTestQuestion *questionTwo = [[SWDriverTestQuestion alloc]initWithQuestionImage:[UIImage imageNamed:@"qImg2"] questionDescp:@"当行人在穿越人行横道时，司机可以加速行驶来躲开行人，这是可行的，哈哈哈哈哈哈哈哈哈，李逍遥弥月大家好，我是夜月神" answers:justAnswers rightIndex:1];
 
                 
+                SWDriverTestQuestionView *question1 = [[SWDriverTestQuestionView alloc] initWithQuestion:questionOne];
+              
+                SWDriverTestQuestionView *question2 = [[SWDriverTestQuestionView alloc] initWithQuestion:questionTwo];
                 NSMutableArray *questionItemViews = [[NSMutableArray alloc] init];
                 [questionItemViews addObject:question1];
                 [questionItemViews addObject:question2];
-                [questionItemViews addObject:question3];
-                SWPageViewController *pagesVC = [[SWPageViewController alloc] initWithContentViews:questionItemViews];
+                SWQuestionPageViewController *pagesVC = [[SWQuestionPageViewController alloc] initWithContentViews:questionItemViews];
                 
                 [self.navigationController pushViewController:pagesVC animated:YES];
             }
