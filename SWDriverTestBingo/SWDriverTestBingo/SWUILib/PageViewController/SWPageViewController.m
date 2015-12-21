@@ -9,8 +9,7 @@
 #import "SWPageViewController.h"
 
 @interface SWPageViewController ()<UIScrollViewDelegate>
-@property(nonatomic, strong) UIScrollView *scrollView;
-@property(nonatomic, strong) NSMutableArray *contentViewsArray;
+
 @property(nonatomic) BOOL isInit;
 @end
 

@@ -16,4 +16,7 @@
 -(void) previousPage;
 -(void) changeToPage:(NSInteger) pageNum;
 -(void) addPageView:(UIView *) pageView;
+
+@property(nonatomic, strong) UIScrollView *scrollView;
+@property(nonatomic, strong) NSMutableArray *contentViewsArray;
 @end
