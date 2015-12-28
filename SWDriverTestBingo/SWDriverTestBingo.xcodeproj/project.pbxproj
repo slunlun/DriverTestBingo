@@ -11,7 +11,7 @@
 		5E0E8C5E1C23E09E005DDB00 /* SWDriverTestQuestionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E0E8C5D1C23E09E005DDB00 /* SWDriverTestQuestionView.m */; };
 		5E0E8C621C23E48F005DDB00 /* SWDriverTestQuestion.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E0E8C611C23E48F005DDB00 /* SWDriverTestQuestion.m */; };
 		5E1CC4391C1FBD9E0025B4F5 /* SWPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E1CC4381C1FBD9E0025B4F5 /* SWPageViewController.m */; };
-		5E4AA9EC1C2791CB004348A9 /* FlexibleAlignButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E4AA9EB1C2791CB004348A9 /* FlexibleAlignButton.m */; settings = {ASSET_TAGS = (); }; };
+		5E4AA9EC1C2791CB004348A9 /* FlexibleAlignButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E4AA9EB1C2791CB004348A9 /* FlexibleAlignButton.m */; };
 		5E8047851C19243600B0587A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E8047841C19243600B0587A /* main.m */; };
 		5E8047881C19243600B0587A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E8047871C19243600B0587A /* AppDelegate.m */; };
 		5E80478E1C19243600B0587A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5E80478C1C19243600B0587A /* Main.storyboard */; };
@@ -27,6 +27,8 @@
 		5EEF42961C1A6CF10050B91B /* SWDriverTestApplyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EEF42951C1A6CF10050B91B /* SWDriverTestApplyViewController.m */; };
 		5EEF42991C1A74350050B91B /* SWDriverTestMainCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EEF42981C1A74350050B91B /* SWDriverTestMainCollectionViewCell.m */; };
 		5EEF429C1C1A756D0050B91B /* CollectionLayoutForDriverTestMain.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EEF429B1C1A756D0050B91B /* CollectionLayoutForDriverTestMain.m */; };
+		8033EB501C316CBD00299527 /* SWRoundButtonTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8033EB4E1C316CBD00299527 /* SWRoundButtonTableViewCell.m */; };
+		8033EB511C316CBD00299527 /* SWRoundButtonTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8033EB4F1C316CBD00299527 /* SWRoundButtonTableViewCell.xib */; };
 		805109101C1C5B8300CB1D18 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 805109121C1C5B8300CB1D18 /* Localizable.strings */; };
 		80CE62FD1C1BD32B0076816A /* SWDriverTestCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 80CE62FC1C1BD32B0076816A /* SWDriverTestCellView.m */; };
 		80F6C7651C25307E00A7E9DB /* SWQuestionPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 80F6C7641C25307E00A7E9DB /* SWQuestionPageViewController.m */; };
@@ -70,6 +72,9 @@
 		5EEF429A1C1A743D0050B91B /* SWDriverTestMainCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWDriverTestMainCollectionViewCell.h; sourceTree = "<group>"; };
 		5EEF429B1C1A756D0050B91B /* CollectionLayoutForDriverTestMain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionLayoutForDriverTestMain.m; sourceTree = "<group>"; };
 		5EEF429D1C1A75730050B91B /* CollectionLayoutForDriverTestMain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionLayoutForDriverTestMain.h; sourceTree = "<group>"; };
+		8033EB4D1C316CBD00299527 /* SWRoundButtonTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRoundButtonTableViewCell.h; sourceTree = "<group>"; };
+		8033EB4E1C316CBD00299527 /* SWRoundButtonTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRoundButtonTableViewCell.m; sourceTree = "<group>"; };
+		8033EB4F1C316CBD00299527 /* SWRoundButtonTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SWRoundButtonTableViewCell.xib; sourceTree = "<group>"; };
 		805109111C1C5B8300CB1D18 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		80CE62FB1C1BD32B0076816A /* SWDriverTestCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWDriverTestCellView.h; sourceTree = "<group>"; };
 		80CE62FC1C1BD32B0076816A /* SWDriverTestCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWDriverTestCellView.m; sourceTree = "<group>"; };
@@ -164,6 +169,7 @@
 		5E80479D1C194C1500B0587A /* SWUILib */ = {
 			isa = PBXGroup;
 			children = (
+				8033EB4C1C316C7300299527 /* RoundBtnTableCell */,
 				80F6C7671C2535E300A7E9DB /* UIButtonExt */,
 				5E1CC4361C1FBD500025B4F5 /* PageViewController */,
 				5EEF42971C1A73630050B91B /* Layout */,
@@ -216,6 +222,16 @@
 				80CE62FC1C1BD32B0076816A /* SWDriverTestCellView.m */,
 			);
 			name = Layout;
+			sourceTree = "<group>";
+		};
+		8033EB4C1C316C7300299527 /* RoundBtnTableCell */ = {
+			isa = PBXGroup;
+			children = (
+				8033EB4D1C316CBD00299527 /* SWRoundButtonTableViewCell.h */,
+				8033EB4E1C316CBD00299527 /* SWRoundButtonTableViewCell.m */,
+				8033EB4F1C316CBD00299527 /* SWRoundButtonTableViewCell.xib */,
+			);
+			name = RoundBtnTableCell;
 			sourceTree = "<group>";
 		};
 		80F6C7671C2535E300A7E9DB /* UIButtonExt */ = {
@@ -288,6 +304,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5E8047961C19243600B0587A /* LaunchScreen.storyboard in Resources */,
+				8033EB511C316CBD00299527 /* SWRoundButtonTableViewCell.xib in Resources */,
 				805109101C1C5B8300CB1D18 /* Localizable.strings in Resources */,
 				5E8047931C19243600B0587A /* Assets.xcassets in Resources */,
 				5E80478E1C19243600B0587A /* Main.storyboard in Resources */,
@@ -319,6 +336,7 @@
 				5E0E8C5E1C23E09E005DDB00 /* SWDriverTestQuestionView.m in Sources */,
 				5E0E8C621C23E48F005DDB00 /* SWDriverTestQuestion.m in Sources */,
 				5E8047C81C197E7C00B0587A /* SWSideMenuContentViewController.m in Sources */,
+				8033EB501C316CBD00299527 /* SWRoundButtonTableViewCell.m in Sources */,
 				80F6C76A1C25363C00A7E9DB /* UIButton+SWUIButtonExt.m in Sources */,
 				80CE62FD1C1BD32B0076816A /* SWDriverTestCellView.m in Sources */,
 			);

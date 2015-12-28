@@ -19,8 +19,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    UIViewController *sideMenuVC = [[UIViewController alloc] init];
-    sideMenuVC.view.backgroundColor = [UIColor yellowColor];
+    SWSideMenuContentViewController *sideMenuVC = [[SWSideMenuContentViewController alloc] init];
+    
     UIStoryboard *mainStoryBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     
 
