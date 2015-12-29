@@ -134,7 +134,8 @@ const NSInteger contentViewTag = 3001;
         
         // situation 3: 用户可以各种拖动
         CGFloat menuCenterOffsetX = offsetX * _speedRation;
-        self.contentViewController.view.center = CGPointMake(self.contentViewController.view.center.x + menuCenterOffsetX, self.contentViewController.view.center.y);
+    
+        self.menuContentViewController.view.center = CGPointMake(self.menuContentViewController.view.center.x + menuCenterOffsetX, self.menuContentViewController.view.center.y);
         
     }
     

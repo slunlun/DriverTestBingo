@@ -7,6 +7,7 @@
 //
 
 #import "SWSideMenuContentViewController.h"
+#import "SWRoundButtonTableViewCell.h"
 
 @interface SWSideMenuContentViewController ()
 
@@ -33,23 +34,71 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
 
-    return 0;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 
+    if (section == 0) { // user info
+        return 1;
+    }else if(section == 1)  // other operations
+    {
+        return 4;
+    }
+    
     return 0;
+    
 }
 
-/*
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
     
-    // Configure the cell...
+    if (indexPath.section == 0) {
+        SWRoundButtonTableViewCell *cell = [SWRoundButtonTableViewCell initWithTableView:tableView userInfoCellWithUserName:@"EShi" userHeadImage:[UIImage imageNamed:@"testUserHead"]];
+        
+        return cell;
+    }
+    // other opeartions 0 考试锦囊 1 考前许愿 2 设置 3 关于
+    static NSString* OPERATION_CELL_IDENTITY = @"OPERATION_CELL_IDENTITY";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:OPERATION_CELL_IDENTITY];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:OPERATION_CELL_IDENTITY];
+    }
+    switch (indexPath.row) {
+        case 0:
+        {
+            cell.textLabel.text = NSLocalizedString(@"GoodIdeasForTest", nil);
+        }
+            break;
+        case 1:
+        {
+            cell.textLabel.text = NSLocalizedString(@"GoodWishForTest", nil);
+        }
+            break;
+        case 2:
+        {
+            cell.textLabel.text = NSLocalizedString(@"Setting", nil);
+        }
+            break;
+        case 3:
+        {
+             cell.textLabel.text = NSLocalizedString(@"About", nil);
+        }
+            break;
+        default:
+            break;
+    }
     
     return cell;
 }
-*/
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell *cell = [self tableView:tableView cellForRowAtIndexPath:indexPath];
+    return cell.frame.size.height;
+}
+
+
+
 
 /*
 // Override to support conditional editing of the table view.
