@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "SWDrag2ShowMenuViewController.h"
 @interface SWSideMenuContentViewController : UITableViewController
-
+@property(nonatomic, weak) SWDrag2ShowMenuViewController *drag2ShowMenuVC;
 @end

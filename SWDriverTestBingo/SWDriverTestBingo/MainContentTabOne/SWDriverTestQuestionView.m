@@ -124,7 +124,7 @@ static NSString *QUESTION_RIGHT_ANSWER_CELL_IDENTITY = @"QUESTION_RIGHT_ANSWER_C
                     cell.contentView.frame = CGRectMake(cell.contentView.frame.origin.x, cell.contentView.frame.origin.y, self.questionTableView.frame.size.width, cell.contentView.frame.size.height * 3);
                     cell.frame = cell.contentView.frame;
                     
-                    UIImageView *questionImgView = [cell.contentView viewWithTag:CELL_IMG_VIEW_TAG];
+                    UIImageView *questionImgView = (UIImageView *)[cell.contentView viewWithTag:CELL_IMG_VIEW_TAG];
                     if (questionImgView == nil) {
                         questionImgView = [[UIImageView alloc] initWithFrame:CGRectMake(cell.contentView.frame.origin.x + 2, cell.contentView.frame.origin.y + 2, cell.contentView.frame.size.width - 4, cell.contentView.frame.size.height - 4)];
                         questionImgView.tag = CELL_IMG_VIEW_TAG;

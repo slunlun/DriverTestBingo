@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SWDrag2ShowMenuViewController.h"
 
 @interface SWMainContentTabBarController : UITabBarController
-
+@property(nonatomic, weak) SWDrag2ShowMenuViewController *drag2ShowMenuVC;
 @end

@@ -19,6 +19,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.navigationController.navigationBarHidden = YES;
     SWSideMenuContentViewController *sideMenuVC = [[SWSideMenuContentViewController alloc] init];
     
     UIStoryboard *mainStoryBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
@@ -29,6 +30,8 @@
 //    mainContentVC.view.backgroundColor = [UIColor greenColor];
     
     SWMainViewController *mainVC = [[SWMainViewController alloc] initWithContentView:tabBarController sideMenuView:sideMenuVC];
+    tabBarController.drag2ShowMenuVC = mainVC;
+    sideMenuVC.drag2ShowMenuVC = mainVC;
     [self addChildViewController:mainVC];
     [self.view addSubview:mainVC.view];
 

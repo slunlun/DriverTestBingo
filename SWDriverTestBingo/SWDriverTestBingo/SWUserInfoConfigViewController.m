@@ -1,37 +1,41 @@
 //
-//  SWMainContentTabBarController.m
+//  SWUserInfoConfigViewController.m
 //  SWDriverTestBingo
 //
-//  Created by EShi on 12/10/15.
+//  Created by EShi on 12/29/15.
 //  Copyright © 2015 Eren. All rights reserved.
 //
 
-#import "SWMainContentTabBarController.h"
-#import "SWDriverTestMainViewController.h"
-#import "SWDriverTestApplyViewController.h"
+#import "SWUserInfoConfigViewController.h"
 
-@interface SWMainContentTabBarController ()
+@interface SWUserInfoConfigViewController ()
 
 @end
 
-@implementation SWMainContentTabBarController
+@implementation SWUserInfoConfigViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-   // self.navigationController.navigationBar.barTintColor = [UIColor brownColor];
-   // self.navigationController.navigationBar.backgroundColor = [UIColor brownColor];
-}
-
-- (void) viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void) viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBarHidden = NO;
+    [self.navigationController.navigationBar setTranslucent:NO];
+
+}
+
+-(void) viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    self.navigationController.navigationBarHidden = YES;
 }
 
 /*
@@ -43,7 +47,5 @@
     // Pass the selected object to the new view controller.
 }
 */
-
-#pragma mark INIT/GETTER/SETTER
 
 @end
