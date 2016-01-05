@@ -8,6 +8,9 @@
 
 #import "AppDelegate.h"
 
+#import "SWUserInfo+CoreDataProperties.h"
+#import "SWCommonUtils.h"
+
 @interface AppDelegate ()
 
 @end
@@ -16,6 +19,7 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    [self initUserInfo];
     return YES;
 }
 
@@ -121,6 +125,17 @@
             abort();
         }
     }
+}
+
+#pragma mark - JUST FOR TEST
+- (void) initUserInfo
+{
+    SWUserInfo *userInfo = [NSEntityDescription insertNewObjectForEntityForName:@"SWUserInfo" inManagedObjectContext:[self managedObjectContext]];
+    userInfo.userName = @"John";
+    userInfo.userID = [SWCommonUtils getTableMaxIndex:@"SWUserInfo"];
+    
+    [self.managedObjectContext save:nil];
+    
 }
 
 @end

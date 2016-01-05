@@ -15,6 +15,12 @@
 #import "SWDriverTestQuestionView.h"
 #import "SWDriverTestQuestion.h"
 
+#import "SWQuestionItems+CoreDataProperties.h"
+#import "SWMarkItems+CoreDataProperties.h"
+
+#import "AppDelegate.h"
+
+
 static NSString *IMG_COL_CELL_IDENTITY = @"IMG_COL_CELL_IDENTITY";
 @interface SWDriverTestMainItemsViewController () <UICollectionViewDataSource, UICollectionViewDelegate>
 @property(nonatomic, strong) UICollectionView *collectionView;
@@ -29,6 +35,9 @@ static NSString *IMG_COL_CELL_IDENTITY = @"IMG_COL_CELL_IDENTITY";
     
     [self setAutomaticallyAdjustsScrollViewInsets:NO];
     [self makeUpCollectionView];
+    
+    // JUST FOR TEST!!!!!!
+    [self genTestData];
 }
 
 -(void) viewWillAppear:(BOOL)animated
@@ -197,6 +206,19 @@ static NSString *IMG_COL_CELL_IDENTITY = @"IMG_COL_CELL_IDENTITY";
         }
     }
     NSLog(@"Now select %@", indexPath);
+}
+
+#pragma mark JUST FOR TEST
+- (NSMutableArray *) genTestData
+{
+    NSMutableArray *testViews = [[NSMutableArray alloc] init];
+    
+    NSFetchRequest *fetch = [NSFetchRequest fetchRequestWithEntityName:@"SWUserInfo"];
+    
+    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+    NSArray *result = [appDelegate.managedObjectContext executeFetchRequest:fetch error:nil];
+    NSLog(@"the user is %@", result);
+    return testViews;
 }
 
 @end

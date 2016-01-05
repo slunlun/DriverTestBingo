@@ -1,4 +1,55 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model name="Test1.xcdatamodel" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1" systemVersion="11A491" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
-    <elements/>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9525" systemVersion="15B42" minimumToolsVersion="Automatic">
+    <entity name="SWMarkItems" representedClassName="SWMarkItems" syncable="YES">
+        <attribute name="userID" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <relationship name="questions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SWQuestionItems" inverseName="markQuestionsLib" inverseEntity="SWQuestionItems" syncable="YES"/>
+        <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SWUserInfo" inverseName="markQuestionsLib" inverseEntity="SWUserInfo" syncable="YES"/>
+    </entity>
+    <entity name="SWQuestionItems" representedClassName="SWQuestionItems" syncable="YES">
+        <attribute name="questionAnswerA" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="questionAnswerB" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="questionAnswerC" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="questionAnswerD" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="questionDesc" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="questionImageTitle" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="questionRightAnswer" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="questionSelectedIndex" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="questionType" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <relationship name="markQuestionsLib" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SWMarkItems" inverseName="questions" inverseEntity="SWMarkItems" syncable="YES"/>
+        <relationship name="wrongQuestionsLib" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SWWrongItems" inverseName="questions" inverseEntity="SWWrongItems" syncable="YES"/>
+    </entity>
+    <entity name="SWQuestionStatus" representedClassName="SWQuestionStatus" syncable="YES">
+        <attribute name="currentQuestionIndex" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="userID" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SWUserInfo" inverseName="questionStatus" inverseEntity="SWUserInfo" syncable="YES"/>
+    </entity>
+    <entity name="SWTableMaxIndex" representedClassName="SWTableMaxIndex" syncable="YES">
+        <attribute name="maxIndex" optional="YES" attributeType="Integer 32" defaultValueString="1" syncable="YES"/>
+        <attribute name="tableName" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="SWUserInfo" representedClassName="SWUserInfo" syncable="YES">
+        <attribute name="averageTestScore" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="remark" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="totalAnswersNum" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="userID" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="userImage" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="userName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="wrongAnswersNum" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <relationship name="markQuestionsLib" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SWMarkItems" inverseName="user" inverseEntity="SWMarkItems" syncable="YES"/>
+        <relationship name="questionStatus" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SWQuestionStatus" inverseName="user" inverseEntity="SWQuestionStatus" syncable="YES"/>
+        <relationship name="wrongQuestionsLib" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SWWrongItems" inverseName="user" inverseEntity="SWWrongItems" syncable="YES"/>
+    </entity>
+    <entity name="SWWrongItems" representedClassName="SWWrongItems" syncable="YES">
+        <attribute name="userID" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <relationship name="questions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SWQuestionItems" inverseName="wrongQuestionsLib" inverseEntity="SWQuestionItems" syncable="YES"/>
+        <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SWUserInfo" inverseName="wrongQuestionsLib" inverseEntity="SWUserInfo" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="SWQuestionItems" positionX="-290" positionY="126" width="128" height="208"/>
+        <element name="SWMarkItems" positionX="-567" positionY="-46" width="128" height="88"/>
+        <element name="SWWrongItems" positionX="-594" positionY="89" width="135" height="88"/>
+        <element name="SWUserInfo" positionX="-306" positionY="-123" width="128" height="193"/>
+        <element name="SWQuestionStatus" positionX="0" positionY="18" width="128" height="88"/>
+        <element name="SWTableMaxIndex" positionX="-243" positionY="108" width="128" height="75"/>
+    </elements>
 </model>
