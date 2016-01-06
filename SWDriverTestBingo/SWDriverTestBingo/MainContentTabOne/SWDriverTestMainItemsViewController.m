@@ -218,6 +218,24 @@ static NSString *IMG_COL_CELL_IDENTITY = @"IMG_COL_CELL_IDENTITY";
     AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
     NSArray *result = [appDelegate.managedObjectContext executeFetchRequest:fetch error:nil];
     NSLog(@"the user is %@", result);
+    
+    SWQuestionItems *questionItem = [NSEntityDescription insertNewObjectForEntityForName:@"SWQuestionItems" inManagedObjectContext:appDelegate.managedObjectContext];
+    questionItem.questionDesc = @"当前方有人行横道时，应该加速行驶。";
+    questionItem.questionAnswerA = @"正确";
+    questionItem.questionAnswerB = @"错误";
+    questionItem.questionRightAnswer = [NSNumber numberWithInteger:0];
+    questionItem.questionType = [NSNumber]
+    
+    SWQuestionItems *questionItem2 = [NSEntityDescription insertNewObjectForEntityForName:@"SWQuestionItems" inManagedObjectContext:appDelegate.managedObjectContext];
+    questionItem2.questionDesc = @"当机动车驾驶人驾驶没有牌照的车子上路时，交警可以做出如下那种处罚";
+    questionItem2.questionAnswerA = @"吊销驾照";
+    questionItem2.questionAnswerB = @"罚款500元以上 1000元以下";
+    questionItem2.questionAnswerC = @"拘禁四个月";
+    questionItem2.questionAnswerD = @"在规定的30个工作日内，向当地车管所备案";
+    questionItem2.questionRightAnswer = [NSNumber numberWithInteger:2];
+    questionItem2.questionImageTitle = @"abc";
+    questionItem2.questionType = [NSNumber numberWithInteger:1];
+
     return testViews;
 }
 
