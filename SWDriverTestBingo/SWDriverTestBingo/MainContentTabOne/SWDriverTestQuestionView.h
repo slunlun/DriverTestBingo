@@ -8,8 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "SWDriverTestQuestion.h"
-@interface SWDriverTestQuestionView : UIView
-- (instancetype) initWithQuestion:(SWDriverTestQuestion *) question;
+#import "SWQuestionItems+CoreDataProperties.h"
 
-@property(nonatomic, strong) SWDriverTestQuestion *question;
+@interface SWDriverTestQuestionView : UIView
+- (instancetype) initWithQuestion:(SWQuestionItems *) question;
+
+@property(nonatomic, strong) SWQuestionItems *question;
 @end
