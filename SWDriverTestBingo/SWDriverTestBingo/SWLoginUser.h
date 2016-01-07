@@ -15,6 +15,7 @@
 
 + (void) markQuestion:(SWQuestionItems *) markedQuestion;
 + (void) unmarkQuestion:(SWQuestionItems *) markedQuestion;
++ (NSSet *) getUserMarkedQuestions;
 
 @property(nonatomic, strong) NSString* userName;
 @property(nonatomic, strong) NSData *userImage;

@@ -39,7 +39,7 @@ static NSString *IMG_COL_CELL_IDENTITY = @"IMG_COL_CELL_IDENTITY";
     [self makeUpCollectionView];
     
     // JUST FOR TEST!!!!!!
-  //  [self genTestData];
+    [SWLoginUser loginWithUserName:@"John" PassWord:@"123"];
 }
 
 -(void) viewWillAppear:(BOOL)animated
@@ -165,10 +165,8 @@ static NSString *IMG_COL_CELL_IDENTITY = @"IMG_COL_CELL_IDENTITY";
         switch (indexPath.row) {
             case 0:  // 顺序答题
             {
-                NSMutableArray *questionItemViews = [self genTestData];
+                NSMutableArray *questionItemViews = [self genSequenceQuestionViews];
                 SWQuestionPageViewController *pagesVC = [[SWQuestionPageViewController alloc] initWithContentViews:questionItemViews];
-                [SWLoginUser loginWithUserName:@"John" PassWord:@"123"];
-                
                 [self.navigationController pushViewController:pagesVC animated:YES];
             }
                 break;
@@ -188,7 +186,15 @@ static NSString *IMG_COL_CELL_IDENTITY = @"IMG_COL_CELL_IDENTITY";
     {
         switch (indexPath.row) {
             case 0:  // 我的收藏
-            {}
+            {
+                NSMutableArray *markedQuestionViews = [self genMarkedQuestionViews];
+                if (markedQuestionViews.count == 0) {
+                    return;
+                }
+                SWQuestionPageViewController *pagesVC = [[SWQuestionPageViewController alloc] initWithContentViews:markedQuestionViews];
+                [self.navigationController pushViewController:pagesVC animated:YES];
+                
+            }
                 break;
             case 1:  // 做题统计
             {}
@@ -200,10 +206,10 @@ static NSString *IMG_COL_CELL_IDENTITY = @"IMG_COL_CELL_IDENTITY";
     NSLog(@"Now select %@", indexPath);
 }
 
-#pragma mark JUST FOR TEST
-- (NSMutableArray *) genTestData
+#pragma mark Question Data provider
+- (NSMutableArray *) genSequenceQuestionViews
 {
-    NSMutableArray *testViews = [[NSMutableArray alloc] init];
+    NSMutableArray *sequenceQuestionViews = [[NSMutableArray alloc] init];
     AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
     
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
@@ -215,10 +221,21 @@ static NSString *IMG_COL_CELL_IDENTITY = @"IMG_COL_CELL_IDENTITY";
     if (fetchedObjects.count > 0) {
         for (SWQuestionItems *question in fetchedObjects) {
             SWDriverTestQuestionView *questionView = [[SWDriverTestQuestionView alloc] initWithQuestion:question];
-            [testViews addObject:questionView];
+            [sequenceQuestionViews addObject:questionView];
         }
     }
-    return testViews;
+    return sequenceQuestionViews;
+}
+
+- (NSMutableArray *) genMarkedQuestionViews
+{
+    NSSet * userMarkedQuestionsSet = [SWLoginUser getUserMarkedQuestions];
+    NSMutableArray *markedQuestionViews = [[NSMutableArray alloc] init];
+    for (SWQuestionItems *question in userMarkedQuestionsSet) {
+        SWDriverTestQuestionView *questionView = [[SWDriverTestQuestionView alloc] initWithQuestion:question];
+        [markedQuestionViews addObject:questionView];
+    }
+    return markedQuestionViews;
 }
 
 @end

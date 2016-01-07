@@ -82,7 +82,7 @@ static SWUserInfo *userInfo = nil;
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"SWMarkItems" inManagedObjectContext:appDelegate.managedObjectContext];
     [fetchRequest setEntity:entity];
     // Specify criteria for filtering which objects to fetch
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"userID=%ld", userInfo.userID];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"userID=%ld", userInfo.userID.integerValue];
     [fetchRequest setPredicate:predicate];
     
     NSError *error = nil;
@@ -96,5 +96,24 @@ static SWUserInfo *userInfo = nil;
         markedQuestion.markQuestionsLib = nil;
         [appDelegate.managedObjectContext save:nil];
     }
+}
+
++ (NSSet *) getUserMarkedQuestions
+{
+    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"SWMarkItems" inManagedObjectContext:appDelegate.managedObjectContext];
+    [fetchRequest setEntity:entity];
+    // Specify criteria for filtering which objects to fetch
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"userID=%ld", userInfo.userID.integerValue];
+    [fetchRequest setPredicate:predicate];
+    
+    NSError *error = nil;
+    NSArray *fetchedObjects = [appDelegate.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    if (fetchedObjects.count != 0) {
+        SWMarkItems *markItems = fetchedObjects.lastObject;
+        return markItems.questions;
+    }
+    return nil;
 }
 @end
