@@ -12,6 +12,7 @@
 #define CELL_IMG_VIEW_TAG 90000
 
 #import "SWDriverTestQuestionView.h"
+
 static NSString *QUESTION_DESC_CELL_IDENTITY = @"QUESTION_DESC_CELL_IDENTITY";
 static NSString *QUESTION_IMG_CELL_IDENTITY = @"QUESTION_IMG_CELL_IDENTITY";
 static NSString *QUESTION_ANSWERS_CELL_IDENTITY = @"QUESTION_ANSWERS_CELL_IDENTITY";
@@ -26,7 +27,7 @@ static NSString *QUESTION_RIGHT_ANSWER_CELL_IDENTITY = @"QUESTION_RIGHT_ANSWER_C
 @implementation SWDriverTestQuestionView
 
 #pragma mark INIT/SETTER/GETTER
-- (instancetype) initWithQuestion:(SWDriverTestQuestion *) question
+- (instancetype) initWithQuestion:(SWQuestionItems *) question
 {
     self = [super init];
     if (self) {
@@ -58,7 +59,7 @@ static NSString *QUESTION_RIGHT_ANSWER_CELL_IDENTITY = @"QUESTION_RIGHT_ANSWER_C
     switch (section) {
         case SECTION_QUESTION_DESC_IMG:
         {
-            if (self.question.questionImage) {
+            if (self.question.questionImageTitle) {
                 return 2;
             }else
             {
@@ -68,7 +69,12 @@ static NSString *QUESTION_RIGHT_ANSWER_CELL_IDENTITY = @"QUESTION_RIGHT_ANSWER_C
             break;
         case SECTION_QUESTION_ANSWERS:
         {
-            return self.question.questionAnswers.count;
+            if (self.question.questionType.integerValue== 1) { // 4 chose
+                return 4;
+            }else
+            {
+                return 2;
+            }
         }
             break;
         case SECTION_RIGHT_ANSWER:
@@ -104,7 +110,7 @@ static NSString *QUESTION_RIGHT_ANSWER_CELL_IDENTITY = @"QUESTION_RIGHT_ANSWER_C
                     }
                     
                     cell.textLabel.numberOfLines = 0;
-                    cell.textLabel.text = self.question.questionDescp;
+                    cell.textLabel.text = self.question.questionDesc;
                     cell.textLabel.lineBreakMode = NSLineBreakByCharWrapping;
                     
                     CGSize textSize = [cell.textLabel sizeThatFits:CGSizeMake(cell.frame.size.width, MAXFLOAT)];
@@ -131,7 +137,7 @@ static NSString *QUESTION_RIGHT_ANSWER_CELL_IDENTITY = @"QUESTION_RIGHT_ANSWER_C
                         questionImgView.contentMode = UIViewContentModeScaleToFill;
                         [cell.contentView addSubview:questionImgView];
                     }
-                    questionImgView.image = self.question.questionImage;
+                    questionImgView.image = [UIImage imageNamed:self.question.questionImageTitle];
                     cell.selectionStyle = UITableViewCellSelectionStyleNone;
                     cell.backgroundColor = self.tinyBackgroundColor;
                     cell.contentView.backgroundColor = self.tinyBackgroundColor;
@@ -149,7 +155,32 @@ static NSString *QUESTION_RIGHT_ANSWER_CELL_IDENTITY = @"QUESTION_RIGHT_ANSWER_C
             }
             
             cell.textLabel.numberOfLines = 0;
-            cell.textLabel.text = self.question.questionAnswers[indexPath.row];
+            switch (indexPath.row) {
+                case 0:
+                {
+                    cell.textLabel.text = self.question.questionAnswerA;
+                }
+                    break;
+                case 1:
+                {
+                    cell.textLabel.text = self.question.questionAnswerB;
+
+                }
+                    break;
+                case 2:
+                {
+                    cell.textLabel.text = self.question.questionAnswerC;
+                }
+                    break;
+                case 3:
+                {
+                    cell.textLabel.text = self.question.questionAnswerD;
+                }
+                    break;
+                default:
+                    break;
+            }
+            
             cell.textLabel.lineBreakMode = NSLineBreakByCharWrapping;
             
             CGSize textSize = [cell.textLabel sizeThatFits:CGSizeMake(cell.frame.size.width, MAXFLOAT)];
@@ -171,7 +202,32 @@ static NSString *QUESTION_RIGHT_ANSWER_CELL_IDENTITY = @"QUESTION_RIGHT_ANSWER_C
             }
             
             cell.textLabel.numberOfLines = 0;
-            cell.textLabel.text = @"A";
+            switch (self.question.questionRightAnswer.integerValue) {
+                case 0:
+                {
+                    cell.textLabel.text = @"A";
+                }
+                    break;
+                case 1:
+                {
+                    cell.textLabel.text = @"B";
+                }
+                    break;
+                case 2:
+                {
+                    cell.textLabel.text = @"C";
+                }
+                    break;
+                case 3:
+                {
+                    cell.textLabel.text = @"D";
+                }
+                    break;
+                    
+                default:
+                    break;
+            }
+            
             cell.textLabel.lineBreakMode = NSLineBreakByCharWrapping;
             CGSize textSize = [cell.textLabel sizeThatFits:CGSizeMake(cell.frame.size.width, MAXFLOAT)];
             cell.textLabel.textColor = [UIColor blackColor];

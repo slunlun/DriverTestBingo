@@ -18,6 +18,8 @@
 #import "SWQuestionItems+CoreDataProperties.h"
 #import "SWMarkItems+CoreDataProperties.h"
 
+#import "SWLoginUser.h"
+
 #import "AppDelegate.h"
 
 
@@ -37,7 +39,7 @@ static NSString *IMG_COL_CELL_IDENTITY = @"IMG_COL_CELL_IDENTITY";
     [self makeUpCollectionView];
     
     // JUST FOR TEST!!!!!!
-    [self genTestData];
+  //  [self genTestData];
 }
 
 -(void) viewWillAppear:(BOOL)animated
@@ -163,19 +165,9 @@ static NSString *IMG_COL_CELL_IDENTITY = @"IMG_COL_CELL_IDENTITY";
         switch (indexPath.row) {
             case 0:  // 顺序答题
             {
-                NSArray *answers = @[@"A.这是错误答案", @"B.也许我是对的？我是对的就没错的了", @"C.我才是正宗的答案",@"D.别听他们胡叨叨"];
-                NSArray *justAnswers =@[@"A.正确", @"B.错误"];
-                SWDriverTestQuestion *questionOne = [[SWDriverTestQuestion alloc]initWithQuestionImage:[UIImage imageNamed:@"qImg1"] questionDescp:@"当行人在穿越人行横道时，司机可以加速行驶来躲开行人，这是可行的，哈哈哈哈哈哈哈哈哈，李逍遥弥月大家好，我是夜月神" answers:answers rightIndex:2];
-                SWDriverTestQuestion *questionTwo = [[SWDriverTestQuestion alloc]initWithQuestionImage:[UIImage imageNamed:@"qImg2"] questionDescp:@"当行人在穿越人行横道时，司机可以加速行驶来躲开行人，这是可行的，哈哈哈哈哈哈哈哈哈，李逍遥弥月大家好，我是夜月神" answers:justAnswers rightIndex:1];
-
-                
-                SWDriverTestQuestionView *question1 = [[SWDriverTestQuestionView alloc] initWithQuestion:questionOne];
-              
-                SWDriverTestQuestionView *question2 = [[SWDriverTestQuestionView alloc] initWithQuestion:questionTwo];
-                NSMutableArray *questionItemViews = [[NSMutableArray alloc] init];
-                [questionItemViews addObject:question1];
-                [questionItemViews addObject:question2];
+                NSMutableArray *questionItemViews = [self genTestData];
                 SWQuestionPageViewController *pagesVC = [[SWQuestionPageViewController alloc] initWithContentViews:questionItemViews];
+                [SWLoginUser loginWithUserName:@"John" PassWord:@"123"];
                 
                 [self.navigationController pushViewController:pagesVC animated:YES];
             }
@@ -212,30 +204,20 @@ static NSString *IMG_COL_CELL_IDENTITY = @"IMG_COL_CELL_IDENTITY";
 - (NSMutableArray *) genTestData
 {
     NSMutableArray *testViews = [[NSMutableArray alloc] init];
-    
-    NSFetchRequest *fetch = [NSFetchRequest fetchRequestWithEntityName:@"SWUserInfo"];
-    
     AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
-    NSArray *result = [appDelegate.managedObjectContext executeFetchRequest:fetch error:nil];
-    NSLog(@"the user is %@", result);
     
-    SWQuestionItems *questionItem = [NSEntityDescription insertNewObjectForEntityForName:@"SWQuestionItems" inManagedObjectContext:appDelegate.managedObjectContext];
-    questionItem.questionDesc = @"当前方有人行横道时，应该加速行驶。";
-    questionItem.questionAnswerA = @"正确";
-    questionItem.questionAnswerB = @"错误";
-    questionItem.questionRightAnswer = [NSNumber numberWithInteger:0];
-    questionItem.questionType = [NSNumber]
-    
-    SWQuestionItems *questionItem2 = [NSEntityDescription insertNewObjectForEntityForName:@"SWQuestionItems" inManagedObjectContext:appDelegate.managedObjectContext];
-    questionItem2.questionDesc = @"当机动车驾驶人驾驶没有牌照的车子上路时，交警可以做出如下那种处罚";
-    questionItem2.questionAnswerA = @"吊销驾照";
-    questionItem2.questionAnswerB = @"罚款500元以上 1000元以下";
-    questionItem2.questionAnswerC = @"拘禁四个月";
-    questionItem2.questionAnswerD = @"在规定的30个工作日内，向当地车管所备案";
-    questionItem2.questionRightAnswer = [NSNumber numberWithInteger:2];
-    questionItem2.questionImageTitle = @"abc";
-    questionItem2.questionType = [NSNumber numberWithInteger:1];
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"SWQuestionItems" inManagedObjectContext:appDelegate.managedObjectContext];
+    [fetchRequest setEntity:entity];
 
+    NSError *error = nil;
+    NSArray *fetchedObjects = [appDelegate.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    if (fetchedObjects.count > 0) {
+        for (SWQuestionItems *question in fetchedObjects) {
+            SWDriverTestQuestionView *questionView = [[SWDriverTestQuestionView alloc] initWithQuestion:question];
+            [testViews addObject:questionView];
+        }
+    }
     return testViews;
 }
 

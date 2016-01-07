@@ -9,6 +9,9 @@
 #import "SWQuestionPageViewController.h"
 #import "UIButton+SWUIButtonExt.h"
 #import "FlexibleAlignButton.h"
+#import "SWQuestionItems+CoreDataProperties.h"
+#import "SWDriverTestQuestionView.h"
+#import "SWLoginUser.h"
 
 @interface SWQuestionPageViewController () <UIScrollViewDelegate>
 
@@ -50,8 +53,13 @@
    // [questionIndexBtn centerImageAndTitle:1.0];
     
     UIButton *markBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 48, 48)];
-    [markBtn setImage:[UIImage imageNamed:@"mark"] forState:UIControlStateNormal];
-    
+    SWQuestionItems *questionItem = [self currentQuestionItem];
+    if (questionItem.markQuestionsLib) {
+        [markBtn setImage:[UIImage imageNamed:@"mark"] forState:UIControlStateNormal];
+    }else
+    {
+        [markBtn setImage:[UIImage imageNamed:@"markNot"] forState:UIControlStateNormal];
+    }
     [markBtn setTitle: NSLocalizedString(@"MarkQuestion", NULL) forState:UIControlStateNormal];
     markBtn.titleLabel.font = [UIFont systemFontOfSize:9];
     [markBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
@@ -71,14 +79,46 @@
     [btnQuestionIndex setTitle:[NSString stringWithFormat:@"%ld/%ld", ([self currentPageNum] + 1), self.contentViewsArray.count] forState:UIControlStateNormal];
 }
 
+-(void) updateMarkBtn
+{
+    SWQuestionItems *question = [self currentQuestionItem];
+    UIButton *btnMark = (UIButton *)self.navigationItem.rightBarButtonItems[0].customView;
+    NSLog(@"question is %@, mark lib is %@", question, question.markQuestionsLib);
+    if (question.markQuestionsLib) {
+        [btnMark setImage:[UIImage imageNamed:@"mark"] forState:UIControlStateNormal];
+    }else
+    {
+        [btnMark setImage:[UIImage imageNamed:@"markNot"] forState:UIControlStateNormal];
+    }
+
+}
+
 -(void) markQuestion:(UIButton *) markBtn
 {
-    
+    SWQuestionItems *question = [self currentQuestionItem];
+    UIButton *btnMark = (UIButton *)self.navigationItem.rightBarButtonItems[0].customView;
+    if (question.markQuestionsLib) {
+        [SWLoginUser unmarkQuestion:question];
+        NSLog(@"question is %@, mark lib is %@", question, question.markQuestionsLib);
+        [btnMark setImage:[UIImage imageNamed:@"markNot"] forState:UIControlStateNormal];
+    }else
+    {
+        [SWLoginUser markQuestion:question];
+        NSLog(@"question is %@, mark lib is %@", question, question.markQuestionsLib);
+        [btnMark setImage:[UIImage imageNamed:@"mark"] forState:UIControlStateNormal];
+    }
+}
+#pragma mark Question Operation
+- (SWQuestionItems *) currentQuestionItem
+{
+    SWDriverTestQuestionView *quesionView = (SWDriverTestQuestionView *)self.contentViewsArray[[self currentPageNum]];
+    return quesionView.question;
 }
 #pragma mark UIScrollViewDelegate
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
     [self updataQuestionIndexTitle];
+    [self updateMarkBtn];
    
 }
 @end
