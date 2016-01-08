@@ -17,6 +17,10 @@
 + (void) unmarkQuestion:(SWQuestionItems *) markedQuestion;
 + (NSSet *) getUserMarkedQuestions;
 
++ (void) addWrongQuestion:(SWQuestionItems *) wrongQuestion;
++ (void) removeWrongQuestion:(SWQuestionItems *) wrongQuestion;
++ (NSSet *) getUserWrongQuestions;
+
 @property(nonatomic, strong) NSString* userName;
 @property(nonatomic, strong) NSData *userImage;
 @end

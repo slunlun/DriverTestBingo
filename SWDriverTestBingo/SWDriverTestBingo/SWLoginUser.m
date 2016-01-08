@@ -11,6 +11,7 @@
 
 #import "SWUserInfo+CoreDataProperties.h"
 #import "SWMarkItems+CoreDataProperties.h"
+#import "SWWrongItems+CoreDataProperties.h"
 
 @implementation SWLoginUser
 static SWLoginUser *userInstance = nil;
@@ -45,6 +46,7 @@ static SWUserInfo *userInfo = nil;
     return userInstance;
 }
 
+#pragma mark Mark questions
 + (void) markQuestion:(SWQuestionItems *) markedQuestion
 {
     AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
@@ -116,4 +118,31 @@ static SWUserInfo *userInfo = nil;
     }
     return nil;
 }
+#pragma mark Wrong QUestions
++ (void) addWrongQuestion:(SWQuestionItems *) wrongQuestion
+{
+    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"SWWrongItems" inManagedObjectContext:appDelegate.managedObjectContext];
+    [fetchRequest setEntity:entity];
+    // Specify criteria for filtering which objects to fetch
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"userID=%ld", userInfo.userID.integerValue];
+    [fetchRequest setPredicate:predicate];
+    
+    NSError *error = nil;
+    NSArray *fetchedObjects = [appDelegate.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    if (fetchedObjects.count == 0) {
+        SWWrongItems *wrongQuestionLib = (SWWrongItems *)[NSEntityDescription insertNewObjectForEntityForName:@"SWWrongItems" inManagedObjectContext:appDelegate.managedObjectContext];
+        wrongQuestionLib.userID = userInfo.userID;
+        [wrongQuestionLib addQuestionsObject:wrongQuestion];
+        wrongQuestion.wrongQuestionsLib = wrongQuestionLib;
+    }else
+    {
+        
+    }
+}
++ (void) removeWrongQuestion:(SWQuestionItems *) wrongQuestion
+{
+}
+
 @end

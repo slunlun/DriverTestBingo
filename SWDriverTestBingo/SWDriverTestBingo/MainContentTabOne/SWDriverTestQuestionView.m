@@ -244,6 +244,7 @@ static NSString *QUESTION_RIGHT_ANSWER_CELL_IDENTITY = @"QUESTION_RIGHT_ANSWER_C
             CGSize textSize = [cell.textLabel sizeThatFits:CGSizeMake(cell.frame.size.width, MAXFLOAT)];
             cell.frame = CGRectMake(cell.frame.origin.x, cell.frame.origin.y, cell.frame.size.width, textSize.height + 24);
             cell.backgroundColor = self.deepBackgroundColor;
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
             
         }
             break;
