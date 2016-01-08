@@ -85,6 +85,7 @@
 		5E8826A71C328616007225E2 /* SWUserInfoConfigViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWUserInfoConfigViewController.m; sourceTree = "<group>"; };
 		5E8826A91C328634007225E2 /* SWGoodIdeasViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWGoodIdeasViewController.h; sourceTree = "<group>"; };
 		5E8826AA1C328634007225E2 /* SWGoodIdeasViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWGoodIdeasViewController.m; sourceTree = "<group>"; };
+		5ECBD9121C3F4D6A00A656DE /* SWDriverTestBigoDef.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWDriverTestBigoDef.h; sourceTree = "<group>"; };
 		5EEF42911C1A69800050B91B /* SWRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRootViewController.m; sourceTree = "<group>"; };
 		5EEF42941C1A6CF10050B91B /* SWDriverTestApplyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SWDriverTestApplyViewController.h; path = MainContentTabTwo/SWDriverTestApplyViewController.h; sourceTree = "<group>"; };
 		5EEF42951C1A6CF10050B91B /* SWDriverTestApplyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SWDriverTestApplyViewController.m; path = MainContentTabTwo/SWDriverTestApplyViewController.m; sourceTree = "<group>"; };
@@ -197,6 +198,7 @@
 				5E80478F1C19243600B0587A /* SWDriverTestBingo.xcdatamodeld */,
 				5E8047831C19243600B0587A /* Supporting Files */,
 				5E8047CC1C197F0500B0587A /* SWMainViewController.h */,
+				5ECBD9121C3F4D6A00A656DE /* SWDriverTestBigoDef.h */,
 				5E8047CD1C197F0500B0587A /* SWMainViewController.m */,
 				5E8047CF1C19851800B0587A /* SWMainContentTabBarController.h */,
 				5E8047D01C19851800B0587A /* SWMainContentTabBarController.m */,

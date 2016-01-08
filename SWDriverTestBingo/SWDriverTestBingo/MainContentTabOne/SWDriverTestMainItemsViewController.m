@@ -21,6 +21,7 @@
 #import "SWLoginUser.h"
 
 #import "AppDelegate.h"
+#import "SWDriverTestBigoDef.h"
 
 
 static NSString *IMG_COL_CELL_IDENTITY = @"IMG_COL_CELL_IDENTITY";
@@ -220,7 +221,7 @@ static NSString *IMG_COL_CELL_IDENTITY = @"IMG_COL_CELL_IDENTITY";
     NSArray *fetchedObjects = [appDelegate.managedObjectContext executeFetchRequest:fetchRequest error:&error];
     if (fetchedObjects.count > 0) {
         for (SWQuestionItems *question in fetchedObjects) {
-            SWDriverTestQuestionView *questionView = [[SWDriverTestQuestionView alloc] initWithQuestion:question];
+            SWDriverTestQuestionView *questionView = [[SWDriverTestQuestionView alloc] initWithQuestion:question viewType:kTestQuestionViewSequence];
             [sequenceQuestionViews addObject:questionView];
         }
     }
@@ -232,7 +233,7 @@ static NSString *IMG_COL_CELL_IDENTITY = @"IMG_COL_CELL_IDENTITY";
     NSSet * userMarkedQuestionsSet = [SWLoginUser getUserMarkedQuestions];
     NSMutableArray *markedQuestionViews = [[NSMutableArray alloc] init];
     for (SWQuestionItems *question in userMarkedQuestionsSet) {
-        SWDriverTestQuestionView *questionView = [[SWDriverTestQuestionView alloc] initWithQuestion:question];
+        SWDriverTestQuestionView *questionView = [[SWDriverTestQuestionView alloc] initWithQuestion:question viewType:kTestQuestionViewMark];
         [markedQuestionViews addObject:questionView];
     }
     return markedQuestionViews;
