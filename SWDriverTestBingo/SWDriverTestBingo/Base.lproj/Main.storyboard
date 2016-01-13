@@ -67,7 +67,7 @@
                         <viewControllerLayoutGuide type="top" id="T30-ur-IKd"/>
                         <viewControllerLayoutGuide type="bottom" id="ixe-hp-CvV"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="93E-Yc-86e" customClass="SWDriverTestCellView">
+                    <view key="view" contentMode="scaleToFill" id="93E-Yc-86e">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
