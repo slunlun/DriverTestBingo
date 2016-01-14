@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #define SW_DRIVER_TEST_CELL_VIEW_TAG 90000
+#define SW_DRIVER_TEST_CUSTOM_LIB_CELL_VIEW_TAG 90001
 @interface SWDriverTestCellView : UIView
 @property(nonatomic, strong) UIImageView *imageView;
 @property(nonatomic, strong) UILabel *titleLab;

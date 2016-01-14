@@ -11,17 +11,14 @@
 #import "SWDriverTestMainCollectionViewCell.h"
 #import "SWDriverTestCellView.h"
 #import "SWQuestionPageViewController.h"
-
 #import "SWDriverTestQuestionView.h"
 #import "SWDriverTestQuestion.h"
-
 #import "SWQuestionItems+CoreDataProperties.h"
 #import "SWMarkItems+CoreDataProperties.h"
-
 #import "SWLoginUser.h"
-
 #import "AppDelegate.h"
 #import "SWDriverTestBigoDef.h"
+#import "SWDriverTestCustomLibCellView.h"
 
 
 static NSString *IMG_COL_CELL_IDENTITY = @"IMG_COL_CELL_IDENTITY";
@@ -46,6 +43,8 @@ static NSString *IMG_COL_CELL_IDENTITY = @"IMG_COL_CELL_IDENTITY";
 -(void) viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    [self.collectionView reloadData];
+    
     [self.navigationController.navigationBar setTranslucent:NO];
 }
 
@@ -94,6 +93,7 @@ static NSString *IMG_COL_CELL_IDENTITY = @"IMG_COL_CELL_IDENTITY";
     SWDriverTestMainCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:IMG_COL_CELL_IDENTITY forIndexPath:indexPath];
     UIImageView *imageView = [[UIImageView alloc] init];
     UILabel *titleLab = [[UILabel alloc] init];
+    UILabel *subTitleLab = [[UILabel alloc] init];
     
     if (indexPath.section == 0) {
         switch (indexPath.row) {
@@ -119,6 +119,9 @@ static NSString *IMG_COL_CELL_IDENTITY = @"IMG_COL_CELL_IDENTITY";
             {
                 imageView.image = [UIImage imageNamed:@"wrongQuestions"];
                 titleLab.text = NSLocalizedString(@"WrongAnswers", nil);
+                subTitleLab.text = [NSString stringWithFormat:@"(%ld)", [SWLoginUser getUserWrongQuestions].count];
+                subTitleLab.textColor = [UIColor orangeColor];
+                subTitleLab.font = [UIFont systemFontOfSize:12];
             }
                 break;
             default:
@@ -131,6 +134,9 @@ static NSString *IMG_COL_CELL_IDENTITY = @"IMG_COL_CELL_IDENTITY";
             {
                 imageView.image = [UIImage imageNamed:@"markQuestions"];
                 titleLab.text = NSLocalizedString(@"MarkQuestions", nil);
+                subTitleLab.text = [NSString stringWithFormat:@"(%ld)", [SWLoginUser getUserMarkedQuestions].count];
+                subTitleLab.textColor = [UIColor orangeColor];
+                subTitleLab.font = [UIFont systemFontOfSize:12];
             }
                 break;
             case 1:
@@ -145,16 +151,60 @@ static NSString *IMG_COL_CELL_IDENTITY = @"IMG_COL_CELL_IDENTITY";
         
     }
     
-    SWDriverTestCellView * cellView = [[SWDriverTestCellView alloc] initWithCellImage:imageView cellTitle:titleLab];
-    cellView.tag = SW_DRIVER_TEST_CELL_VIEW_TAG;
-    cellView.frame = cell.contentView.frame;
-    UIView *preView = [cell.contentView viewWithTag:SW_DRIVER_TEST_CELL_VIEW_TAG];
-    if (preView) {
-        [preView removeFromSuperview];
-    }
+    if (indexPath.section == 0) {
+        if (indexPath.row != 3) {
+            SWDriverTestCellView * cellView = [[SWDriverTestCellView alloc] initWithCellImage:imageView cellTitle:titleLab];
+            cellView.tag = SW_DRIVER_TEST_CELL_VIEW_TAG;
+            cellView.frame = cell.contentView.frame;
+            UIView *preView = [cell.contentView viewWithTag:SW_DRIVER_TEST_CELL_VIEW_TAG];
+            if (preView) {
+                [preView removeFromSuperview];
+            }
+            
+            [cell.contentView addSubview:cellView];
+            [cellView layoutCellView];
+        }else if(indexPath.row == 3) // 错题集
+        {
+            SWDriverTestCustomLibCellView *cellView = [[SWDriverTestCustomLibCellView alloc] initWithImageView:imageView TitleLabel:titleLab SubtitleLabel:subTitleLab];
+            cellView.tag = SW_DRIVER_TEST_CUSTOM_LIB_CELL_VIEW_TAG;
+            cellView.frame = cell.contentView.frame;
+            UIView *preView = [cell.contentView viewWithTag:SW_DRIVER_TEST_CUSTOM_LIB_CELL_VIEW_TAG];
+            if (preView) {
+                [preView removeFromSuperview];
+            }
+            
+            [cell.contentView addSubview:cellView];
+            [cellView layoutLibCellView];
+        }
     
-    [cell.contentView addSubview:cellView];
-    [cellView layoutCellView];
+    }else if(indexPath.section == 1)
+    {
+        if (indexPath.row == 0) { // 我的收藏
+            SWDriverTestCustomLibCellView *cellView = [[SWDriverTestCustomLibCellView alloc] initWithImageView:imageView TitleLabel:titleLab SubtitleLabel:subTitleLab];
+            cellView.tag = SW_DRIVER_TEST_CUSTOM_LIB_CELL_VIEW_TAG;
+            cellView.frame = cell.contentView.frame;
+            UIView *preView = [cell.contentView viewWithTag:SW_DRIVER_TEST_CUSTOM_LIB_CELL_VIEW_TAG];
+            if (preView) {
+                [preView removeFromSuperview];
+            }
+            
+            [cell.contentView addSubview:cellView];
+            [cellView layoutLibCellView];
+        }else if(indexPath.row == 1) { // 做题统计
+            SWDriverTestCellView * cellView = [[SWDriverTestCellView alloc] initWithCellImage:imageView cellTitle:titleLab];
+            cellView.tag = SW_DRIVER_TEST_CELL_VIEW_TAG;
+            cellView.frame = cell.contentView.frame;
+            UIView *preView = [cell.contentView viewWithTag:SW_DRIVER_TEST_CELL_VIEW_TAG];
+            if (preView) {
+                [preView removeFromSuperview];
+            }
+            
+            [cell.contentView addSubview:cellView];
+            [cellView layoutCellView];
+        }
+       
+    }
+  
     
     return cell;
 }
