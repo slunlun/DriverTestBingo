@@ -138,7 +138,9 @@ static SWUserInfo *userInfo = nil;
         wrongQuestion.wrongQuestionsLib = wrongQuestionLib;
     }else
     {
-        
+        SWWrongItems *wrongQuestionLib = fetchedObjects.lastObject;
+        [wrongQuestionLib addQuestionsObject:wrongQuestion];
+        wrongQuestion.wrongQuestionsLib = wrongQuestionLib;
     }
 }
 + (void) removeWrongQuestion:(SWQuestionItems *) wrongQuestion

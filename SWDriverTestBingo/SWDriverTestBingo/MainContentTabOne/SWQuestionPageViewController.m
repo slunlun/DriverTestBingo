@@ -83,7 +83,6 @@
 {
     SWQuestionItems *question = [self currentQuestionItem];
     UIButton *btnMark = (UIButton *)self.navigationItem.rightBarButtonItems[0].customView;
-    NSLog(@"question is %@, mark lib is %@", question, question.markQuestionsLib);
     if (question.markQuestionsLib) {
         [btnMark setImage:[UIImage imageNamed:@"mark"] forState:UIControlStateNormal];
     }else
@@ -99,12 +98,10 @@
     UIButton *btnMark = (UIButton *)self.navigationItem.rightBarButtonItems[0].customView;
     if (question.markQuestionsLib) {
         [SWLoginUser unmarkQuestion:question];
-        NSLog(@"question is %@, mark lib is %@", question, question.markQuestionsLib);
         [btnMark setImage:[UIImage imageNamed:@"markNot"] forState:UIControlStateNormal];
     }else
     {
         [SWLoginUser markQuestion:question];
-        NSLog(@"question is %@, mark lib is %@", question, question.markQuestionsLib);
         [btnMark setImage:[UIImage imageNamed:@"mark"] forState:UIControlStateNormal];
     }
 }

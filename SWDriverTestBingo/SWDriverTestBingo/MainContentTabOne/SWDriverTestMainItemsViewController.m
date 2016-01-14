@@ -213,12 +213,12 @@ static NSString *IMG_COL_CELL_IDENTITY = @"IMG_COL_CELL_IDENTITY";
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0) {
+        NSMutableArray *questionItemViews = nil;
         switch (indexPath.row) {
             case 0:  // 顺序答题
             {
-                NSMutableArray *questionItemViews = [self genSequenceQuestionViews];
-                SWQuestionPageViewController *pagesVC = [[SWQuestionPageViewController alloc] initWithContentViews:questionItemViews];
-                [self.navigationController pushViewController:pagesVC animated:YES];
+                questionItemViews = [self genSequenceQuestionViews];
+               
             }
                 break;
             case 1:  // 模拟练习
@@ -228,11 +228,16 @@ static NSString *IMG_COL_CELL_IDENTITY = @"IMG_COL_CELL_IDENTITY";
             {}
                 break;
             case 3:  // 错题集
-            {}
+            {
+                questionItemViews = [self genWrongQuestionViews];
+            }
                 break;
             default:
                 break;
         }
+        SWQuestionPageViewController *pagesVC = [[SWQuestionPageViewController alloc] initWithContentViews:questionItemViews];
+        [self.navigationController pushViewController:pagesVC animated:YES];
+        
     }else if(indexPath.section == 1)
     {
         switch (indexPath.row) {
@@ -287,6 +292,17 @@ static NSString *IMG_COL_CELL_IDENTITY = @"IMG_COL_CELL_IDENTITY";
         [markedQuestionViews addObject:questionView];
     }
     return markedQuestionViews;
+}
+
+- (NSMutableArray *) genWrongQuestionViews
+{
+    NSSet * userWrongQuestionsSet = [SWLoginUser getUserWrongQuestions];
+    NSMutableArray *wrongQuestionViews = [[NSMutableArray alloc] init];
+    for (SWQuestionItems *question in userWrongQuestionsSet) {
+        SWDriverTestQuestionView *questionView = [[SWDriverTestQuestionView alloc] initWithQuestion:question viewType:kTestQuestionViewWrongQuestions];
+        [wrongQuestionViews addObject:questionView];
+    }
+    return wrongQuestionViews;
 }
 
 @end

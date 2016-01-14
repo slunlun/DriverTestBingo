@@ -12,6 +12,7 @@
 #define CELL_IMG_VIEW_TAG 90000
 
 #import "SWDriverTestQuestionView.h"
+#import "SWLoginUser.h"
 
 
 static NSString *QUESTION_DESC_CELL_IDENTITY = @"QUESTION_DESC_CELL_IDENTITY";
@@ -280,6 +281,8 @@ static NSString *QUESTION_RIGHT_ANSWER_CELL_IDENTITY = @"QUESTION_RIGHT_ANSWER_C
                 // Show right Answer
                 NSIndexPath *rightIndexPath = [NSIndexPath indexPathForRow:0 inSection:SECTION_RIGHT_ANSWER];
                 [tableView insertRowsAtIndexPaths:@[rightIndexPath] withRowAnimation:YES];
+                // Auto store into user's wrong lib
+                [SWLoginUser addWrongQuestion:self.question];
             }
         }
     }
