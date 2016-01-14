@@ -116,6 +116,8 @@
 {
     [self updataQuestionIndexTitle];
     [self updateMarkBtn];
-   
+
+    // 当前的pageVC为优化模式，需要显示实时补充新的page
+    [self createNextPageView];
 }
 @end

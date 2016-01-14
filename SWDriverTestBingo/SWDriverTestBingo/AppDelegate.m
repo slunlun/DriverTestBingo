@@ -141,7 +141,7 @@
         
         
         // questionItem
-        for (int i = 1; i < 6; i++) {
+        for (int i = 1; i < 600; i++) {
             SWQuestionItems *questionItem = [NSEntityDescription insertNewObjectForEntityForName:@"SWQuestionItems" inManagedObjectContext:self.managedObjectContext];
             questionItem.questionDesc = @"当前方有人行横道时，应该加速行驶。";
             questionItem.questionAnswerA = @"A.正确";

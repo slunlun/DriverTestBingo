@@ -235,7 +235,7 @@ static NSString *IMG_COL_CELL_IDENTITY = @"IMG_COL_CELL_IDENTITY";
             default:
                 break;
         }
-        SWQuestionPageViewController *pagesVC = [[SWQuestionPageViewController alloc] initWithContentViews:questionItemViews];
+        SWQuestionPageViewController *pagesVC = [[SWQuestionPageViewController alloc] initWithContentViews:questionItemViews type:kOptimizedPageController];
         [self.navigationController pushViewController:pagesVC animated:YES];
         
     }else if(indexPath.section == 1)
@@ -247,7 +247,7 @@ static NSString *IMG_COL_CELL_IDENTITY = @"IMG_COL_CELL_IDENTITY";
                 if (markedQuestionViews.count == 0) {
                     return;
                 }
-                SWQuestionPageViewController *pagesVC = [[SWQuestionPageViewController alloc] initWithContentViews:markedQuestionViews];
+                SWQuestionPageViewController *pagesVC = [[SWQuestionPageViewController alloc] initWithContentViews:markedQuestionViews type:kOptimizedPageController];
                 [self.navigationController pushViewController:pagesVC animated:YES];
                 
             }
