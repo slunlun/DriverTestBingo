@@ -7,6 +7,7 @@
 //
 
 #import "SWMainViewController.h"
+#import "SWDriverTestBigoDef.h"
 
 @interface SWMainViewController ()
 
@@ -16,11 +17,17 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userPressedShowDetailBtn:) name:USER_PRESS_SHOW_SIDE_MENU_BTN object:nil];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void) dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 /*
@@ -32,5 +39,10 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+- (void) userPressedShowDetailBtn:(NSNotification *) notify
+{
+    [self showSlideMenu];
+}
 
 @end

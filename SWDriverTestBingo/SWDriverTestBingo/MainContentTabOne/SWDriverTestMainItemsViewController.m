@@ -19,6 +19,7 @@
 #import "AppDelegate.h"
 #import "SWDriverTestBigoDef.h"
 #import "SWDriverTestCustomLibCellView.h"
+#import "SWUserInfoConfigViewController.h"
 
 
 static NSString *IMG_COL_CELL_IDENTITY = @"IMG_COL_CELL_IDENTITY";
@@ -35,6 +36,23 @@ static NSString *IMG_COL_CELL_IDENTITY = @"IMG_COL_CELL_IDENTITY";
     
     [self setAutomaticallyAdjustsScrollViewInsets:NO];
     [self makeUpCollectionView];
+    
+     UIBarButtonItem *showSlideMenuBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"slideMenu"] style:UIBarButtonItemStylePlain target:self action:@selector(showSlideMenuBtnPressed:)];
+    showSlideMenuBarButton.tintColor = [UIColor blackColor];
+    self.navigationItem.leftBarButtonItem = showSlideMenuBarButton;
+    
+    UIImageView *userPic = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"testUserHead"]];
+    userPic.frame = CGRectMake(0, 0, 35, 35);
+    userPic.layer.cornerRadius = userPic.frame.size.width / 2;
+    userPic.clipsToBounds = YES;
+    userPic.layer.borderWidth = 1.0f;
+    userPic.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+    UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(userInfoBtnPressed:)];
+    [userPic addGestureRecognizer:tapRecognizer];
+    
+    
+    UIBarButtonItem *userInfoBtn = [[UIBarButtonItem alloc] initWithCustomView:userPic];
+    self.navigationItem.rightBarButtonItem = userInfoBtn;
     
     // JUST FOR TEST!!!!!!
     [SWLoginUser loginWithUserName:@"John" PassWord:@"123"];
@@ -226,7 +244,7 @@ static NSString *IMG_COL_CELL_IDENTITY = @"IMG_COL_CELL_IDENTITY";
                 break;
             case 2:  // 浏览题库
             {
-                
+                questionItemViews = [self genGlanceViews];
             }
                 break;
             case 3:  // 错题集
@@ -307,9 +325,41 @@ static NSString *IMG_COL_CELL_IDENTITY = @"IMG_COL_CELL_IDENTITY";
     return wrongQuestionViews;
 }
 
-- (NSMutableArray *) genaaViews
+- (NSMutableArray *) genGlanceViews
 {
+    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+    NSMutableArray *glanceViews = [[NSMutableArray alloc] init];
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"SWQuestionItems" inManagedObjectContext:appDelegate.managedObjectContext];
+    [fetchRequest setEntity:entity];
+    
+    NSError *error = nil;
+    NSArray *fetchedObjects = [appDelegate.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    for (SWQuestionItems *question in fetchedObjects) {
+        SWDriverTestQuestionView *questionView = [[SWDriverTestQuestionView alloc] initWithQuestion:question viewType:kTestQuestionViewGlance];
+        [glanceViews addObject:questionView];
+    }
+    
+    return glanceViews;
+}
+
+
+#pragma mark NavigationItem Response
+- (void) showSlideMenuBtnPressed:(UIBarButtonItem *) barItem
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:USER_PRESS_SHOW_SIDE_MENU_BTN object:nil];
+}
+
+- (void) userInfoBtnPressed:(UIGestureRecognizer *) gestureRec
+{
+    SWUserInfoConfigViewController *configViewController = [[SWUserInfoConfigViewController alloc] init];
+    configViewController.view.backgroundColor = [UIColor blueColor];
+    
+    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+    [appDelegate.rootNavigationController pushViewController:configViewController animated:YES];
     
 }
+
+
 
 @end
