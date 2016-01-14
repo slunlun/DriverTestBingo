@@ -23,9 +23,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.scrollView.delegate = self;
-    
-    
 }
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -47,7 +46,6 @@
     [questionIndexBtn setImage:[UIImage imageNamed:@"questionIndex"] forState:UIControlStateNormal];
     [questionIndexBtn setTitle:[NSString stringWithFormat:@"%ld/%ld", ([self currentPageNum] + 1), self.contentViewsArray.count] forState:UIControlStateNormal];
     questionIndexBtn.titleLabel.font = [UIFont systemFontOfSize:9];
-    questionIndexBtn.titleLabel.backgroundColor = [UIColor yellowColor];
     [questionIndexBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
     
    // [questionIndexBtn centerImageAndTitle:1.0];

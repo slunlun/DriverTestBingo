@@ -188,7 +188,11 @@
 
 -(void) createNextPageView
 {
-    if ([self currentPageNum] > 0) { // 之前已经创建了2个page, 因此当前page index == 0时，不需要补充新的page
+    if (self.type != kOptimizedPageController) {
+        return;
+    }
+    
+    if ([self currentPageNum] > 0) { // 初始化时已经创建了2个page, 因此当前page index == 0时，不需要补充新的page
         if (([self currentPageNum] + 1) < self.contentViewsArray.count && ([self currentPageNum] + 1) == self.createdPageNum) {
             self.createdPageNum++;
             UIView *nextPageView = self.contentViewsArray[([self currentPageNum] + 1)];

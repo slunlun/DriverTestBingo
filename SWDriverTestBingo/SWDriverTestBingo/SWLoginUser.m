@@ -145,6 +145,26 @@ static SWUserInfo *userInfo = nil;
 }
 + (void) removeWrongQuestion:(SWQuestionItems *) wrongQuestion
 {
+    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"SWWrongItems" inManagedObjectContext:appDelegate.managedObjectContext];
+    [fetchRequest setEntity:entity];
+    // Specify criteria for filtering which objects to fetch
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"userID=%ld", userInfo.userID.integerValue];
+    [fetchRequest setPredicate:predicate];
+    
+    NSError *error = nil;
+    NSArray *fetchedObjects = [appDelegate.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    if (fetchedObjects == nil) {
+        return;
+    }else
+    {
+        SWWrongItems *wrongItems = fetchedObjects.lastObject;
+        [wrongItems removeQuestionsObject:wrongQuestion];
+        wrongQuestion.wrongQuestionsLib = nil;
+        [appDelegate.managedObjectContext save:nil];
+    }
+
 }
 
 + (NSSet *) getUserWrongQuestions
@@ -161,7 +181,7 @@ static SWUserInfo *userInfo = nil;
     NSError *error = nil;
     NSArray *fetchedObjects = [appDelegate.managedObjectContext executeFetchRequest:fetchRequest error:&error];
     if (fetchedObjects.count != 0) {
-        SWMarkItems *markItems = fetchedObjects.lastObject;
+        SWWrongItems *markItems = fetchedObjects.lastObject;
         return markItems.questions;
     }
     return nil;

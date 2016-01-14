@@ -275,6 +275,10 @@ static NSString *QUESTION_RIGHT_ANSWER_CELL_IDENTITY = @"QUESTION_RIGHT_ANSWER_C
             if (indexPath.row == self.question.questionRightAnswer.integerValue) {
                 
                 cell.textLabel.textColor = [UIColor greenColor];
+                if (self.questionViewType == kTestQuestionViewWrongQuestions) {
+                    [SWLoginUser removeWrongQuestion:self.question];
+                }
+                
             }else
             {
                 cell.textLabel.textColor = [UIColor redColor];
