@@ -84,7 +84,7 @@ static NSString *QUESTION_RIGHT_ANSWER_CELL_IDENTITY = @"QUESTION_RIGHT_ANSWER_C
             break;
         case SECTION_RIGHT_ANSWER:
         {
-            if (self.didUserSelectedAnswer) {
+            if (self.didUserSelectedAnswer || self.questionViewType == kTestQuestionViewGlance) {
                 return 1;
             }else
             {
@@ -263,7 +263,7 @@ static NSString *QUESTION_RIGHT_ANSWER_CELL_IDENTITY = @"QUESTION_RIGHT_ANSWER_C
 #pragma mark UITableViewDelegate
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(nonnull NSIndexPath *)indexPath
 {
-    if (self.didUserSelectedAnswer) {
+    if (self.didUserSelectedAnswer || self.questionViewType == kTestQuestionViewGlance) {
         return;
     }
     if (self.questionViewType != kTestQuestionViewGlance) {

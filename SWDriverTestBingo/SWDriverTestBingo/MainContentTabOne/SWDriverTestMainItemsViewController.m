@@ -225,7 +225,9 @@ static NSString *IMG_COL_CELL_IDENTITY = @"IMG_COL_CELL_IDENTITY";
             {}
                 break;
             case 2:  // 浏览题库
-            {}
+            {
+                
+            }
                 break;
             case 3:  // 错题集
             {
@@ -303,6 +305,11 @@ static NSString *IMG_COL_CELL_IDENTITY = @"IMG_COL_CELL_IDENTITY";
         [wrongQuestionViews addObject:questionView];
     }
     return wrongQuestionViews;
+}
+
+- (NSMutableArray *) genaaViews
+{
+    
 }
 
 @end
