@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "AppDelegate.h"
 #import "SWQuestionItems+CoreDataProperties.h"
 
 @interface SWLoginUser : NSObject
@@ -22,5 +23,5 @@
 + (NSSet *) getUserWrongQuestions;
 
 @property(nonatomic, strong) NSString* userName;
-@property(nonatomic, strong) NSData *userImage;
+@property(nonatomic, strong) UIImage *userImage;
 @end

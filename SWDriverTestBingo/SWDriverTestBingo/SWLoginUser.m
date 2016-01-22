@@ -7,7 +7,7 @@
 //
 
 #import "SWLoginUser.h"
-#import "AppDelegate.h"
+
 
 #import "SWUserInfo+CoreDataProperties.h"
 #import "SWMarkItems+CoreDataProperties.h"
@@ -33,7 +33,7 @@ static SWUserInfo *userInfo = nil;
             userInstance = [[self alloc] init];
             if (userInstance) {
                 userInstance.userName = userInfo.userName;
-                userInstance.userImage = userInfo.userImage;
+                userInstance.userImage = [UIImage imageWithData:userInfo.userImage];
                 NSLog(@"user ID is %ld", userInfo.userID.integerValue);
             }
         });

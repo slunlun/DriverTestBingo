@@ -56,6 +56,7 @@ static NSString *IMG_COL_CELL_IDENTITY = @"IMG_COL_CELL_IDENTITY";
     
     // JUST FOR TEST!!!!!!
     [SWLoginUser loginWithUserName:@"John" PassWord:@"123"];
+    [SWLoginUser sharedInstance].userImage = [UIImage imageNamed:@"testUserHead"];
 }
 
 -(void) viewWillAppear:(BOOL)animated
@@ -137,7 +138,7 @@ static NSString *IMG_COL_CELL_IDENTITY = @"IMG_COL_CELL_IDENTITY";
             {
                 imageView.image = [UIImage imageNamed:@"wrongQuestions"];
                 titleLab.text = NSLocalizedString(@"WrongAnswers", nil);
-                subTitleLab.text = [NSString stringWithFormat:@"(%ld)", [SWLoginUser getUserWrongQuestions].count];
+                subTitleLab.text = [NSString stringWithFormat:@"(%ld)", (unsigned long)[SWLoginUser getUserWrongQuestions].count];
                 subTitleLab.textColor = [UIColor orangeColor];
                 subTitleLab.font = [UIFont systemFontOfSize:12];
             }
@@ -152,7 +153,7 @@ static NSString *IMG_COL_CELL_IDENTITY = @"IMG_COL_CELL_IDENTITY";
             {
                 imageView.image = [UIImage imageNamed:@"markQuestions"];
                 titleLab.text = NSLocalizedString(@"MarkQuestions", nil);
-                subTitleLab.text = [NSString stringWithFormat:@"(%ld)", [SWLoginUser getUserMarkedQuestions].count];
+                subTitleLab.text = [NSString stringWithFormat:@"(%ld)", (unsigned long)[SWLoginUser getUserMarkedQuestions].count];
                 subTitleLab.textColor = [UIColor orangeColor];
                 subTitleLab.font = [UIFont systemFontOfSize:12];
             }

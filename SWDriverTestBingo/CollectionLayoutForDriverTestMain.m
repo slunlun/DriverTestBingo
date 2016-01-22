@@ -94,7 +94,6 @@
 //}
 
 - (NSArray *)layoutAttributesForElementsInRect:(CGRect)rect{
-    NSLog(@"layoutAttributesForElementsInRect");
     [super layoutAttributesForElementsInRect:rect];
     NSMutableArray *muArr = [NSMutableArray array];
     //indexPathsOfItem方法，根据传入的frame值计算当前应该显示的cell

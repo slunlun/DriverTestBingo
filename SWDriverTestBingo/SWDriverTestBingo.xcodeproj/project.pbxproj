@@ -10,8 +10,10 @@
 		5E0E8C581C23AC65005DDB00 /* SWDriverTestMainItemsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E0E8C571C23AC65005DDB00 /* SWDriverTestMainItemsViewController.m */; };
 		5E0E8C5E1C23E09E005DDB00 /* SWDriverTestQuestionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E0E8C5D1C23E09E005DDB00 /* SWDriverTestQuestionView.m */; };
 		5E0E8C621C23E48F005DDB00 /* SWDriverTestQuestion.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E0E8C611C23E48F005DDB00 /* SWDriverTestQuestion.m */; };
+		5E1A172C1C51D15F00C02B20 /* SWInputTableViewCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E1A172B1C51D15F00C02B20 /* SWInputTableViewCellView.m */; };
 		5E1CC4391C1FBD9E0025B4F5 /* SWPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E1CC4381C1FBD9E0025B4F5 /* SWPageViewController.m */; };
 		5E4AA9EC1C2791CB004348A9 /* FlexibleAlignButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E4AA9EB1C2791CB004348A9 /* FlexibleAlignButton.m */; };
+		5E6973411C5226DD00483D27 /* SWTitleImageCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E6973401C5226DD00483D27 /* SWTitleImageCellView.m */; };
 		5E8047851C19243600B0587A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E8047841C19243600B0587A /* main.m */; };
 		5E8047881C19243600B0587A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E8047871C19243600B0587A /* AppDelegate.m */; };
 		5E80478E1C19243600B0587A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5E80478C1C19243600B0587A /* Main.storyboard */; };
@@ -29,7 +31,7 @@
 		5EEF42961C1A6CF10050B91B /* SWDriverTestApplyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EEF42951C1A6CF10050B91B /* SWDriverTestApplyViewController.m */; };
 		5EEF42991C1A74350050B91B /* SWDriverTestMainCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EEF42981C1A74350050B91B /* SWDriverTestMainCollectionViewCell.m */; };
 		5EEF429C1C1A756D0050B91B /* CollectionLayoutForDriverTestMain.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EEF429B1C1A756D0050B91B /* CollectionLayoutForDriverTestMain.m */; };
-		5EFA71461C472EF2007F88D0 /* SWDriverTestCustomLibCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EFA71451C472EF2007F88D0 /* SWDriverTestCustomLibCellView.m */; settings = {ASSET_TAGS = (); }; };
+		5EFA71461C472EF2007F88D0 /* SWDriverTestCustomLibCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EFA71451C472EF2007F88D0 /* SWDriverTestCustomLibCellView.m */; };
 		8033EB501C316CBD00299527 /* SWRoundButtonTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8033EB4E1C316CBD00299527 /* SWRoundButtonTableViewCell.m */; };
 		8033EB511C316CBD00299527 /* SWRoundButtonTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8033EB4F1C316CBD00299527 /* SWRoundButtonTableViewCell.xib */; };
 		805109101C1C5B8300CB1D18 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 805109121C1C5B8300CB1D18 /* Localizable.strings */; };
@@ -59,10 +61,14 @@
 		5E0E8C5D1C23E09E005DDB00 /* SWDriverTestQuestionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SWDriverTestQuestionView.m; path = MainContentTabOne/SWDriverTestQuestionView.m; sourceTree = "<group>"; };
 		5E0E8C601C23E48F005DDB00 /* SWDriverTestQuestion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SWDriverTestQuestion.h; path = DriverTestQuestionItem/SWDriverTestQuestion.h; sourceTree = "<group>"; };
 		5E0E8C611C23E48F005DDB00 /* SWDriverTestQuestion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SWDriverTestQuestion.m; path = DriverTestQuestionItem/SWDriverTestQuestion.m; sourceTree = "<group>"; };
+		5E1A172A1C51D15F00C02B20 /* SWInputTableViewCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SWInputTableViewCellView.h; path = SWDriverTestBingo/SWUILib/SWInputTableViewCellView.h; sourceTree = "<group>"; };
+		5E1A172B1C51D15F00C02B20 /* SWInputTableViewCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SWInputTableViewCellView.m; path = SWDriverTestBingo/SWUILib/SWInputTableViewCellView.m; sourceTree = "<group>"; };
 		5E1CC4371C1FBD970025B4F5 /* SWPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SWPageViewController.h; path = SWDriverTestBingo/SWUILib/PageViewController/SWPageViewController.h; sourceTree = "<group>"; };
 		5E1CC4381C1FBD9E0025B4F5 /* SWPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SWPageViewController.m; path = SWDriverTestBingo/SWUILib/PageViewController/SWPageViewController.m; sourceTree = "<group>"; };
 		5E4AA9EB1C2791CB004348A9 /* FlexibleAlignButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FlexibleAlignButton.m; sourceTree = "<group>"; };
 		5E4AA9ED1C2791D5004348A9 /* FlexibleAlignButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlexibleAlignButton.h; sourceTree = "<group>"; };
+		5E69733F1C5226DD00483D27 /* SWTitleImageCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SWTitleImageCellView.h; path = SWDriverTestBingo/SWUILib/SWTitleImageCellView.h; sourceTree = "<group>"; };
+		5E6973401C5226DD00483D27 /* SWTitleImageCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SWTitleImageCellView.m; path = SWDriverTestBingo/SWUILib/SWTitleImageCellView.m; sourceTree = "<group>"; };
 		5E8047801C19243600B0587A /* SWDriverTestBingo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SWDriverTestBingo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E8047841C19243600B0587A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		5E8047861C19243600B0587A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -291,6 +297,10 @@
 				80CE62FC1C1BD32B0076816A /* SWDriverTestCellView.m */,
 				5EFA71441C472EF2007F88D0 /* SWDriverTestCustomLibCellView.h */,
 				5EFA71451C472EF2007F88D0 /* SWDriverTestCustomLibCellView.m */,
+				5E1A172A1C51D15F00C02B20 /* SWInputTableViewCellView.h */,
+				5E1A172B1C51D15F00C02B20 /* SWInputTableViewCellView.m */,
+				5E69733F1C5226DD00483D27 /* SWTitleImageCellView.h */,
+				5E6973401C5226DD00483D27 /* SWTitleImageCellView.m */,
 			);
 			name = Layout;
 			sourceTree = "<group>";
@@ -432,6 +442,7 @@
 				5E8826AB1C328634007225E2 /* SWGoodIdeasViewController.m in Sources */,
 				80D779531C3AA50D004C9151 /* SWQuestionItems.m in Sources */,
 				80D779681C3AACC4004C9151 /* SWCommonUtils.m in Sources */,
+				5E6973411C5226DD00483D27 /* SWTitleImageCellView.m in Sources */,
 				5EEF429C1C1A756D0050B91B /* CollectionLayoutForDriverTestMain.m in Sources */,
 				80D7796E1C3AAD7C004C9151 /* SWTableMaxIndex.m in Sources */,
 				80D7794C1C3AA50D004C9151 /* SWQuestionStatus+CoreDataProperties.m in Sources */,
@@ -454,6 +465,7 @@
 				80D779591C3AA5B3004C9151 /* SWUserInfo.m in Sources */,
 				5E8047D11C19851800B0587A /* SWMainContentTabBarController.m in Sources */,
 				5EEF42961C1A6CF10050B91B /* SWDriverTestApplyViewController.m in Sources */,
+				5E1A172C1C51D15F00C02B20 /* SWInputTableViewCellView.m in Sources */,
 				80D7794D1C3AA50D004C9151 /* SWQuestionStatus.m in Sources */,
 				5E0E8C581C23AC65005DDB00 /* SWDriverTestMainItemsViewController.m in Sources */,
 				5E8047911C19243600B0587A /* SWDriverTestBingo.xcdatamodeld in Sources */,
