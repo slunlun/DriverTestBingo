@@ -10,6 +10,7 @@
 #import "SWMainContentTabBarController.h"
 #import "SWSideMenuContentViewController.h"
 #import "SWMainViewController.h"
+#import "AppDelegate.h"
 
 @interface SWRootViewController ()
 
@@ -34,6 +35,9 @@
     sideMenuVC.drag2ShowMenuVC = mainVC;
     [self addChildViewController:mainVC];
     [self.view addSubview:mainVC.view];
+    
+    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+    appDelegate.rootNavigationController = self.navigationController;
 
 }
 
