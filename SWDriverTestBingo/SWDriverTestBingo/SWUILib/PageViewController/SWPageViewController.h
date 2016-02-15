@@ -22,7 +22,9 @@ typedef enum
 -(void) previousPage;
 -(void) changeToPage:(NSInteger) pageNum;
 -(void) addPageView:(UIView *) pageView;
+
 -(void) createNextPageView;
+-(void) createPageAtIndex:(NSInteger) index;
 
 @property(nonatomic, strong) UIScrollView *scrollView;
 @property(nonatomic, strong) NSMutableArray *contentViewsArray;

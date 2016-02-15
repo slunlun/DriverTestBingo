@@ -30,7 +30,6 @@
 -(void) viewDidLayoutSubviews
 {
     self.scrollView.contentSize = CGSizeMake(self.scrollView.frame.size.width * self.contentViewsArray.count, self.scrollView.contentSize.height);
-    NSLog(@"The contsize is width = %f, height = %f, frame = %@", self.scrollView.contentSize.width, self.scrollView.contentSize.height, NSStringFromCGRect(self.scrollView.frame));
 }
 
 #pragma mark INIT/SETTER/GETTER
@@ -50,6 +49,7 @@
         _type = type;
         [self.view addSubview:_scrollView];
         [self makeUpScrollViews];
+        [self createPageAtIndex:0];
     }
     return self;
 }
@@ -207,6 +207,24 @@
         }
 
     }
+}
+
+-(void) createPageAtIndex:(NSInteger) index
+{
+    if (self.type != kOptimizedPageController || index >= self.contentViewsArray.count || index < 0) {
+        return;
+    }
+    
+    UIView *newPageView = self.contentViewsArray[index];
+    newPageView.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.scrollView addSubview:newPageView];
+    
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:newPageView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.topLayoutGuide attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:newPageView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.scrollView attribute:NSLayoutAttributeWidth multiplier:1.0 constant:0.0]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:newPageView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.bottomLayoutGuide attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.0]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:newPageView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.scrollView attribute:NSLayoutAttributeLeading multiplier:1.0 constant:self.scrollView.frame.size.width * index]];
+
+    
 }
 
 #pragma mark private method
