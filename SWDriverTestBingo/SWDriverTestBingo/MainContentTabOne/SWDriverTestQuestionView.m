@@ -292,4 +292,15 @@ static NSString *QUESTION_RIGHT_ANSWER_CELL_IDENTITY = @"QUESTION_RIGHT_ANSWER_C
     }
 }
 
+-(void) encodeRestorableStateWithCoder:(NSCoder *)coder
+{
+    [super encodeRestorableStateWithCoder:coder];
+    NSLog(@"EEEEEEEEEEEECODEEEEEEEEEEEEEEEEEEEE!!!!!!");
+}
+
+-(void) decodeRestorableStateWithCoder:(NSCoder *)coder
+{
+    [super decodeRestorableStateWithCoder:coder];
+    NSLog(@"DDDDDDDDDDEEEEEEEEECODE!!!!!!!!!!!");
+}
 @end

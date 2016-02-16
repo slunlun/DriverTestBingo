@@ -112,10 +112,29 @@
 #pragma mark UIScrollViewDelegate
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
+   
+}
+
+- (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView
+{
     [self updataQuestionIndexTitle];
     [self updateMarkBtn];
-
+    
     // 当前的pageVC为优化模式，需要显示实时补充新的page
-    [self createNextPageView];
+    NSInteger pageNum = [self currentPageNum];
+    [self createPageAtIndex:pageNum + 1];
+    [self createPageAtIndex:pageNum + 2];
+    [self createPageAtIndex:pageNum + 3];
+}
+
+#pragma mark Encode/Decode UI
+-(void) encodeRestorableStateWithCoder:(NSCoder *)coder
+{
+    [super encodeRestorableStateWithCoder:coder];
+}
+
+-(void) decodeRestorableStateWithCoder:(NSCoder *)coder
+{
+    [super decodeRestorableStateWithCoder:coder];
 }
 @end

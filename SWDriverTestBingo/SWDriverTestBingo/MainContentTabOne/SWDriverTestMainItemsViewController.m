@@ -237,6 +237,7 @@ static NSString *IMG_COL_CELL_IDENTITY = @"IMG_COL_CELL_IDENTITY";
             case 0:  // 顺序答题
             {
                 questionItemViews = [self genSequenceQuestionViews];
+                //questionItemViews = [self genTestViews];
                
             }
                 break;
@@ -284,6 +285,29 @@ static NSString *IMG_COL_CELL_IDENTITY = @"IMG_COL_CELL_IDENTITY";
 }
 
 #pragma mark Question Data provider
+-(NSArray *) genTestViews
+{
+    UIView *redView = [[UIView alloc] init];
+    redView.backgroundColor = [UIColor redColor];
+    
+    UIView *yellowView = [[UIView alloc] init];
+    yellowView.backgroundColor = [UIColor yellowColor];
+    
+    UIView *brownView = [[UIView alloc] init];
+    brownView.backgroundColor = [UIColor brownColor];
+    
+    UIView *greenView = [[UIView alloc] init];
+    greenView.backgroundColor = [UIColor greenColor];
+    
+    UIView *grayView = [[UIView alloc] init];
+    grayView.backgroundColor = [UIColor grayColor];
+    
+    UIView *blueView = [[UIView alloc] init];
+    blueView.backgroundColor = [UIColor blueColor];
+    
+    NSArray *retArray = @[redView, yellowView, brownView, greenView, grayView, blueView];
+    return retArray;
+}
 - (NSMutableArray *) genSequenceQuestionViews
 {
     NSMutableArray *sequenceQuestionViews = [[NSMutableArray alloc] init];
