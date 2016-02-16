@@ -32,7 +32,9 @@
     [super layoutSubviews];
     NSDictionary *constraintViews = @{@"imageView":_imageView, @"titleLabel":_titleLabel};
     NSDictionary *metricsDic = @{@"space":@(5), @"margin":@(20)};
+//    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-margin-[titleLabel(==100)]-[imageView]-space@1000-|" options:0 metrics:metricsDic views:constraintViews]];
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-margin-[titleLabel(==100)]-[imageView]-space@1000-|" options:0 metrics:metricsDic views:constraintViews]];
+//     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-margin-[titleLabel(==100)]-[imageView(==60)]-space@1000-|" options:0 metrics:metricsDic views:constraintViews]];
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[titleLabel]-|" options:0 metrics:nil views:constraintViews]];
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[imageView]-|" options:0 metrics:nil views:constraintViews]];
 }
