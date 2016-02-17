@@ -14,7 +14,7 @@
 #import "SWLoginUser.h"
 
 @interface SWQuestionPageViewController () <UIScrollViewDelegate>
-
+@property(nonatomic) NSInteger pageNumBeforePageScroll;
 
 @end
 
@@ -23,6 +23,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.scrollView.delegate = self;
+    self.pageNumBeforePageScroll = self.initPageNum;
 }
 
 
@@ -110,21 +111,33 @@
     return quesionView.question;
 }
 #pragma mark UIScrollViewDelegate
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
-{
-   
-}
-
-- (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     [self updataQuestionIndexTitle];
     [self updateMarkBtn];
     
     // 当前的pageVC为优化模式，需要显示实时补充新的page
     NSInteger pageNum = [self currentPageNum];
-    [self createPageAtIndex:pageNum + 1];
-    [self createPageAtIndex:pageNum + 2];
-    [self createPageAtIndex:pageNum + 3];
+    if (self.pageNumBeforePageScroll != pageNum) {
+        NSInteger pageChange = pageNum - self.pageNumBeforePageScroll;
+        if (pageChange > 0) {
+            // generate next pages
+            [self createPageAtIndex:(pageNum + 1)];
+            // release page that can not see
+            [self releasePageAtIndex:(pageNum - 2)];
+            NSLog(@"The subview count is %ld", self.scrollView.subviews.count);
+            
+        }else if(pageChange < 0)
+        {
+            // generate pre pages
+            [self createPageAtIndex:(pageNum - 1)];
+            // release page that can not see
+            [self releasePageAtIndex:(pageNum + 2)];
+             NSLog(@"The subview count is %ld", self.scrollView.subviews.count);
+            
+        }
+        self.pageNumBeforePageScroll = pageNum;
+    }
 }
 
 #pragma mark Encode/Decode UI

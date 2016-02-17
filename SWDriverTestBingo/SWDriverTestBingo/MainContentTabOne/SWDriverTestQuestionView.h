@@ -14,5 +14,6 @@
 @interface SWDriverTestQuestionView : UIView
 - (instancetype) initWithQuestion:(SWQuestionItems *) question viewType:(TestQuestionViewType) viewType;
 
+- (instancetype) initWithQuestion:(SWQuestionItems *)question viewType:(TestQuestionViewType)viewType pageNum:(NSInteger) pageNum;
 @property(nonatomic, strong) SWQuestionItems *question;
 @end

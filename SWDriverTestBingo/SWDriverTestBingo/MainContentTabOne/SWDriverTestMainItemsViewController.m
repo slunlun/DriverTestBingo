@@ -65,6 +65,7 @@ static NSString *IMG_COL_CELL_IDENTITY = @"IMG_COL_CELL_IDENTITY";
     [self.collectionView reloadData];
     
     [self.navigationController.navigationBar setTranslucent:NO];
+    self.navigationController.interactivePopGestureRecognizer.enabled = NO;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -257,7 +258,7 @@ static NSString *IMG_COL_CELL_IDENTITY = @"IMG_COL_CELL_IDENTITY";
             default:
                 break;
         }
-        SWQuestionPageViewController *pagesVC = [[SWQuestionPageViewController alloc] initWithContentViews:questionItemViews type:kOptimizedPageController];
+        SWQuestionPageViewController *pagesVC = [[SWQuestionPageViewController alloc] initWithContentViews:questionItemViews type:kOptimizedPageController switchToPage:999];
         [self.navigationController pushViewController:pagesVC animated:YES];
         
     }else if(indexPath.section == 1)
@@ -319,10 +320,12 @@ static NSString *IMG_COL_CELL_IDENTITY = @"IMG_COL_CELL_IDENTITY";
 
     NSError *error = nil;
     NSArray *fetchedObjects = [appDelegate.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    NSInteger pageNum = 1;
     if (fetchedObjects.count > 0) {
         for (SWQuestionItems *question in fetchedObjects) {
-            SWDriverTestQuestionView *questionView = [[SWDriverTestQuestionView alloc] initWithQuestion:question viewType:kTestQuestionViewSequence];
+            SWDriverTestQuestionView *questionView = [[SWDriverTestQuestionView alloc] initWithQuestion:question viewType:kTestQuestionViewSequence pageNum:pageNum];
             [sequenceQuestionViews addObject:questionView];
+            pageNum++;
         }
     }
     return sequenceQuestionViews;

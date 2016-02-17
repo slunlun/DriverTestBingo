@@ -13,6 +13,7 @@
 @property(nonatomic) BOOL isInit;
 @property(nonatomic, strong) UIView *lastView;
 @property(nonatomic) NSInteger createdPageNum;
+
 @end
 
 @implementation SWPageViewController
@@ -25,6 +26,15 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void) viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [self createPageAtIndex:self.initPageNum];
+    [self createPageAtIndex:self.initPageNum + 1];
+    [self createPageAtIndex:self.initPageNum - 1];
+   [self changeToPage:self.initPageNum];
 }
 
 -(void) viewDidLayoutSubviews
@@ -50,6 +60,27 @@
         [self.view addSubview:_scrollView];
         [self makeUpScrollViews];
         [self createPageAtIndex:0];
+    }
+    return self;
+}
+
+-(instancetype) initWithContentViews:(NSMutableArray *) viewContents type:(SWPageViewControllerType) type switchToPage:(NSUInteger) pageNum
+{
+    self = [super init];
+    if (self) {
+        _contentViewsArray = viewContents;
+        _scrollView = [[UIScrollView alloc] init];
+        _scrollView.showsHorizontalScrollIndicator = NO;
+        _scrollView.showsVerticalScrollIndicator = NO;
+        _scrollView.pagingEnabled = YES;
+        _scrollView.translatesAutoresizingMaskIntoConstraints = NO;
+        _scrollView.delaysContentTouches = YES;
+        _scrollView.canCancelContentTouches = YES;
+        _isInit = YES;
+        _type = type;
+        _initPageNum = pageNum;
+        [self.view addSubview:_scrollView];
+        [self makeUpScrollViews];
     }
     return self;
 }
@@ -93,24 +124,50 @@
         
         _lastView = nil;
         // set up contentViews in scrollView
+        NSInteger pageIndex = 0;
         for (UIView *contentView in self.contentViewsArray) {
             contentView.translatesAutoresizingMaskIntoConstraints = NO;
+            contentView.tag = pageIndex++;
             [self.scrollView addSubview:contentView];
             if (_lastView == nil) { // first view
-                [self.view addConstraint:[NSLayoutConstraint constraintWithItem:contentView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.topLayoutGuide attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0]];
-                [self.view addConstraint:[NSLayoutConstraint constraintWithItem:contentView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.scrollView attribute:NSLayoutAttributeWidth multiplier:1.0 constant:0.0]];
-                [self.view addConstraint:[NSLayoutConstraint constraintWithItem:contentView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.bottomLayoutGuide attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.0]];
-                [self.view addConstraint:[NSLayoutConstraint constraintWithItem:contentView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.scrollView attribute:NSLayoutAttributeLeading multiplier:1.0 constant:0.0]];
+                NSLayoutConstraint *topConstraint = [NSLayoutConstraint constraintWithItem:contentView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.topLayoutGuide attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0];
+                topConstraint.identifier = [self pageConstraintIdentify:pageIndex];
+                
+                NSLayoutConstraint *widthConstraint = [NSLayoutConstraint constraintWithItem:contentView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.scrollView attribute:NSLayoutAttributeWidth multiplier:1.0 constant:0.0];
+                widthConstraint.identifier = [self pageConstraintIdentify:pageIndex];
+                
+                NSLayoutConstraint *bottomConstraint = [NSLayoutConstraint constraintWithItem:contentView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.bottomLayoutGuide attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.0];
+                bottomConstraint.identifier = [self pageConstraintIdentify:pageIndex];
+                
+                NSLayoutConstraint *leadingConstraint = [NSLayoutConstraint constraintWithItem:contentView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.scrollView attribute:NSLayoutAttributeLeading multiplier:1.0 constant:0.0];
+                leadingConstraint.identifier = [self pageConstraintIdentify:pageIndex];
+
+                [self.view addConstraint:topConstraint];
+                [self.view addConstraint:widthConstraint];
+                [self.view addConstraint:bottomConstraint];
+                [self.view addConstraint:leadingConstraint];
                 
                 _lastView = contentView;
             
             }else
             {
-                [self.view addConstraint:[NSLayoutConstraint constraintWithItem:contentView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.topLayoutGuide attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0]];
-                [self.view addConstraint:[NSLayoutConstraint constraintWithItem:contentView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.scrollView attribute:NSLayoutAttributeWidth multiplier:1.0 constant:0.0]];
-                [self.view addConstraint:[NSLayoutConstraint constraintWithItem:contentView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.bottomLayoutGuide attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.0]];
-                [self.view addConstraint:[NSLayoutConstraint constraintWithItem:contentView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:_lastView attribute:NSLayoutAttributeTrailing multiplier:1.0 constant:0.0]];
+                NSLayoutConstraint *topConstraint = [NSLayoutConstraint constraintWithItem:contentView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.topLayoutGuide attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0];
+                topConstraint.identifier = [self pageConstraintIdentify:pageIndex];
                 
+                NSLayoutConstraint *widthConstraint = [NSLayoutConstraint constraintWithItem:contentView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.scrollView attribute:NSLayoutAttributeWidth multiplier:1.0 constant:0.0];
+                widthConstraint.identifier = [self pageConstraintIdentify:pageIndex];
+                
+                NSLayoutConstraint *bottomConstraint = [NSLayoutConstraint constraintWithItem:contentView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.bottomLayoutGuide attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.0];
+                bottomConstraint.identifier = [self pageConstraintIdentify:pageIndex];
+                
+                NSLayoutConstraint *leadingConstraint = [NSLayoutConstraint constraintWithItem:contentView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:_lastView attribute:NSLayoutAttributeTrailing multiplier:1.0 constant:0.0];
+                leadingConstraint.identifier = [self pageConstraintIdentify:pageIndex];
+                
+                [self.view addConstraint:topConstraint];
+                [self.view addConstraint:widthConstraint];
+                [self.view addConstraint:bottomConstraint];
+                [self.view addConstraint:leadingConstraint];
+
                 _lastView = contentView;
                 
                 // if type is Optimized, only init two pages, the other pages will create when user call createNextPage method.
@@ -161,30 +218,31 @@
 -(void) changeToPage:(NSInteger) pageNum
 {
     if (pageNum >= 0 && pageNum < self.contentViewsArray.count) {
+        NSLog(@"The width is %lf", self.scrollView.frame.size.width);
         self.scrollView.contentOffset = CGPointMake(self.scrollView.frame.size.width * pageNum, self.scrollView.contentOffset.y);
     }
 }
 
--(void) addPageView:(UIView *) pageView
-{
-    pageView.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.scrollView addSubview:pageView];
-    if (self.contentViewsArray.count > 0) {
-        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:pageView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.topLayoutGuide attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0]];
-        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:pageView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.scrollView attribute:NSLayoutAttributeWidth multiplier:1.0 constant:0.0]];
-        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:pageView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.bottomLayoutGuide attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.0]];
-        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:pageView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.contentViewsArray.lastObject attribute:NSLayoutAttributeTrailing multiplier:1.0 constant:0.0]];
-
-    }else
-    {
-        // first page
-        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:pageView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.topLayoutGuide attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0]];
-        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:pageView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.scrollView attribute:NSLayoutAttributeWidth multiplier:1.0 constant:0.0]];
-        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:pageView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.bottomLayoutGuide attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.0]];
-        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:pageView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.scrollView attribute:NSLayoutAttributeLeading multiplier:1.0 constant:0.0]];
-    }
-    [self.contentViewsArray addObject:pageView];
-}
+//-(void) addPageView:(UIView *) pageView
+//{
+//    pageView.translatesAutoresizingMaskIntoConstraints = NO;
+//    [self.scrollView addSubview:pageView];
+//    if (self.contentViewsArray.count > 0) {
+//        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:pageView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.topLayoutGuide attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0]];
+//        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:pageView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.scrollView attribute:NSLayoutAttributeWidth multiplier:1.0 constant:0.0]];
+//        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:pageView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.bottomLayoutGuide attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.0]];
+//        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:pageView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.contentViewsArray.lastObject attribute:NSLayoutAttributeTrailing multiplier:1.0 constant:0.0]];
+//
+//    }else
+//    {
+//        // first page
+//        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:pageView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.topLayoutGuide attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0]];
+//        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:pageView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.scrollView attribute:NSLayoutAttributeWidth multiplier:1.0 constant:0.0]];
+//        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:pageView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.bottomLayoutGuide attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.0]];
+//        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:pageView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.scrollView attribute:NSLayoutAttributeLeading multiplier:1.0 constant:0.0]];
+//    }
+//    [self.contentViewsArray addObject:pageView];
+//}
 
 -(void) createNextPageView
 {
@@ -197,12 +255,28 @@
             self.createdPageNum++;
             UIView *nextPageView = self.contentViewsArray[([self currentPageNum] + 1)];
             nextPageView.translatesAutoresizingMaskIntoConstraints = NO;
+            nextPageView.tag = ([self currentPageNum] + 1);
+            NSInteger pageIndex = ([self currentPageNum] + 1);
+
             [self.scrollView addSubview:nextPageView];
             
-            [self.view addConstraint:[NSLayoutConstraint constraintWithItem:nextPageView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.topLayoutGuide attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0]];
-            [self.view addConstraint:[NSLayoutConstraint constraintWithItem:nextPageView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.scrollView attribute:NSLayoutAttributeWidth multiplier:1.0 constant:0.0]];
-            [self.view addConstraint:[NSLayoutConstraint constraintWithItem:nextPageView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.bottomLayoutGuide attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.0]];
-            [self.view addConstraint:[NSLayoutConstraint constraintWithItem:nextPageView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.lastView attribute:NSLayoutAttributeTrailing multiplier:1.0 constant:0.0]];
+            NSLayoutConstraint *topConstraint = [NSLayoutConstraint constraintWithItem:nextPageView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.topLayoutGuide attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0];
+            topConstraint.identifier = [self pageConstraintIdentify:pageIndex];
+            
+            NSLayoutConstraint *widthConstraint = [NSLayoutConstraint constraintWithItem:nextPageView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.scrollView attribute:NSLayoutAttributeWidth multiplier:1.0 constant:0.0];
+            widthConstraint.identifier = [self pageConstraintIdentify:pageIndex];
+            
+            NSLayoutConstraint *bottomConstraint = [NSLayoutConstraint constraintWithItem:nextPageView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.bottomLayoutGuide attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.0];
+            bottomConstraint.identifier = [self pageConstraintIdentify:pageIndex];
+            
+            NSLayoutConstraint *leadingConstraint = [NSLayoutConstraint constraintWithItem:nextPageView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.lastView attribute:NSLayoutAttributeTrailing multiplier:1.0 constant:0.0];
+            leadingConstraint.identifier = [self pageConstraintIdentify:pageIndex];
+            
+            [self.view addConstraint:topConstraint];
+            [self.view addConstraint:widthConstraint];
+            [self.view addConstraint:bottomConstraint];
+            [self.view addConstraint:leadingConstraint];
+            
             self.lastView = nextPageView;
         }
 
@@ -217,17 +291,56 @@
     
     UIView *newPageView = self.contentViewsArray[index];
     newPageView.translatesAutoresizingMaskIntoConstraints = NO;
+    newPageView.tag = index;
     [self.scrollView addSubview:newPageView];
     
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:newPageView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.topLayoutGuide attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0]];
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:newPageView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.scrollView attribute:NSLayoutAttributeWidth multiplier:1.0 constant:0.0]];
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:newPageView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.bottomLayoutGuide attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.0]];
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:newPageView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.scrollView attribute:NSLayoutAttributeLeading multiplier:1.0 constant:self.scrollView.frame.size.width * index]];
+    NSLayoutConstraint *topConstraint = [NSLayoutConstraint constraintWithItem:newPageView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.topLayoutGuide attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0];
+    topConstraint.identifier = [self pageConstraintIdentify:index];
+    
+    NSLayoutConstraint *widthConstraint = [NSLayoutConstraint constraintWithItem:newPageView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.scrollView attribute:NSLayoutAttributeWidth multiplier:1.0 constant:0.0];
+    widthConstraint.identifier = [self pageConstraintIdentify:index];
+    
+    NSLayoutConstraint *bottomConstraint = [NSLayoutConstraint constraintWithItem:newPageView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.bottomLayoutGuide attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.0];
+    bottomConstraint.identifier = [self pageConstraintIdentify:index];
+    
+    NSLayoutConstraint *leadingConstraint = [NSLayoutConstraint constraintWithItem:newPageView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.scrollView attribute:NSLayoutAttributeLeading multiplier:1.0 constant:self.scrollView.frame.size.width * index];
+    leadingConstraint.identifier = [self pageConstraintIdentify:index];
+    
+    [self.view addConstraint:topConstraint];
+    [self.view addConstraint:widthConstraint];
+    [self.view addConstraint:bottomConstraint];
+    [self.view addConstraint:leadingConstraint];
 
     
 }
 
+-(void) releasePageAtIndex:(NSInteger) index
+{
+//    NSString *constraintIdentifyB = [self pageConstraintIdentify:index];
+//    for (NSLayoutConstraint* constraints in self.view.constraints) {
+//        NSLog(@"BEfroe The cons identify is %@ do be del is %@", constraints.identifier, constraintIdentifyB);
+//    }
+
+    // The constraint with the view will be deleted with the sub view.
+    UIView *page = [self.scrollView viewWithTag:index];
+    [page removeFromSuperview];
+    
+//    NSString *constraintIdentify = [self pageConstraintIdentify:index];
+//    for (NSLayoutConstraint* constraints in self.view.constraints) {
+//        NSLog(@"After The cons identify is %@ do be del is %@", constraints.identifier, constraintIdentify);
+//    }
+}
+
 #pragma mark private method
+
+-(NSString *) pageConstraintIdentify:(NSInteger) pageIndex
+{
+    if (pageIndex < 0 || pageIndex >= self.contentViewsArray.count) {
+        return nil;
+    }
+    
+    return [NSString stringWithFormat:@"PAGE_CONS_%ld", pageIndex];
+}
 
 #pragma mark UIScrollViewDelegate
 

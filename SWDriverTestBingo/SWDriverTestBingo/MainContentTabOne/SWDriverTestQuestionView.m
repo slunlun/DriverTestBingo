@@ -27,6 +27,7 @@ static NSString *QUESTION_RIGHT_ANSWER_CELL_IDENTITY = @"QUESTION_RIGHT_ANSWER_C
 @property(nonatomic, strong) UIColor *tinyBackgroundColor;
 @property(nonatomic) BOOL didUserSelectedAnswer;
 @property(nonatomic) TestQuestionViewType questionViewType;
+@property(nonatomic) NSInteger pageNum;
 @end
 @implementation SWDriverTestQuestionView
 
@@ -56,6 +57,12 @@ static NSString *QUESTION_RIGHT_ANSWER_CELL_IDENTITY = @"QUESTION_RIGHT_ANSWER_C
        
     }
     return self;
+}
+
+- (instancetype) initWithQuestion:(SWQuestionItems *)question viewType:(TestQuestionViewType)viewType pageNum:(NSInteger) pageNum
+{
+    _pageNum = pageNum;
+    return [self initWithQuestion:question viewType:viewType];
 }
 #pragma mark UITableViewDataSource
 
@@ -120,7 +127,8 @@ static NSString *QUESTION_RIGHT_ANSWER_CELL_IDENTITY = @"QUESTION_RIGHT_ANSWER_C
                     }
                     
                     cell.textLabel.numberOfLines = 0;
-                    cell.textLabel.text = self.question.questionDesc;
+                    NSString *cellContent = [NSString stringWithFormat:@"%ld. %@", self.pageNum, self.question.questionDesc];
+                    cell.textLabel.text = cellContent;
                     cell.textLabel.lineBreakMode = NSLineBreakByCharWrapping;
                     
                     CGSize textSize = [cell.textLabel sizeThatFits:CGSizeMake(cell.frame.size.width, MAXFLOAT)];
