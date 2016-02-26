@@ -204,7 +204,6 @@
 				5E8047921C19243600B0587A /* Assets.xcassets */,
 				5E8047941C19243600B0587A /* LaunchScreen.storyboard */,
 				5E8047971C19243600B0587A /* Info.plist */,
-				5E80478F1C19243600B0587A /* SWDriverTestBingo.xcdatamodeld */,
 				5E8047831C19243600B0587A /* Supporting Files */,
 				5E8047CC1C197F0500B0587A /* SWMainViewController.h */,
 				5ECBD9121C3F4D6A00A656DE /* SWDriverTestBigoDef.h */,
@@ -351,6 +350,7 @@
 				80D7795B1C3AA5F8004C9151 /* SWMarkItems+CoreDataProperties.m */,
 				80D7795C1C3AA5F8004C9151 /* SWMarkItems.h */,
 				80D7795D1C3AA5F8004C9151 /* SWMarkItems.m */,
+				5E80478F1C19243600B0587A /* SWDriverTestBingo.xcdatamodeld */,
 			);
 			name = CoreData;
 			sourceTree = "<group>";
