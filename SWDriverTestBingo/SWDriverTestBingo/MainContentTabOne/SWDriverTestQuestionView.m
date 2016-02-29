@@ -26,6 +26,7 @@ static NSString *QUESTION_RIGHT_ANSWER_CELL_IDENTITY = @"QUESTION_RIGHT_ANSWER_C
 @property(nonatomic, strong) UIColor *deepBackgroundColor;
 @property(nonatomic, strong) UIColor *tinyBackgroundColor;
 @property(nonatomic) BOOL didUserSelectedAnswer;
+@property(nonatomic) BOOL didSelectedRightAnswer;
 @property(nonatomic) TestQuestionViewType questionViewType;
 @property(nonatomic) NSInteger pageNum;
 @end
@@ -71,7 +72,7 @@ static NSString *QUESTION_RIGHT_ANSWER_CELL_IDENTITY = @"QUESTION_RIGHT_ANSWER_C
     switch (section) {
         case SECTION_QUESTION_DESC_IMG:
         {
-            if (self.question.questionImageTitle) {
+            if (![self.question.questionImageTitle isEqualToString:@""]) {
                 return 2;
             }else
             {
@@ -81,7 +82,7 @@ static NSString *QUESTION_RIGHT_ANSWER_CELL_IDENTITY = @"QUESTION_RIGHT_ANSWER_C
             break;
         case SECTION_QUESTION_ANSWERS:
         {
-            if (self.question.questionType.integerValue== 1) { // 4 chose
+            if (self.question.questionType == 1) { // 4 chose
                 return 4;
             }else
             {
@@ -91,8 +92,17 @@ static NSString *QUESTION_RIGHT_ANSWER_CELL_IDENTITY = @"QUESTION_RIGHT_ANSWER_C
             break;
         case SECTION_RIGHT_ANSWER:
         {
-            if (self.didUserSelectedAnswer || self.questionViewType == kTestQuestionViewGlance) {
-                return 1;
+            if (self.didUserSelectedAnswer) {
+                if (self.didSelectedRightAnswer) {
+                    return 1;
+                }else
+                {
+                    return 2;
+                }
+               
+            }else if(self.questionViewType == kTestQuestionViewGlance)
+            {
+                return 2;
             }else
             {
                 return 0;
@@ -221,39 +231,47 @@ static NSString *QUESTION_RIGHT_ANSWER_CELL_IDENTITY = @"QUESTION_RIGHT_ANSWER_C
             
             cell.textLabel.numberOfLines = 0;
             
-            switch (self.question.questionRightAnswer.integerValue) {
-                case 0:
-                {
-                    cell.textLabel.text = [NSString stringWithFormat:@"正确答案：%@", @"A"];
+            if (indexPath.row == 0 && !self.didSelectedRightAnswer) {
+                switch (self.question.questionRightAnswer.integerValue) {
+                    case 1:
+                    {
+                        cell.textLabel.text = [NSString stringWithFormat:@"正确答案：%@", @"A"];
+                    }
+                        break;
+                    case 2:
+                    {
+                        cell.textLabel.text = [NSString stringWithFormat:@"正确答案：%@", @"B"];
+                    }
+                        break;
+                    case 3:
+                    {
+                        cell.textLabel.text = [NSString stringWithFormat:@"正确答案：%@", @"C"];
+                    }
+                        break;
+                    case 4:
+                    {
+                        cell.textLabel.text = [NSString stringWithFormat:@"正确答案：%@", @"D"];
+                    }
+                        break;
+                        
+                    default:
+                        break;
                 }
-                    break;
-                case 1:
-                {
-                    cell.textLabel.text = [NSString stringWithFormat:@"正确答案：%@", @"B"];
-                }
-                    break;
-                case 2:
-                {
-                    cell.textLabel.text = [NSString stringWithFormat:@"正确答案：%@", @"C"];
-                }
-                    break;
-                case 3:
-                {
-                    cell.textLabel.text = [NSString stringWithFormat:@"正确答案：%@", @"D"];
-                }
-                    break;
-                    
-                default:
-                    break;
+                cell.textLabel.textColor = [UIColor greenColor];
+            }else
+            {
+                cell.textLabel.text = self.question.questionExplain;
+                cell.textLabel.textColor = [UIColor blueColor];
             }
+           
             
             cell.textLabel.lineBreakMode = NSLineBreakByCharWrapping;
-            cell.textLabel.textColor = [UIColor greenColor];
             
             CGSize textSize = [cell.textLabel sizeThatFits:CGSizeMake(cell.frame.size.width, MAXFLOAT)];
             cell.frame = CGRectMake(cell.frame.origin.x, cell.frame.origin.y, cell.frame.size.width, textSize.height + 24);
             cell.backgroundColor = self.deepBackgroundColor;
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
+           
             
         }
             break;
@@ -280,19 +298,22 @@ static NSString *QUESTION_RIGHT_ANSWER_CELL_IDENTITY = @"QUESTION_RIGHT_ANSWER_C
             self.didUserSelectedAnswer = YES;
             
             UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-            if (indexPath.row == self.question.questionRightAnswer.integerValue) {
-                
+            if (indexPath.row + 1 == self.question.questionRightAnswer.integerValue) {
+                self.didSelectedRightAnswer = YES;
                 cell.textLabel.textColor = [UIColor greenColor];
                 if (self.questionViewType == kTestQuestionViewWrongQuestions) {
                     [SWLoginUser removeWrongQuestion:self.question];
                 }
+                NSIndexPath *explansPath = [NSIndexPath indexPathForRow:0 inSection:SECTION_RIGHT_ANSWER];
+                [tableView insertRowsAtIndexPaths:@[explansPath] withRowAnimation:YES];
                 
             }else
             {
                 cell.textLabel.textColor = [UIColor redColor];
                 // Show right Answer
                 NSIndexPath *rightIndexPath = [NSIndexPath indexPathForRow:0 inSection:SECTION_RIGHT_ANSWER];
-                [tableView insertRowsAtIndexPaths:@[rightIndexPath] withRowAnimation:YES];
+                NSIndexPath *explansPath = [NSIndexPath indexPathForRow:1 inSection:SECTION_RIGHT_ANSWER];
+                [tableView insertRowsAtIndexPaths:@[rightIndexPath, explansPath] withRowAnimation:YES];
                 // Auto store into user's wrong lib
                 [SWLoginUser addWrongQuestion:self.question];
             }

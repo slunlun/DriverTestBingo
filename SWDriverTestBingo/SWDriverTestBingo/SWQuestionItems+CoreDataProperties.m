@@ -2,8 +2,8 @@
 //  SWQuestionItems+CoreDataProperties.m
 //  SWDriverTestBingo
 //
-//  Created by EShi on 2/26/16.
-//  Copyright © 2016 Eren. All rights reserved.
+//  Created by ShiTeng on 16/2/27.
+//  Copyright © 2016年 Eren. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
 //  to delete and recreate this implementation file for your updated model.
@@ -18,11 +18,12 @@
 @dynamic questionAnswerC;
 @dynamic questionAnswerD;
 @dynamic questionDesc;
+@dynamic questionID;
 @dynamic questionImageTitle;
 @dynamic questionRightAnswer;
 @dynamic questionSelectedIndex;
 @dynamic questionType;
-@dynamic questionID;
+@dynamic questionExplain;
 @dynamic markQuestionsLib;
 @dynamic wrongQuestionsLib;
 

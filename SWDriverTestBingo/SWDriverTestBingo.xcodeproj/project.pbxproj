@@ -36,6 +36,7 @@
 		8033EB511C316CBD00299527 /* SWRoundButtonTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8033EB4F1C316CBD00299527 /* SWRoundButtonTableViewCell.xib */; };
 		805109101C1C5B8300CB1D18 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 805109121C1C5B8300CB1D18 /* Localizable.strings */; };
 		8052BEF71C3D39C900D7994E /* SWLoginUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 8052BEF61C3D39C800D7994E /* SWLoginUser.m */; };
+		8089F0DA1C81C99E00FB2E4E /* SWDriverTestBingo.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 8089F0D91C81C99E00FB2E4E /* SWDriverTestBingo.sqlite */; };
 		80CE62FD1C1BD32B0076816A /* SWDriverTestCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 80CE62FC1C1BD32B0076816A /* SWDriverTestCellView.m */; };
 		80D7794C1C3AA50D004C9151 /* SWQuestionStatus+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 80D7793B1C3AA50D004C9151 /* SWQuestionStatus+CoreDataProperties.m */; };
 		80D7794D1C3AA50D004C9151 /* SWQuestionStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 80D7793D1C3AA50D004C9151 /* SWQuestionStatus.m */; };
@@ -108,6 +109,7 @@
 		805109111C1C5B8300CB1D18 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		8052BEF51C3D39C800D7994E /* SWLoginUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWLoginUser.h; sourceTree = "<group>"; };
 		8052BEF61C3D39C800D7994E /* SWLoginUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWLoginUser.m; sourceTree = "<group>"; };
+		8089F0D91C81C99E00FB2E4E /* SWDriverTestBingo.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = SWDriverTestBingo.sqlite; sourceTree = "<group>"; };
 		80CE62FB1C1BD32B0076816A /* SWDriverTestCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWDriverTestCellView.h; sourceTree = "<group>"; };
 		80CE62FC1C1BD32B0076816A /* SWDriverTestCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWDriverTestCellView.m; sourceTree = "<group>"; };
 		80D7793A1C3AA50D004C9151 /* SWQuestionStatus+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SWQuestionStatus+CoreDataProperties.h"; sourceTree = "<group>"; };
@@ -326,6 +328,7 @@
 		80D779351C3AA49A004C9151 /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
+				8089F0D91C81C99E00FB2E4E /* SWDriverTestBingo.sqlite */,
 				80D779691C3AAD7C004C9151 /* SWTableMaxIndex+CoreDataProperties.h */,
 				80D7796A1C3AAD7C004C9151 /* SWTableMaxIndex+CoreDataProperties.m */,
 				80D7796B1C3AAD7C004C9151 /* SWTableMaxIndex.h */,
@@ -425,6 +428,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5E8047961C19243600B0587A /* LaunchScreen.storyboard in Resources */,
+				8089F0DA1C81C99E00FB2E4E /* SWDriverTestBingo.sqlite in Resources */,
 				8033EB511C316CBD00299527 /* SWRoundButtonTableViewCell.xib in Resources */,
 				805109101C1C5B8300CB1D18 /* Localizable.strings in Resources */,
 				5E8047931C19243600B0587A /* Assets.xcassets in Resources */,
