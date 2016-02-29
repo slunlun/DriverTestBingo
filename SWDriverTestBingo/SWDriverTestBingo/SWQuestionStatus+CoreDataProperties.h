@@ -17,8 +17,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nullable, nonatomic, retain) NSNumber *userID;
 @property (nullable, nonatomic, retain) NSNumber *currentQuestionIndex;
-@property (nullable, nonatomic, retain) SWUserInfo *user;
-
 @end
 
 NS_ASSUME_NONNULL_END

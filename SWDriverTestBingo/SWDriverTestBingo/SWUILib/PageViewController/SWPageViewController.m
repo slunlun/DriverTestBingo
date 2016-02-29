@@ -162,7 +162,6 @@
                 
                 NSLayoutConstraint *leadingConstraint = [NSLayoutConstraint constraintWithItem:contentView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:_lastView attribute:NSLayoutAttributeTrailing multiplier:1.0 constant:0.0];
                 leadingConstraint.identifier = [self pageConstraintIdentify:pageIndex];
-                
                 [self.view addConstraint:topConstraint];
                 [self.view addConstraint:widthConstraint];
                 [self.view addConstraint:bottomConstraint];
@@ -322,6 +321,9 @@
 //    }
 
     // The constraint with the view will be deleted with the sub view.
+    if (self.type == kOptimizedPageController && index == 0) { // 0 is position base view, so do not remove it.
+        return;
+    }
     UIView *page = [self.scrollView viewWithTag:index];
     [page removeFromSuperview];
     

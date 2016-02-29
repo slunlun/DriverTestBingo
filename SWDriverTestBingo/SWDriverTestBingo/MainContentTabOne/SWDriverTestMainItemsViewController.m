@@ -258,7 +258,7 @@ static NSString *IMG_COL_CELL_IDENTITY = @"IMG_COL_CELL_IDENTITY";
             default:
                 break;
         }
-        SWQuestionPageViewController *pagesVC = [[SWQuestionPageViewController alloc] initWithContentViews:questionItemViews type:kOptimizedPageController switchToPage:999];
+        SWQuestionPageViewController *pagesVC = [[SWQuestionPageViewController alloc] initWithContentViews:questionItemViews type:kOptimizedPageController switchToPage:[SWLoginUser loadUserQuestionIndex].integerValue];
         [self.navigationController pushViewController:pagesVC animated:YES];
         
     }else if(indexPath.section == 1)

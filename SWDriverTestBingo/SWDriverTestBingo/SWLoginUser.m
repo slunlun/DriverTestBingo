@@ -12,6 +12,7 @@
 #import "SWUserInfo+CoreDataProperties.h"
 #import "SWMarkItems+CoreDataProperties.h"
 #import "SWWrongItems+CoreDataProperties.h"
+#import "SWQuestionStatus+CoreDataProperties.h"
 
 @implementation SWLoginUser
 static SWLoginUser *userInstance = nil;
@@ -186,6 +187,56 @@ static SWUserInfo *userInfo = nil;
     }
     return nil;
 
+}
+
++ (void) savaUserQuestionStatus:(NSNumber *) questionIndex
+{
+    AppDelegate *appDelegate = [[AppDelegate alloc] init];
+    
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"SWQuestionStatus" inManagedObjectContext:appDelegate.managedObjectContext];
+    [fetchRequest setEntity:entity];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"userID=%ld", userInfo.userID.integerValue];
+    [fetchRequest setPredicate:predicate];
+    NSError *error = nil;
+    NSArray *fetchResult = [appDelegate.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    if (fetchResult.count ==0) {
+        SWQuestionStatus *questionStatus = [NSEntityDescription insertNewObjectForEntityForName:@"SWQuestionStatus" inManagedObjectContext:appDelegate.managedObjectContext];
+        questionStatus.userID = userInfo.userID;
+        questionStatus.currentQuestionIndex = questionIndex;
+    }else
+    {
+        SWQuestionStatus *questionStatus = fetchResult.lastObject;
+        questionStatus.currentQuestionIndex = questionIndex;
+    }
+    
+    [appDelegate saveContext];
+}
+
++ (NSNumber *) loadUserQuestionIndex
+{
+    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"SWQuestionStatus" inManagedObjectContext:appDelegate.managedObjectContext];
+    [fetchRequest setEntity:entity];
+    // Specify criteria for filtering which objects to fetch
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"userID=%ld", userInfo.userID.integerValue];
+    [fetchRequest setPredicate:predicate];
+    
+    NSError *error = nil;
+    NSArray *fetchedObjects = [appDelegate.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    if (fetchedObjects.count != 0) {
+        SWQuestionStatus *questionStatus = fetchedObjects.lastObject;
+        return questionStatus.currentQuestionIndex;
+    }
+    return [NSNumber numberWithInteger:0];
+
+}
+
++(void) saveUserAnsweredQuestion:(SWQuestionItems *) answeredQuestion
+{
+    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+    [appDelegate saveContext];
 }
 
 @end

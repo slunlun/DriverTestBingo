@@ -38,6 +38,14 @@
     [self makeUpNavigationBarView];
 }
 
+-(void) viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    NSLog(@"Current page is %ld", (long)[self currentPageNum]);
+    self.pageNumBeforePageScroll = [self currentPageNum];
+    [SWLoginUser savaUserQuestionStatus:[NSNumber numberWithInteger:[self currentPageNum]]];
+}
+
 #pragma mark INIT/SETTER/GETTER
 -(void) makeUpNavigationBarView
 {
@@ -140,14 +148,4 @@
     }
 }
 
-#pragma mark Encode/Decode UI
--(void) encodeRestorableStateWithCoder:(NSCoder *)coder
-{
-    [super encodeRestorableStateWithCoder:coder];
-}
-
--(void) decodeRestorableStateWithCoder:(NSCoder *)coder
-{
-    [super decodeRestorableStateWithCoder:coder];
-}
 @end

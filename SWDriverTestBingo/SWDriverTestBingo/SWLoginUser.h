@@ -22,6 +22,10 @@
 + (void) removeWrongQuestion:(SWQuestionItems *) wrongQuestion;
 + (NSSet *) getUserWrongQuestions;
 
++ (void) savaUserQuestionStatus:(NSNumber *) questionIndex;
++ (NSNumber *) loadUserQuestionIndex;
+
++(void) saveUserAnsweredQuestion:(SWQuestionItems *) answeredQuestion;
 @property(nonatomic, strong) NSString* userName;
 @property(nonatomic, strong) UIImage *userImage;
 @end

@@ -19,7 +19,7 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-  //  [self initUserInfo];
+   [self initUserInfo];
     return YES;
 }
 
@@ -150,27 +150,27 @@
         
         
         // questionItem
-        for (int i = 1; i < 600; i++) {
-            SWQuestionItems *questionItem = [NSEntityDescription insertNewObjectForEntityForName:@"SWQuestionItems" inManagedObjectContext:self.managedObjectContext];
-            questionItem.questionDesc = @"当前方有人行横道时，应该加速行驶。";
-            questionItem.questionAnswerA = @"A.正确";
-            questionItem.questionAnswerB = @"B.错误";
-            questionItem.questionRightAnswer = [NSNumber numberWithInteger:0];
-            questionItem.questionType = [NSNumber numberWithInteger:2];
-            
-            SWQuestionItems *questionItem2 = [NSEntityDescription insertNewObjectForEntityForName:@"SWQuestionItems" inManagedObjectContext:self.managedObjectContext];
-            questionItem2.questionDesc = @"当机动车驾驶人驾驶没有牌照的车子上路时，交警可以做出如下那种处罚";
-            questionItem2.questionAnswerA = @"A.吊销驾照";
-            questionItem2.questionAnswerB = @"B.罚款500元以上 1000元以下";
-            questionItem2.questionAnswerC = @"C.拘禁四个月";
-            questionItem2.questionAnswerD = @"D.在规定的30个工作日内，向当地车管所备案";
-            questionItem2.questionRightAnswer = [NSNumber numberWithInteger:2];
-            questionItem2.questionImageTitle = @"qImg1";
-            questionItem2.questionType = [NSNumber numberWithInteger:1];
-            
-            [self.managedObjectContext save:nil];
-
-        }
+//        for (int i = 1; i < 600; i++) {
+//            SWQuestionItems *questionItem = [NSEntityDescription insertNewObjectForEntityForName:@"SWQuestionItems" inManagedObjectContext:self.managedObjectContext];
+//            questionItem.questionDesc = @"当前方有人行横道时，应该加速行驶。";
+//            questionItem.questionAnswerA = @"A.正确";
+//            questionItem.questionAnswerB = @"B.错误";
+//            questionItem.questionRightAnswer = [NSNumber numberWithInteger:0];
+//            questionItem.questionType = [NSNumber numberWithInteger:2];
+//            
+//            SWQuestionItems *questionItem2 = [NSEntityDescription insertNewObjectForEntityForName:@"SWQuestionItems" inManagedObjectContext:self.managedObjectContext];
+//            questionItem2.questionDesc = @"当机动车驾驶人驾驶没有牌照的车子上路时，交警可以做出如下那种处罚";
+//            questionItem2.questionAnswerA = @"A.吊销驾照";
+//            questionItem2.questionAnswerB = @"B.罚款500元以上 1000元以下";
+//            questionItem2.questionAnswerC = @"C.拘禁四个月";
+//            questionItem2.questionAnswerD = @"D.在规定的30个工作日内，向当地车管所备案";
+//            questionItem2.questionRightAnswer = [NSNumber numberWithInteger:2];
+//            questionItem2.questionImageTitle = @"qImg1";
+//            questionItem2.questionType = [NSNumber numberWithInteger:1];
+//            
+//            [self.managedObjectContext save:nil];
+//
+//        }
         
     }else{
         NSLog(@"不是第一次启动");
