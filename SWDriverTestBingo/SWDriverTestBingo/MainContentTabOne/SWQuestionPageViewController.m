@@ -53,7 +53,7 @@
     questionIndexBtn.alignment = kButtonAlignmentImageTop;
     questionIndexBtn.gap = 2;
     [questionIndexBtn setImage:[UIImage imageNamed:@"questionIndex"] forState:UIControlStateNormal];
-    [questionIndexBtn setTitle:[NSString stringWithFormat:@"%ld/%ld", ([self currentPageNum] + 1), self.contentViewsArray.count] forState:UIControlStateNormal];
+    [questionIndexBtn setTitle:[NSString stringWithFormat:@"%ld/%ld", ([self currentPageNum] + 1), self.pageCount] forState:UIControlStateNormal];
     questionIndexBtn.titleLabel.font = [UIFont systemFontOfSize:9];
     [questionIndexBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
     
@@ -83,7 +83,7 @@
 -(void) updataQuestionIndexTitle
 {
     UIButton *btnQuestionIndex = (UIButton *)self.navigationItem.rightBarButtonItems[1].customView;
-    [btnQuestionIndex setTitle:[NSString stringWithFormat:@"%ld/%ld", ([self currentPageNum] + 1), self.contentViewsArray.count] forState:UIControlStateNormal];
+    [btnQuestionIndex setTitle:[NSString stringWithFormat:@"%ld/%ld", ([self currentPageNum] + 1), self.pageCount] forState:UIControlStateNormal];
 }
 
 -(void) updateMarkBtn
@@ -115,8 +115,7 @@
 #pragma mark Question Operation
 - (SWQuestionItems *) currentQuestionItem
 {
-    SWDriverTestQuestionView *quesionView = (SWDriverTestQuestionView *)self.contentViewsArray[[self currentPageNum]];
-    return quesionView.question;
+    return [self.delegate swpageViewController:self pageDataForIndex:[self currentPageNum]];
 }
 #pragma mark UIScrollViewDelegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
