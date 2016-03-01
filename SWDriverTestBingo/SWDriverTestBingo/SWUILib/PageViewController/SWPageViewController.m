@@ -11,6 +11,7 @@
 @interface SWPageViewController ()<UIScrollViewDelegate>
 
 @property(nonatomic) BOOL isInit;
+@property(nonatomic) BOOL isFirstShown;
 @property(nonatomic, strong) UIView *lastView;
 @property(nonatomic) NSInteger createdPageNum;
 
@@ -31,10 +32,14 @@
 - (void) viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [self createPageAtIndex:self.initPageNum];
-    [self createPageAtIndex:self.initPageNum + 1];
-    [self createPageAtIndex:self.initPageNum - 1];
-   [self changeToPage:self.initPageNum];
+    if (self.isFirstShown) {
+        [self createPageAtIndex:self.initPageNum];
+        [self createPageAtIndex:self.initPageNum + 1];
+        [self createPageAtIndex:self.initPageNum - 1];
+        [self changeToPage:self.initPageNum];
+        self.isFirstShown = NO;
+
+    }
 }
 
 -(void) viewDidLayoutSubviews
@@ -57,6 +62,7 @@
         _scrollView.canCancelContentTouches = YES;
         _isInit = YES;
         _type = type;
+        _isFirstShown = YES;
         [self.view addSubview:_scrollView];
         [self makeUpScrollViews];
         [self createPageAtIndex:0];
@@ -78,6 +84,7 @@
         _scrollView.canCancelContentTouches = YES;
         _isInit = YES;
         _type = type;
+        _isFirstShown = YES;
         _initPageNum = pageNum;
         [self.view addSubview:_scrollView];
         [self makeUpScrollViews];
@@ -97,6 +104,7 @@
         _scrollView.translatesAutoresizingMaskIntoConstraints = NO;
         _scrollView.delaysContentTouches = YES;
         _scrollView.canCancelContentTouches = YES;
+        _isFirstShown = YES;
         [self.view addSubview:_scrollView];
         [self makeUpScrollViews];
     }
@@ -287,8 +295,14 @@
     if (self.type != kOptimizedPageController || index >= self.contentViewsArray.count || index < 0) {
         return;
     }
+    UIView *newPageView = nil;
+    if ([self.delegate respondsToSelector:@selector(pageViewForIndex:)]) {
+        newPageView = [self.delegate pageViewForIndex:index];
+    }else
+    {
+        newPageView  = self.contentViewsArray[index];
+    }
     
-    UIView *newPageView = self.contentViewsArray[index];
     newPageView.translatesAutoresizingMaskIntoConstraints = NO;
     newPageView.tag = index;
     [self.scrollView addSubview:newPageView];
