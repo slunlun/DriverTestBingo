@@ -15,6 +15,7 @@ typedef enum{
     kTestQuestionViewMark,
     kTestQuestionViewFav,
     kTestQuestionViewWrongQuestions,
+    kTestQuestionViewTest,
 } TestQuestionViewType;
 
 #define USER_PRESS_SHOW_SIDE_MENU_BTN @"USER_PRESS_SHOW_SIDE_MENU_BTN"

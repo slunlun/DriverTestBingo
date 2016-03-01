@@ -68,14 +68,14 @@ static SWUserInfo *userInfo = nil;
         markItems.userID = userInfo.userID;
         [markItems addQuestionsObject:markedQuestion];
         markedQuestion.markQuestionsLib = markItems;
-        [appDelegate.managedObjectContext save:nil];
     }else
     {
         SWMarkItems *markItems = fetchedObjects.lastObject;
         [markItems addQuestionsObject:markedQuestion];
         markedQuestion.markQuestionsLib = markItems;
-        [appDelegate.managedObjectContext save:nil];
     }
+    
+    [appDelegate saveContext];
 }
 
 + (void) unmarkQuestion:(SWQuestionItems *) markedQuestion
@@ -97,8 +97,9 @@ static SWUserInfo *userInfo = nil;
         SWMarkItems *markItems = fetchedObjects.lastObject;
         [markItems removeQuestionsObject:markedQuestion];
         markedQuestion.markQuestionsLib = nil;
-        [appDelegate.managedObjectContext save:nil];
     }
+    
+    [appDelegate saveContext];
 }
 
 + (NSSet *) getUserMarkedQuestions
@@ -143,6 +144,8 @@ static SWUserInfo *userInfo = nil;
         [wrongQuestionLib addQuestionsObject:wrongQuestion];
         wrongQuestion.wrongQuestionsLib = wrongQuestionLib;
     }
+    
+    [appDelegate saveContext];
 }
 + (void) removeWrongQuestion:(SWQuestionItems *) wrongQuestion
 {
@@ -163,8 +166,9 @@ static SWUserInfo *userInfo = nil;
         SWWrongItems *wrongItems = fetchedObjects.lastObject;
         [wrongItems removeQuestionsObject:wrongQuestion];
         wrongQuestion.wrongQuestionsLib = nil;
-        [appDelegate.managedObjectContext save:nil];
     }
+    
+    [appDelegate saveContext];
 
 }
 

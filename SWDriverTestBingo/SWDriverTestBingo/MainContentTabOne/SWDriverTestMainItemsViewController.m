@@ -234,23 +234,29 @@ static NSString *IMG_COL_CELL_IDENTITY = @"IMG_COL_CELL_IDENTITY";
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0) {
+        TestQuestionViewType viewType;
         switch (indexPath.row) {
             case 0:  // 顺序答题
             {
                 [self genSequenceQuestionDatas];
+                viewType = kTestQuestionViewSequence;
             }
                 break;
             case 1:  // 模拟练习
-            {}
+            {
+                viewType = kTestQuestionViewTest;
+            }
                 break;
             case 2:  // 浏览题库
             {
                 [self genGlanceDatas];
+                viewType = kTestQuestionViewGlance;
             }
                 break;
             case 3:  // 错题集
             {
                 [self genWrongQuestionDatas];
+                viewType = kTestQuestionViewWrongQuestions;
             }
                 break;
             default:
@@ -265,6 +271,7 @@ static NSString *IMG_COL_CELL_IDENTITY = @"IMG_COL_CELL_IDENTITY";
         }
         
         pagesVC.delegate = self;
+        pagesVC.questionPageType = viewType;
         
         [self.navigationController pushViewController:pagesVC animated:YES];
         
@@ -279,6 +286,7 @@ static NSString *IMG_COL_CELL_IDENTITY = @"IMG_COL_CELL_IDENTITY";
                 }
                 SWQuestionPageViewController *pagesVC = [[SWQuestionPageViewController alloc] initWithContentViewsCount:self.pageDataArray.count type:kOptimizedPageController];
                 pagesVC.delegate = self;
+                pagesVC.questionPageType = kTestQuestionViewMark;
                 [self.navigationController pushViewController:pagesVC animated:YES];
                 
             }
