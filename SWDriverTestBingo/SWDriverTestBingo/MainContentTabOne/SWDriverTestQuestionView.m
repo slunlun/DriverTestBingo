@@ -137,7 +137,7 @@ static NSString *QUESTION_RIGHT_ANSWER_CELL_IDENTITY = @"QUESTION_RIGHT_ANSWER_C
                     }
                     
                     cell.textLabel.numberOfLines = 0;
-                    NSString *cellContent = [NSString stringWithFormat:@"%ld. %@", self.pageNum, self.question.questionDesc];
+                    NSString *cellContent = [NSString stringWithFormat:@"%ld. %@", self.question.questionID.integerValue, self.question.questionDesc];
                     cell.textLabel.text = cellContent;
                     cell.textLabel.lineBreakMode = NSLineBreakByCharWrapping;
                     
@@ -165,8 +165,7 @@ static NSString *QUESTION_RIGHT_ANSWER_CELL_IDENTITY = @"QUESTION_RIGHT_ANSWER_C
                         questionImgView.contentMode = UIViewContentModeScaleToFill;
                         [cell.contentView addSubview:questionImgView];
                     }
-                    questionImgView.image = [UIImage imageNamed:self.question.questionImageTitle];
-                    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                    questionImgView.image = [UIImage imageNamed:self.question.questionImageTitle inBundle:[NSBundle mainBundle] compatibleWithTraitCollection:nil];                    cell.selectionStyle = UITableViewCellSelectionStyleNone;
                     cell.backgroundColor = self.tinyBackgroundColor;
                     cell.contentView.backgroundColor = self.tinyBackgroundColor;
                 }

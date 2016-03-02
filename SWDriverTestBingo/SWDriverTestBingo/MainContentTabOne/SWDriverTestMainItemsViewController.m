@@ -120,7 +120,7 @@ static NSString *IMG_COL_CELL_IDENTITY = @"IMG_COL_CELL_IDENTITY";
         switch (indexPath.row) {
             case 0:
             {
-                imageView.image = [UIImage imageNamed:@"list"];
+                imageView.image = [UIImage imageNamed:@"List"];
                 titleLab.text = NSLocalizedString(@"SequenAnswer", nil);
             }
                 break;
