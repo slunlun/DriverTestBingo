@@ -82,7 +82,7 @@ static NSString *QUESTION_RIGHT_ANSWER_CELL_IDENTITY = @"QUESTION_RIGHT_ANSWER_C
             break;
         case SECTION_QUESTION_ANSWERS:
         {
-            if (self.question.questionType == 1) { // 4 chose
+            if (self.question.questionType.integerValue == 1) { // 4 chose
                 return 4;
             }else
             {
@@ -92,8 +92,8 @@ static NSString *QUESTION_RIGHT_ANSWER_CELL_IDENTITY = @"QUESTION_RIGHT_ANSWER_C
             break;
         case SECTION_RIGHT_ANSWER:
         {
-            if (self.didUserSelectedAnswer) {
-                if (self.didSelectedRightAnswer) {
+            if (self.didUserSelectedAnswer || self.question.questionSelectedIndex.integerValue != 0) {
+                if (self.didSelectedRightAnswer || [self isUserSelectedRightAnswer]) {
                     return 1;
                 }else
                 {
@@ -213,6 +213,15 @@ static NSString *QUESTION_RIGHT_ANSWER_CELL_IDENTITY = @"QUESTION_RIGHT_ANSWER_C
             
             CGSize textSize = [cell.textLabel sizeThatFits:CGSizeMake(cell.frame.size.width, MAXFLOAT)];
             cell.textLabel.textColor = [UIColor blackColor];
+            
+            if (self.question.questionSelectedIndex.integerValue == indexPath.row + 1) {
+                if ([self isUserSelectedRightAnswer]) {
+                    cell.textLabel.textColor = [UIColor greenColor];
+                }else
+                {
+                    cell.textLabel.textColor = [UIColor redColor];
+                }
+            }
             cell.frame = CGRectMake(cell.frame.origin.x, cell.frame.origin.y, cell.frame.size.width, textSize.height + 24);
             if (indexPath.row %2 == 0) {
                 cell.backgroundColor = self.deepBackgroundColor;
@@ -231,7 +240,7 @@ static NSString *QUESTION_RIGHT_ANSWER_CELL_IDENTITY = @"QUESTION_RIGHT_ANSWER_C
             
             cell.textLabel.numberOfLines = 0;
             
-            if (indexPath.row == 0 && !self.didSelectedRightAnswer) {
+            if ((indexPath.row == 0 && !self.didSelectedRightAnswer && self.didUserSelectedAnswer)) {
                 switch (self.question.questionRightAnswer.integerValue) {
                     case 1:
                     {
@@ -289,13 +298,19 @@ static NSString *QUESTION_RIGHT_ANSWER_CELL_IDENTITY = @"QUESTION_RIGHT_ANSWER_C
 #pragma mark UITableViewDelegate
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(nonnull NSIndexPath *)indexPath
 {
-    if (self.didUserSelectedAnswer || self.questionViewType == kTestQuestionViewGlance) {
+    if (self.didUserSelectedAnswer || self.questionViewType == kTestQuestionViewGlance || self.question.questionSelectedIndex.integerValue != 0) {
         return;
     }
     if (self.questionViewType != kTestQuestionViewGlance) {
         if (indexPath.section == SECTION_QUESTION_ANSWERS) {
             
             self.didUserSelectedAnswer = YES;
+            
+            if (self.questionViewType == kTestQuestionViewSequence) {
+                self.question.questionSelectedIndex = [NSNumber numberWithInteger:(indexPath.row + 1)];
+                [SWLoginUser saveUserAnsweredQuestion:self.question];
+            }
+            
             
             UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
             if (indexPath.row + 1 == self.question.questionRightAnswer.integerValue) {
@@ -321,15 +336,10 @@ static NSString *QUESTION_RIGHT_ANSWER_CELL_IDENTITY = @"QUESTION_RIGHT_ANSWER_C
     }
 }
 
--(void) encodeRestorableStateWithCoder:(NSCoder *)coder
+#pragma mark - private method
+-(BOOL) isUserSelectedRightAnswer
 {
-    [super encodeRestorableStateWithCoder:coder];
-    NSLog(@"EEEEEEEEEEEECODEEEEEEEEEEEEEEEEEEEE!!!!!!");
-}
-
--(void) decodeRestorableStateWithCoder:(NSCoder *)coder
-{
-    [super decodeRestorableStateWithCoder:coder];
-    NSLog(@"DDDDDDDDDDEEEEEEEEECODE!!!!!!!!!!!");
+    NSLog(@"User select is %@ and index is %ld", self.question.questionSelectedIndex, (long)self.question.questionSelectedIndex.integerValue);
+    return (self.question.questionSelectedIndex.integerValue == self.question.questionRightAnswer.integerValue);
 }
 @end

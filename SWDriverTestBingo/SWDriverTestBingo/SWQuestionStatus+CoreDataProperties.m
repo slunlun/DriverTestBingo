@@ -15,6 +15,4 @@
 
 @dynamic userID;
 @dynamic currentQuestionIndex;
-@dynamic user;
-
 @end

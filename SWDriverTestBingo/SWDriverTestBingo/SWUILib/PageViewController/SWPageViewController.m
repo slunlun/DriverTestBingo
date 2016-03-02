@@ -11,6 +11,7 @@
 @interface SWPageViewController ()<UIScrollViewDelegate>
 
 @property(nonatomic) BOOL isInit;
+@property(nonatomic) BOOL isFirstShown;
 @property(nonatomic, strong) UIView *lastView;
 @property(nonatomic) NSInteger createdPageNum;
 
@@ -31,23 +32,27 @@
 - (void) viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [self createPageAtIndex:self.initPageNum];
-    [self createPageAtIndex:self.initPageNum + 1];
-    [self createPageAtIndex:self.initPageNum - 1];
-   [self changeToPage:self.initPageNum];
+    if (self.isFirstShown) {
+        [self createPageAtIndex:self.initPageNum];
+        [self createPageAtIndex:self.initPageNum + 1];
+        [self createPageAtIndex:self.initPageNum - 1];
+        [self changeToPage:self.initPageNum];
+        self.isFirstShown = NO;
+
+    }
 }
 
 -(void) viewDidLayoutSubviews
 {
-    self.scrollView.contentSize = CGSizeMake(self.scrollView.frame.size.width * self.contentViewsArray.count, self.scrollView.contentSize.height);
+    self.scrollView.contentSize = CGSizeMake(self.scrollView.frame.size.width * self.pageCount, self.scrollView.contentSize.height);
 }
 
 #pragma mark INIT/SETTER/GETTER
--(instancetype) initWithContentViews:(NSMutableArray *) viewContents type:(SWPageViewControllerType) type
+-(instancetype) initWithContentViewsCount:(NSInteger) pageCount type:(SWPageViewControllerType) type
 {
     self = [super init];
     if (self) {
-        _contentViewsArray = viewContents;
+        _pageCount = pageCount;
         _scrollView = [[UIScrollView alloc] init];
         _scrollView.showsHorizontalScrollIndicator = NO;
         _scrollView.showsVerticalScrollIndicator = NO;
@@ -57,18 +62,16 @@
         _scrollView.canCancelContentTouches = YES;
         _isInit = YES;
         _type = type;
+        _isFirstShown = YES;
         [self.view addSubview:_scrollView];
-        [self makeUpScrollViews];
-        [self createPageAtIndex:0];
     }
     return self;
 }
-
--(instancetype) initWithContentViews:(NSMutableArray *) viewContents type:(SWPageViewControllerType) type switchToPage:(NSUInteger) pageNum
+-(instancetype) initWithContentViewsCount:(NSInteger) pageCount type:(SWPageViewControllerType) type switchToPage:(NSUInteger) pageNum
 {
     self = [super init];
     if (self) {
-        _contentViewsArray = viewContents;
+        _pageCount = pageCount;
         _scrollView = [[UIScrollView alloc] init];
         _scrollView.showsHorizontalScrollIndicator = NO;
         _scrollView.showsVerticalScrollIndicator = NO;
@@ -78,11 +81,12 @@
         _scrollView.canCancelContentTouches = YES;
         _isInit = YES;
         _type = type;
+        _isFirstShown = YES;
         _initPageNum = pageNum;
         [self.view addSubview:_scrollView];
-        [self makeUpScrollViews];
     }
     return self;
+
 }
 
 -(instancetype) init
@@ -97,18 +101,17 @@
         _scrollView.translatesAutoresizingMaskIntoConstraints = NO;
         _scrollView.delaysContentTouches = YES;
         _scrollView.canCancelContentTouches = YES;
+        _isFirstShown = YES;
         [self.view addSubview:_scrollView];
-        [self makeUpScrollViews];
     }
     return self;
 }
 
--(NSMutableArray *) contentViewsArray
+-(void) setDelegate:(id<SWPageViewControllerDelegate>)delegate
 {
-    if (_contentViewsArray == nil) {
-        _contentViewsArray = [[NSMutableArray alloc] init];
-    }
-    return _contentViewsArray;
+    _delegate = delegate;
+    [self makeUpScrollViews];
+    [self createPageAtIndex:0];
 }
 
 #pragma mark Layout
@@ -124,10 +127,10 @@
         
         _lastView = nil;
         // set up contentViews in scrollView
-        NSInteger pageIndex = 0;
-        for (UIView *contentView in self.contentViewsArray) {
+        for (NSInteger pageIndex = 0; pageIndex < self.pageCount; pageIndex++) {
+            UIView *contentView = [self.delegate swpageViewController:self pageForIndex:pageIndex];
             contentView.translatesAutoresizingMaskIntoConstraints = NO;
-            contentView.tag = pageIndex++;
+            contentView.tag = pageIndex;
             [self.scrollView addSubview:contentView];
             if (_lastView == nil) { // first view
                 NSLayoutConstraint *topConstraint = [NSLayoutConstraint constraintWithItem:contentView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.topLayoutGuide attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0];
@@ -162,7 +165,6 @@
                 
                 NSLayoutConstraint *leadingConstraint = [NSLayoutConstraint constraintWithItem:contentView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:_lastView attribute:NSLayoutAttributeTrailing multiplier:1.0 constant:0.0];
                 leadingConstraint.identifier = [self pageConstraintIdentify:pageIndex];
-                
                 [self.view addConstraint:topConstraint];
                 [self.view addConstraint:widthConstraint];
                 [self.view addConstraint:bottomConstraint];
@@ -194,7 +196,7 @@
 -(void) nextPage
 {
     NSInteger currentPageNum = [self currentPageNum];
-    if (currentPageNum < self.contentViewsArray.count - 1) {
+    if (currentPageNum < self.pageCount - 1) {
         currentPageNum++;
         [UIView animateWithDuration:0.3 animations:^{
             self.scrollView.contentOffset = CGPointMake(self.scrollView.frame.size.width * currentPageNum, self.scrollView.contentOffset.y);
@@ -217,7 +219,7 @@
 }
 -(void) changeToPage:(NSInteger) pageNum
 {
-    if (pageNum >= 0 && pageNum < self.contentViewsArray.count) {
+    if (pageNum >= 0 && pageNum < self.pageCount) {
         NSLog(@"The width is %lf", self.scrollView.frame.size.width);
         self.scrollView.contentOffset = CGPointMake(self.scrollView.frame.size.width * pageNum, self.scrollView.contentOffset.y);
     }
@@ -251,9 +253,9 @@
     }
     
     if ([self currentPageNum] > 0) { // 初始化时已经创建了2个page, 因此当前page index == 0时，不需要补充新的page
-        if (([self currentPageNum] + 1) < self.contentViewsArray.count && ([self currentPageNum] + 1) == self.createdPageNum) {
+        if (([self currentPageNum] + 1) < self.pageCount && ([self currentPageNum] + 1) == self.createdPageNum) {
             self.createdPageNum++;
-            UIView *nextPageView = self.contentViewsArray[([self currentPageNum] + 1)];
+            UIView *nextPageView = [self.delegate swpageViewController:self pageForIndex:(self.currentPageNum + 1)];
             nextPageView.translatesAutoresizingMaskIntoConstraints = NO;
             nextPageView.tag = ([self currentPageNum] + 1);
             NSInteger pageIndex = ([self currentPageNum] + 1);
@@ -285,11 +287,14 @@
 
 -(void) createPageAtIndex:(NSInteger) index
 {
-    if (self.type != kOptimizedPageController || index >= self.contentViewsArray.count || index < 0) {
+    if (self.type != kOptimizedPageController || index >= self.pageCount || index < 0) {
         return;
     }
+    UIView *newPageView = nil;
+    if ([self.delegate respondsToSelector:@selector(swpageViewController:pageForIndex:)]) {
+        newPageView = [self.delegate swpageViewController:self pageForIndex:index];
+    }
     
-    UIView *newPageView = self.contentViewsArray[index];
     newPageView.translatesAutoresizingMaskIntoConstraints = NO;
     newPageView.tag = index;
     [self.scrollView addSubview:newPageView];
@@ -322,6 +327,9 @@
 //    }
 
     // The constraint with the view will be deleted with the sub view.
+    if (self.type == kOptimizedPageController && index == 0) { // 0 is position base view, so do not remove it.
+        return;
+    }
     UIView *page = [self.scrollView viewWithTag:index];
     [page removeFromSuperview];
     
@@ -335,7 +343,7 @@
 
 -(NSString *) pageConstraintIdentify:(NSInteger) pageIndex
 {
-    if (pageIndex < 0 || pageIndex >= self.contentViewsArray.count) {
+    if (pageIndex < 0 || pageIndex >= self.pageCount) {
         return nil;
     }
     

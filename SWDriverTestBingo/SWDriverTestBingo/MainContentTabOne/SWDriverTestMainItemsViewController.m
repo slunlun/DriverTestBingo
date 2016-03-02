@@ -23,8 +23,9 @@
 
 
 static NSString *IMG_COL_CELL_IDENTITY = @"IMG_COL_CELL_IDENTITY";
-@interface SWDriverTestMainItemsViewController () <UICollectionViewDataSource, UICollectionViewDelegate>
+@interface SWDriverTestMainItemsViewController () <UICollectionViewDataSource, UICollectionViewDelegate, SWPageViewControllerDelegate>
 @property(nonatomic, strong) UICollectionView *collectionView;
+@property(nonatomic, strong) NSArray *pageDataArray;
 @end
 
 @implementation SWDriverTestMainItemsViewController
@@ -233,32 +234,45 @@ static NSString *IMG_COL_CELL_IDENTITY = @"IMG_COL_CELL_IDENTITY";
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0) {
-        NSMutableArray *questionItemViews = nil;
+        TestQuestionViewType viewType;
         switch (indexPath.row) {
             case 0:  // 顺序答题
             {
-                questionItemViews = [self genSequenceQuestionViews];
-                //questionItemViews = [self genTestViews];
-               
+                [self genSequenceQuestionDatas];
+                viewType = kTestQuestionViewSequence;
             }
                 break;
             case 1:  // 模拟练习
-            {}
+            {
+                viewType = kTestQuestionViewTest;
+            }
                 break;
             case 2:  // 浏览题库
             {
-                questionItemViews = [self genGlanceViews];
+                [self genGlanceDatas];
+                viewType = kTestQuestionViewGlance;
             }
                 break;
             case 3:  // 错题集
             {
-                questionItemViews = [self genWrongQuestionViews];
+                [self genWrongQuestionDatas];
+                viewType = kTestQuestionViewWrongQuestions;
             }
                 break;
             default:
                 break;
         }
-        SWQuestionPageViewController *pagesVC = [[SWQuestionPageViewController alloc] initWithContentViews:questionItemViews type:kOptimizedPageController switchToPage:999];
+        SWQuestionPageViewController *pagesVC = nil;
+        if (indexPath.row == 0) {
+            pagesVC = [[SWQuestionPageViewController alloc] initWithContentViewsCount:self.pageDataArray.count type:kOptimizedPageController switchToPage:[SWLoginUser loadUserQuestionIndex].integerValue];
+        }else
+        {
+            pagesVC = [[SWQuestionPageViewController alloc] initWithContentViewsCount:self.pageDataArray.count type:kOptimizedPageController];
+        }
+        
+        pagesVC.delegate = self;
+        pagesVC.questionPageType = viewType;
+        
         [self.navigationController pushViewController:pagesVC animated:YES];
         
     }else if(indexPath.section == 1)
@@ -266,11 +280,13 @@ static NSString *IMG_COL_CELL_IDENTITY = @"IMG_COL_CELL_IDENTITY";
         switch (indexPath.row) {
             case 0:  // 我的收藏
             {
-                NSMutableArray *markedQuestionViews = [self genMarkedQuestionViews];
-                if (markedQuestionViews.count == 0) {
+                NSInteger markCount = [self genMarkedQuestionDatas];
+                if (markCount == 0) {
                     return;
                 }
-                SWQuestionPageViewController *pagesVC = [[SWQuestionPageViewController alloc] initWithContentViews:markedQuestionViews type:kOptimizedPageController];
+                SWQuestionPageViewController *pagesVC = [[SWQuestionPageViewController alloc] initWithContentViewsCount:self.pageDataArray.count type:kOptimizedPageController];
+                pagesVC.delegate = self;
+                pagesVC.questionPageType = kTestQuestionViewMark;
                 [self.navigationController pushViewController:pagesVC animated:YES];
                 
             }
@@ -309,66 +325,52 @@ static NSString *IMG_COL_CELL_IDENTITY = @"IMG_COL_CELL_IDENTITY";
     NSArray *retArray = @[redView, yellowView, brownView, greenView, grayView, blueView];
     return retArray;
 }
-- (NSMutableArray *) genSequenceQuestionViews
+- (NSInteger) genSequenceQuestionDatas
 {
-    NSMutableArray *sequenceQuestionViews = [[NSMutableArray alloc] init];
     AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
-    
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"SWQuestionItems" inManagedObjectContext:appDelegate.managedObjectContext];
     [fetchRequest setEntity:entity];
 
     NSError *error = nil;
     NSArray *fetchedObjects = [appDelegate.managedObjectContext executeFetchRequest:fetchRequest error:&error];
-    NSInteger pageNum = 1;
-    if (fetchedObjects.count > 0) {
-        for (SWQuestionItems *question in fetchedObjects) {
-            SWDriverTestQuestionView *questionView = [[SWDriverTestQuestionView alloc] initWithQuestion:question viewType:kTestQuestionViewSequence pageNum:pageNum];
-            [sequenceQuestionViews addObject:questionView];
-            pageNum++;
-        }
-    }
-    return sequenceQuestionViews;
+    self.pageDataArray = fetchedObjects;
+    return self.pageDataArray.count;
 }
 
-- (NSMutableArray *) genMarkedQuestionViews
+- (NSInteger) genMarkedQuestionDatas
 {
     NSSet * userMarkedQuestionsSet = [SWLoginUser getUserMarkedQuestions];
-    NSMutableArray *markedQuestionViews = [[NSMutableArray alloc] init];
+    NSMutableArray *markedQuestionDatas = [[NSMutableArray alloc] init];
     for (SWQuestionItems *question in userMarkedQuestionsSet) {
-        SWDriverTestQuestionView *questionView = [[SWDriverTestQuestionView alloc] initWithQuestion:question viewType:kTestQuestionViewMark];
-        [markedQuestionViews addObject:questionView];
+        [markedQuestionDatas addObject:question];
     }
-    return markedQuestionViews;
+    self.pageDataArray = markedQuestionDatas;
+    return self.pageDataArray.count;
 }
 
-- (NSMutableArray *) genWrongQuestionViews
+- (NSInteger) genWrongQuestionDatas
 {
     NSSet * userWrongQuestionsSet = [SWLoginUser getUserWrongQuestions];
-    NSMutableArray *wrongQuestionViews = [[NSMutableArray alloc] init];
+    NSMutableArray *wrongQuestionDatas = [[NSMutableArray alloc] init];
     for (SWQuestionItems *question in userWrongQuestionsSet) {
-        SWDriverTestQuestionView *questionView = [[SWDriverTestQuestionView alloc] initWithQuestion:question viewType:kTestQuestionViewWrongQuestions];
-        [wrongQuestionViews addObject:questionView];
+        [wrongQuestionDatas addObject:question];
     }
-    return wrongQuestionViews;
+    self.pageDataArray = wrongQuestionDatas;
+    return self.pageDataArray.count;
 }
 
-- (NSMutableArray *) genGlanceViews
+- (NSInteger) genGlanceDatas
 {
     AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
-    NSMutableArray *glanceViews = [[NSMutableArray alloc] init];
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"SWQuestionItems" inManagedObjectContext:appDelegate.managedObjectContext];
     [fetchRequest setEntity:entity];
     
     NSError *error = nil;
     NSArray *fetchedObjects = [appDelegate.managedObjectContext executeFetchRequest:fetchRequest error:&error];
-    for (SWQuestionItems *question in fetchedObjects) {
-        SWDriverTestQuestionView *questionView = [[SWDriverTestQuestionView alloc] initWithQuestion:question viewType:kTestQuestionViewGlance];
-        [glanceViews addObject:questionView];
-    }
-    
-    return glanceViews;
+    self.pageDataArray = fetchedObjects;
+    return self.pageDataArray.count;
 }
 
 
@@ -388,6 +390,27 @@ static NSString *IMG_COL_CELL_IDENTITY = @"IMG_COL_CELL_IDENTITY";
     
 }
 
+#pragma mark - SWPageViewControllerDelegate
+
+-(UIView *) swpageViewController:(SWPageViewController *)pageViewController pageForIndex:(NSInteger)pageNum
+{
+    if (pageNum < self.pageDataArray.count) {
+        SWQuestionItems *question = self.pageDataArray[pageNum];
+        SWQuestionPageViewController* questionPageVC = (SWQuestionPageViewController *)pageViewController;
+         SWDriverTestQuestionView *questionView = [[SWDriverTestQuestionView alloc] initWithQuestion:question viewType:questionPageVC.questionPageType];
+        return questionView;
+    }
+    
+    return nil;
+}
+
+-(id) swpageViewController:(SWPageViewController *) pageViewController pageDataForIndex:(NSInteger) pageNum
+{
+    if (pageNum < self.pageDataArray.count) {
+        return self.pageDataArray[pageNum];
+    }
+    return nil;
+}
 
 
 @end

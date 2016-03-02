@@ -7,7 +7,8 @@
 //
 
 #import "SWPageViewController.h"
+#import "SWDriverTestBigoDef.h"
 
 @interface SWQuestionPageViewController : SWPageViewController
-
+@property(nonatomic) TestQuestionViewType questionPageType;
 @end

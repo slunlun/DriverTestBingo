@@ -14,10 +14,17 @@ typedef enum
     kOptimizedPageController,
     
 }SWPageViewControllerType;
+@class SWPageViewController;
+@protocol SWPageViewControllerDelegate <NSObject>
+@required
+-(UIView *) swpageViewController:(SWPageViewController *) pageViewController pageForIndex:(NSInteger) pageNum;
+-(id) swpageViewController:(SWPageViewController *) pageViewController pageDataForIndex:(NSInteger) pageNum;
+@end
 @interface SWPageViewController : UIViewController
 
--(instancetype) initWithContentViews:(NSMutableArray *) viewContents type:(SWPageViewControllerType) type;
--(instancetype) initWithContentViews:(NSMutableArray *) viewContents type:(SWPageViewControllerType) type switchToPage:(NSUInteger) pageNum;
+
+-(instancetype) initWithContentViewsCount:(NSInteger) pageCount type:(SWPageViewControllerType) type;
+-(instancetype) initWithContentViewsCount:(NSInteger) pageCount type:(SWPageViewControllerType) type switchToPage:(NSUInteger) pageNum;
 -(NSInteger) currentPageNum;
 -(void) nextPage;
 -(void) previousPage;
@@ -31,8 +38,9 @@ typedef enum
 
 
 @property(nonatomic) NSUInteger initPageNum;
+@property(nonatomic) NSInteger pageCount;
 @property(nonatomic, strong) UIScrollView *scrollView;
-@property(nonatomic, strong) NSMutableArray *contentViewsArray;
 @property(nonatomic) SWPageViewControllerType type;
+@property(nonatomic, weak) id<SWPageViewControllerDelegate> delegate;
 
 @end
