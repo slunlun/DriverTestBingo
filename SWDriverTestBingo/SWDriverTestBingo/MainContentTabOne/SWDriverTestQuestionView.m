@@ -93,7 +93,7 @@ static NSString *QUESTION_RIGHT_ANSWER_CELL_IDENTITY = @"QUESTION_RIGHT_ANSWER_C
         case SECTION_RIGHT_ANSWER:
         {
             if (self.didUserSelectedAnswer || self.question.questionSelectedIndex.integerValue != 0) {
-                if (self.didSelectedRightAnswer || [self isUserSelectedRightAnswer]) {
+                if ([self isUserSelectedRightAnswer]) {
                     return 1;
                 }else
                 {
@@ -214,7 +214,7 @@ static NSString *QUESTION_RIGHT_ANSWER_CELL_IDENTITY = @"QUESTION_RIGHT_ANSWER_C
             CGSize textSize = [cell.textLabel sizeThatFits:CGSizeMake(cell.frame.size.width, MAXFLOAT)];
             cell.textLabel.textColor = [UIColor blackColor];
             
-            if (self.question.questionSelectedIndex.integerValue == indexPath.row + 1) {
+            if (self.question.questionSelectedIndex.integerValue == indexPath.row + 1 && self.questionViewType == kTestQuestionViewSequence) {
                 if ([self isUserSelectedRightAnswer]) {
                     cell.textLabel.textColor = [UIColor greenColor];
                 }else
@@ -240,33 +240,41 @@ static NSString *QUESTION_RIGHT_ANSWER_CELL_IDENTITY = @"QUESTION_RIGHT_ANSWER_C
             
             cell.textLabel.numberOfLines = 0;
             
-            if ((indexPath.row == 0 && !self.didSelectedRightAnswer && self.didUserSelectedAnswer)) {
-                switch (self.question.questionRightAnswer.integerValue) {
-                    case 1:
-                    {
-                        cell.textLabel.text = [NSString stringWithFormat:@"正确答案：%@", @"A"];
+            if (indexPath.row == 0) {
+                if ([self isUserSelectedRightAnswer]) {
+                    cell.textLabel.text = self.question.questionExplain;
+                    cell.textLabel.textColor = [UIColor blueColor];
+                    
+                }else{
+                    
+                    switch (self.question.questionRightAnswer.integerValue) {
+                        case 1:
+                        {
+                            cell.textLabel.text = [NSString stringWithFormat:@"正确答案：%@", @"A"];
+                        }
+                            break;
+                        case 2:
+                        {
+                            cell.textLabel.text = [NSString stringWithFormat:@"正确答案：%@", @"B"];
+                        }
+                            break;
+                        case 3:
+                        {
+                            cell.textLabel.text = [NSString stringWithFormat:@"正确答案：%@", @"C"];
+                        }
+                            break;
+                        case 4:
+                        {
+                            cell.textLabel.text = [NSString stringWithFormat:@"正确答案：%@", @"D"];
+                        }
+                            break;
+                            
+                        default:
+                            break;
                     }
-                        break;
-                    case 2:
-                    {
-                        cell.textLabel.text = [NSString stringWithFormat:@"正确答案：%@", @"B"];
-                    }
-                        break;
-                    case 3:
-                    {
-                        cell.textLabel.text = [NSString stringWithFormat:@"正确答案：%@", @"C"];
-                    }
-                        break;
-                    case 4:
-                    {
-                        cell.textLabel.text = [NSString stringWithFormat:@"正确答案：%@", @"D"];
-                    }
-                        break;
-                        
-                    default:
-                        break;
+                    cell.textLabel.textColor = [UIColor greenColor];
                 }
-                cell.textLabel.textColor = [UIColor greenColor];
+                
             }else
             {
                 cell.textLabel.text = self.question.questionExplain;
@@ -340,6 +348,6 @@ static NSString *QUESTION_RIGHT_ANSWER_CELL_IDENTITY = @"QUESTION_RIGHT_ANSWER_C
 -(BOOL) isUserSelectedRightAnswer
 {
     NSLog(@"User select is %@ and index is %ld", self.question.questionSelectedIndex, (long)self.question.questionSelectedIndex.integerValue);
-    return (self.question.questionSelectedIndex.integerValue == self.question.questionRightAnswer.integerValue);
+    return (self.question.questionSelectedIndex.integerValue == self.question.questionRightAnswer.integerValue || self.didSelectedRightAnswer);
 }
 @end
