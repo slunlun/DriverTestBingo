@@ -92,7 +92,7 @@ static NSString *QUESTION_RIGHT_ANSWER_CELL_IDENTITY = @"QUESTION_RIGHT_ANSWER_C
             break;
         case SECTION_RIGHT_ANSWER:
         {
-            if (self.didUserSelectedAnswer || self.question.questionSelectedIndex.integerValue != 0) {
+            if ([self isUserSelectedAnswer]) {
                 if ([self isUserSelectedRightAnswer]) {
                     return 1;
                 }else
@@ -305,9 +305,10 @@ static NSString *QUESTION_RIGHT_ANSWER_CELL_IDENTITY = @"QUESTION_RIGHT_ANSWER_C
 #pragma mark UITableViewDelegate
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(nonnull NSIndexPath *)indexPath
 {
-    if (self.didUserSelectedAnswer || self.questionViewType == kTestQuestionViewGlance || self.question.questionSelectedIndex.integerValue != 0) {
+    if (![self canUserSelecteAnswer]){
         return;
     }
+    
     if (self.questionViewType != kTestQuestionViewGlance) {
         if (indexPath.section == SECTION_QUESTION_ANSWERS) {
             
@@ -346,7 +347,31 @@ static NSString *QUESTION_RIGHT_ANSWER_CELL_IDENTITY = @"QUESTION_RIGHT_ANSWER_C
 #pragma mark - private method
 -(BOOL) isUserSelectedRightAnswer
 {
-    NSLog(@"User select is %@ and index is %ld", self.question.questionSelectedIndex, (long)self.question.questionSelectedIndex.integerValue);
-    return (self.question.questionSelectedIndex.integerValue == self.question.questionRightAnswer.integerValue || self.didSelectedRightAnswer);
+    if (self.questionViewType == kTestQuestionViewSequence) {
+        return (self.question.questionSelectedIndex.integerValue == self.question.questionRightAnswer.integerValue || self.didSelectedRightAnswer);
+
+    }else
+    {
+         return (self.didSelectedRightAnswer);
+    }
+}
+
+-(BOOL) canUserSelecteAnswer
+{
+    if (self.didUserSelectedAnswer || self.questionViewType == kTestQuestionViewGlance || (self.questionViewType == kTestQuestionViewSequence && self.questionViewType ==  self.question.questionSelectedIndex.integerValue != 0)) {
+        return NO;
+    }
+    
+    return YES;
+}
+
+-(BOOL) isUserSelectedAnswer
+{
+    if ((self.questionViewType == kTestQuestionViewSequence && self.self.question.questionSelectedIndex.integerValue != 0) || self.didUserSelectedAnswer) {
+        return YES;
+    }else
+    {
+        return NO;
+    }
 }
 @end

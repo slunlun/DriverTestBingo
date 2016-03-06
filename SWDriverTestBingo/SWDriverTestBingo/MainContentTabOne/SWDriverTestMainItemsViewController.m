@@ -263,7 +263,7 @@ static NSString *IMG_COL_CELL_IDENTITY = @"IMG_COL_CELL_IDENTITY";
                 break;
         }
         SWQuestionPageViewController *pagesVC = nil;
-        if (indexPath.row == 0) {
+        if (viewType == kTestQuestionViewSequence) {
             pagesVC = [[SWQuestionPageViewController alloc] initWithContentViewsCount:self.pageDataArray.count type:kOptimizedPageController switchToPage:[SWLoginUser loadUserQuestionIndex].integerValue];
         }else
         {

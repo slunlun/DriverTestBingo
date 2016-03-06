@@ -41,9 +41,10 @@
 -(void) viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    NSLog(@"Current page is %ld", (long)[self currentPageNum]);
     self.pageNumBeforePageScroll = [self currentPageNum];
-    [SWLoginUser savaUserQuestionStatus:[NSNumber numberWithInteger:[self currentPageNum]]];
+    if (self.questionPageType == kTestQuestionViewSequence) { // 只有顺序答题 才需要保存答题页数
+        [SWLoginUser savaUserQuestionStatus:[NSNumber numberWithInteger:[self currentPageNum]]];
+    }
 }
 
 #pragma mark INIT/SETTER/GETTER
