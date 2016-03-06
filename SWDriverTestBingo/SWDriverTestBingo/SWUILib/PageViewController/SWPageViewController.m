@@ -222,6 +222,9 @@
     if (pageNum >= 0 && pageNum < self.pageCount) {
         NSLog(@"The width is %lf", self.scrollView.frame.size.width);
         self.scrollView.contentOffset = CGPointMake(self.scrollView.frame.size.width * pageNum, self.scrollView.contentOffset.y);
+        [self createPageAtIndex:pageNum];
+        [self createPageAtIndex:pageNum -1];
+        [self createPageAtIndex:pageNum + 1];
     }
 }
 
@@ -290,6 +293,11 @@
     if (self.type != kOptimizedPageController || index >= self.pageCount || index < 0) {
         return;
     }
+    UIView *oldView = [self.scrollView viewWithTag:index];
+    if (oldView) {
+        return;
+    }
+     NSLog(@"Create %ld", (long)index);
     UIView *newPageView = nil;
     if ([self.delegate respondsToSelector:@selector(swpageViewController:pageForIndex:)]) {
         newPageView = [self.delegate swpageViewController:self pageForIndex:index];
@@ -297,6 +305,10 @@
     
     newPageView.translatesAutoresizingMaskIntoConstraints = NO;
     newPageView.tag = index;
+    //UIView *oldView = [self.scrollView viewWithTag:index];
+   // [oldView removeFromSuperview];
+    //oldView = nil;
+    
     [self.scrollView addSubview:newPageView];
     
     NSLayoutConstraint *topConstraint = [NSLayoutConstraint constraintWithItem:newPageView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.topLayoutGuide attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0];
@@ -330,6 +342,7 @@
     if (self.type == kOptimizedPageController && index == 0) { // 0 is position base view, so do not remove it.
         return;
     }
+    NSLog(@"Release %ld", (long)index);
     UIView *page = [self.scrollView viewWithTag:index];
     [page removeFromSuperview];
     
