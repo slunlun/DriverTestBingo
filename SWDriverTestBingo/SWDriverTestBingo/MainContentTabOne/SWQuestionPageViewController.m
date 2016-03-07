@@ -49,10 +49,18 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+-(void) viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self.navigationController.navigationBar setTranslucent:NO];
+    self.navigationController.interactivePopGestureRecognizer.enabled = NO;
 
+    self.navigationController.navigationBarHidden = NO;
+}
 -(void) viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+   
     [self makeUpNavigationBarView];
     if (self.questionPageType == kTestQuestionViewTest) {
         [self AddTestQuestionStatusItemsView];

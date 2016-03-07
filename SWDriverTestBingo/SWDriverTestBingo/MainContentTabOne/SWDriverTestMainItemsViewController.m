@@ -274,7 +274,9 @@ static NSString *IMG_COL_CELL_IDENTITY = @"IMG_COL_CELL_IDENTITY";
         
         pagesVC.delegate = self;
         
-        [self.navigationController pushViewController:pagesVC animated:YES];
+        AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+        [appDelegate.rootNavigationController pushViewController:pagesVC animated:YES];
+        //[self.navigationController pushViewController:pagesVC animated:YES];
         
     }else if(indexPath.section == 1)
     {
@@ -287,8 +289,8 @@ static NSString *IMG_COL_CELL_IDENTITY = @"IMG_COL_CELL_IDENTITY";
                 }
                 SWQuestionPageViewController *pagesVC = [[SWQuestionPageViewController alloc] initWithContentViewsCount:self.pageDataArray.count type:kOptimizedPageController questinPageType:kTestQuestionViewMark];
                 pagesVC.delegate = self;
-                [self.navigationController pushViewController:pagesVC animated:YES];
-                
+                AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+                [appDelegate.rootNavigationController pushViewController:pagesVC animated:YES];
             }
                 break;
             case 1:  // 做题统计
