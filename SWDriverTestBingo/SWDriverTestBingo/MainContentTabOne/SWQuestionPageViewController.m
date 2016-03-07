@@ -14,10 +14,12 @@
 #import "SWLoginUser.h"
 #import "SWTestQuestionCell.h"
 
+#define SW_QUESTION_ITESM_STATUS_VIEW_INIT_HIEGHT 80.0
 @interface SWQuestionPageViewController () <UIScrollViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 @property(nonatomic) NSInteger pageNumBeforePageScroll;
 
 @property(nonatomic, strong) UIView *dragMoveView;
+@property(nonatomic, strong) UIView *dragMoveViewHeader;
 @property(nonatomic) NSInteger initHeight;
 @property(nonatomic) NSInteger beginHeight;
 @property(nonatomic) NSInteger maxHeight;
@@ -41,6 +43,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.scrollView.delegate = self;
+    self.scrollView.backgroundColor = [UIColor whiteColor];
     self.pageNumBeforePageScroll = self.initPageNum;
 }
 
@@ -178,16 +181,26 @@
     }
 }
 
+
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    if (self.questionPageType == kTestQuestionViewTest) {
+        NSIndexPath *index = [NSIndexPath indexPathForRow:[self currentPageNum] inSection:0];
+        [self.contentCollectionView scrollToItemAtIndexPath:index atScrollPosition:UICollectionViewScrollPositionTop animated:YES];
+    }
+}
+
 #pragma makr - For Questions Test Page
 -(void) AddTestQuestionStatusItemsView
 {
     _dragMoveView = [[UIView alloc] init];
-    _dragMoveView.backgroundColor = [UIColor grayColor];
+    _dragMoveView.backgroundColor = [UIColor whiteColor];
     _dragMoveView.translatesAutoresizingMaskIntoConstraints = NO;
     
     UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panViewResponse:)];
     [_dragMoveView addGestureRecognizer:pan];
-    self.initHeight = 80.0f;
+    self.initHeight = SW_QUESTION_ITESM_STATUS_VIEW_INIT_HIEGHT;
     
     [self.view addSubview:_dragMoveView];
     [self.view bringSubviewToFront:_dragMoveView];
@@ -210,6 +223,7 @@
     _contentCollectionView.bounces = YES;
     [_contentCollectionView setShowsHorizontalScrollIndicator:NO];
     [_contentCollectionView setShowsVerticalScrollIndicator:NO];
+    _contentCollectionView.backgroundColor = [UIColor clearColor];
     
     
     [_contentCollectionView registerNib:[UINib nibWithNibName:@"SWTestQuestionCell" bundle:nil] forCellWithReuseIdentifier:@"SW_QUESTION_NUM_CELL"];
@@ -217,7 +231,10 @@
     [self.dragMoveView addSubview:_contentCollectionView];
     viewDict = @{@"collectionView":_contentCollectionView};
     [self.dragMoveView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[collectionView]|" options:0 metrics:nil views:viewDict]];
-    [self.dragMoveView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(30)-[collectionView]-|" options:0 metrics:nil views:viewDict]];
+    [self.dragMoveView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(20)-[collectionView]|" options:0 metrics:nil views:viewDict]];
+    
+    _dragMoveViewHeader = [[UIView alloc] init];
+    
 
 }
 
@@ -291,8 +308,8 @@
     SWTestQuestionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"SW_QUESTION_NUM_CELL" forIndexPath:indexPath];
     NSString * stringTitle = [NSString stringWithFormat:@"%ld", (long)(indexPath.row + 1)];
     [cell.SWQuestionNumLabel setText:stringTitle];
-    [cell.SWQuestionNumLabel setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:1.0 alpha:0.6]];
-    cell.SWQuestionNumLabel.layer.cornerRadius = 24.0f;
+    [cell.SWQuestionNumLabel setBackgroundColor:[UIColor colorWithRed:(180.0f/255.0f) green:(228.0f/255.0f) blue:(247.0f/255.0f) alpha:0.6]];
+    cell.SWQuestionNumLabel.layer.cornerRadius = 25.0f;
     cell.SWQuestionNumLabel.layer.masksToBounds = YES;
     [cell.SWQuestionNumLabel.layer setBorderWidth:1.0];
     
@@ -309,7 +326,42 @@
     [self releasePageAtIndex:[self currentPageNum] + 1];
     
     [self changeToPage:indexPath.row];
+    
+    [self downTestQuestionItemStatusView];
 }
 
+-(void) upTestQuestionItemStatusView
+{
+     [self.view removeConstraint:self.heightConstraint];
+     self.heightConstraint = [NSLayoutConstraint constraintWithItem:self.dragMoveView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:self.maxHeight];
+    [UIView animateWithDuration:0.5 animations:^{
+        
+        [self.view addConstraint:self.heightConstraint];
+        [self.view layoutIfNeeded];
+        
+        
+    } completion:^(BOOL finished) {
+    
+    }];
 
+}
+
+-(void) downTestQuestionItemStatusView
+{
+    [self.view removeConstraint:self.heightConstraint];
+    self.heightConstraint = [NSLayoutConstraint constraintWithItem:self.dragMoveView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:self.initHeight];
+    [UIView animateWithDuration:0.5 animations:^{
+        
+        [self.view addConstraint:self.heightConstraint];
+        [self.view layoutIfNeeded];
+        
+        
+    } completion:^(BOOL finished) {
+        if (finished) {
+            NSIndexPath *index = [NSIndexPath indexPathForRow:[self currentPageNum] inSection:0];
+            [self.contentCollectionView scrollToItemAtIndexPath:index atScrollPosition:UICollectionViewScrollPositionTop animated:YES];
+        }
+    }];
+
+}
 @end
