@@ -11,4 +11,7 @@
 
 @interface SWQuestionPageViewController : SWPageViewController
 @property(nonatomic) TestQuestionViewType questionPageType;
+
+-(instancetype) initWithContentViewsCount:(NSInteger) pageCount type:(SWPageViewControllerType) type questinPageType:(TestQuestionViewType) questionPageType;
+-(instancetype) initWithContentViewsCount:(NSInteger) pageCount type:(SWPageViewControllerType) type switchToPage:(NSUInteger) pageNum questinPageType:(TestQuestionViewType) questionPageType;
 @end

@@ -244,7 +244,9 @@ static NSString *IMG_COL_CELL_IDENTITY = @"IMG_COL_CELL_IDENTITY";
                 break;
             case 1:  // 模拟练习
             {
+                [self genTestQuestionDatas];
                 viewType = kTestQuestionViewTest;
+                
             }
                 break;
             case 2:  // 浏览题库
@@ -263,15 +265,14 @@ static NSString *IMG_COL_CELL_IDENTITY = @"IMG_COL_CELL_IDENTITY";
                 break;
         }
         SWQuestionPageViewController *pagesVC = nil;
-        if (indexPath.row == 0) {
-            pagesVC = [[SWQuestionPageViewController alloc] initWithContentViewsCount:self.pageDataArray.count type:kOptimizedPageController switchToPage:[SWLoginUser loadUserQuestionIndex].integerValue];
+        if (viewType == kTestQuestionViewSequence) {
+            pagesVC = [[SWQuestionPageViewController alloc] initWithContentViewsCount:self.pageDataArray.count type:kOptimizedPageController switchToPage:[SWLoginUser loadUserQuestionIndex].integerValue questinPageType:viewType];
         }else
         {
-            pagesVC = [[SWQuestionPageViewController alloc] initWithContentViewsCount:self.pageDataArray.count type:kOptimizedPageController];
+            pagesVC = [[SWQuestionPageViewController alloc] initWithContentViewsCount:self.pageDataArray.count type:kOptimizedPageController questinPageType:viewType];
         }
         
         pagesVC.delegate = self;
-        pagesVC.questionPageType = viewType;
         
         [self.navigationController pushViewController:pagesVC animated:YES];
         
@@ -284,9 +285,8 @@ static NSString *IMG_COL_CELL_IDENTITY = @"IMG_COL_CELL_IDENTITY";
                 if (markCount == 0) {
                     return;
                 }
-                SWQuestionPageViewController *pagesVC = [[SWQuestionPageViewController alloc] initWithContentViewsCount:self.pageDataArray.count type:kOptimizedPageController];
+                SWQuestionPageViewController *pagesVC = [[SWQuestionPageViewController alloc] initWithContentViewsCount:self.pageDataArray.count type:kOptimizedPageController questinPageType:kTestQuestionViewMark];
                 pagesVC.delegate = self;
-                pagesVC.questionPageType = kTestQuestionViewMark;
                 [self.navigationController pushViewController:pagesVC animated:YES];
                 
             }
@@ -325,6 +325,26 @@ static NSString *IMG_COL_CELL_IDENTITY = @"IMG_COL_CELL_IDENTITY";
     NSArray *retArray = @[redView, yellowView, brownView, greenView, grayView, blueView];
     return retArray;
 }
+
+- (NSInteger) genTestQuestionDatas
+{
+    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"SWQuestionItems" inManagedObjectContext:appDelegate.managedObjectContext];
+    [fetchRequest setEntity:entity];
+    
+    // Specify how the fetched objects should be sorted
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"questionID"
+                                                                   ascending:YES];
+    [fetchRequest setSortDescriptors:[NSArray arrayWithObjects:sortDescriptor, nil]];
+    
+    
+    NSError *error = nil;
+    NSArray *fetchedObjects = [appDelegate.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    self.pageDataArray = fetchedObjects;
+    return self.pageDataArray.count;
+}
+
 - (NSInteger) genSequenceQuestionDatas
 {
     AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;

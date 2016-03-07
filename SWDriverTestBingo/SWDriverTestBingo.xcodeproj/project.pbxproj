@@ -37,6 +37,8 @@
 		805109101C1C5B8300CB1D18 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 805109121C1C5B8300CB1D18 /* Localizable.strings */; };
 		8052BEF71C3D39C900D7994E /* SWLoginUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 8052BEF61C3D39C800D7994E /* SWLoginUser.m */; };
 		8089F0DA1C81C99E00FB2E4E /* SWDriverTestBingo.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 8089F0D91C81C99E00FB2E4E /* SWDriverTestBingo.sqlite */; };
+		808AC43E1C8C34AC00A05F6D /* SWTestQuestionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 808AC43C1C8C34AC00A05F6D /* SWTestQuestionCell.m */; };
+		808AC43F1C8C34AC00A05F6D /* SWTestQuestionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 808AC43D1C8C34AC00A05F6D /* SWTestQuestionCell.xib */; };
 		80CE62FD1C1BD32B0076816A /* SWDriverTestCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 80CE62FC1C1BD32B0076816A /* SWDriverTestCellView.m */; };
 		80D7794C1C3AA50D004C9151 /* SWQuestionStatus+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 80D7793B1C3AA50D004C9151 /* SWQuestionStatus+CoreDataProperties.m */; };
 		80D7794D1C3AA50D004C9151 /* SWQuestionStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 80D7793D1C3AA50D004C9151 /* SWQuestionStatus.m */; };
@@ -692,6 +694,9 @@
 		8052BEF51C3D39C800D7994E /* SWLoginUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWLoginUser.h; sourceTree = "<group>"; };
 		8052BEF61C3D39C800D7994E /* SWLoginUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWLoginUser.m; sourceTree = "<group>"; };
 		8089F0D91C81C99E00FB2E4E /* SWDriverTestBingo.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = SWDriverTestBingo.sqlite; sourceTree = "<group>"; };
+		808AC43B1C8C34AC00A05F6D /* SWTestQuestionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWTestQuestionCell.h; sourceTree = "<group>"; };
+		808AC43C1C8C34AC00A05F6D /* SWTestQuestionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWTestQuestionCell.m; sourceTree = "<group>"; };
+		808AC43D1C8C34AC00A05F6D /* SWTestQuestionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SWTestQuestionCell.xib; sourceTree = "<group>"; };
 		80CE62FB1C1BD32B0076816A /* SWDriverTestCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWDriverTestCellView.h; sourceTree = "<group>"; };
 		80CE62FC1C1BD32B0076816A /* SWDriverTestCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWDriverTestCellView.m; sourceTree = "<group>"; };
 		80D7793A1C3AA50D004C9151 /* SWQuestionStatus+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SWQuestionStatus+CoreDataProperties.h"; sourceTree = "<group>"; };
@@ -1397,6 +1402,7 @@
 		5E80479D1C194C1500B0587A /* SWUILib */ = {
 			isa = PBXGroup;
 			children = (
+				808AC43A1C8C348D00A05F6D /* TestQuestionCell */,
 				8033EB4C1C316C7300299527 /* RoundBtnTableCell */,
 				80F6C7671C2535E300A7E9DB /* UIButtonExt */,
 				5E1CC4361C1FBD500025B4F5 /* PageViewController */,
@@ -1488,6 +1494,16 @@
 				8052BEF61C3D39C800D7994E /* SWLoginUser.m */,
 			);
 			name = UserInfo;
+			sourceTree = "<group>";
+		};
+		808AC43A1C8C348D00A05F6D /* TestQuestionCell */ = {
+			isa = PBXGroup;
+			children = (
+				808AC43B1C8C34AC00A05F6D /* SWTestQuestionCell.h */,
+				808AC43C1C8C34AC00A05F6D /* SWTestQuestionCell.m */,
+				808AC43D1C8C34AC00A05F6D /* SWTestQuestionCell.xib */,
+			);
+			name = TestQuestionCell;
 			sourceTree = "<group>";
 		};
 		80D779351C3AA49A004C9151 /* CoreData */ = {
@@ -2353,6 +2369,7 @@
 				80F29DFA1C8738A70062F096 /* 883.jpg in Resources */,
 				80F29C721C8738A70062F096 /* 49.jpg in Resources */,
 				80F29D241C8738A70062F096 /* 399.jpg in Resources */,
+				808AC43F1C8C34AC00A05F6D /* SWTestQuestionCell.xib in Resources */,
 				80F29C781C8738A70062F096 /* 56.jpg in Resources */,
 				80F29C551C8738A70062F096 /* 19.jpg in Resources */,
 				80F29DCD1C8738A70062F096 /* 795.jpg in Resources */,
@@ -2779,6 +2796,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				808AC43E1C8C34AC00A05F6D /* SWTestQuestionCell.m in Sources */,
 				5E8826AB1C328634007225E2 /* SWGoodIdeasViewController.m in Sources */,
 				80D779531C3AA50D004C9151 /* SWQuestionItems.m in Sources */,
 				80D779681C3AACC4004C9151 /* SWCommonUtils.m in Sources */,
