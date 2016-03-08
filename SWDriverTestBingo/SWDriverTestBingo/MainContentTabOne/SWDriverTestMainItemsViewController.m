@@ -22,6 +22,7 @@
 #import "SWUserInfoConfigViewController.h"
 
 
+
 static NSString *IMG_COL_CELL_IDENTITY = @"IMG_COL_CELL_IDENTITY";
 @interface SWDriverTestMainItemsViewController () <UICollectionViewDataSource, UICollectionViewDelegate, SWPageViewControllerDelegate>
 @property(nonatomic, strong) UICollectionView *collectionView;

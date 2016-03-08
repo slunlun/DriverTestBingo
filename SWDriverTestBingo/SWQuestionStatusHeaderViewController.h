@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface SWQuestionStatusHeaderViewController : UIViewController
+@property (weak, nonatomic) IBOutlet UIImageView *headImage;
 
 @end

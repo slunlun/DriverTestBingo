@@ -13,13 +13,14 @@
 #import "SWDriverTestQuestionView.h"
 #import "SWLoginUser.h"
 #import "SWTestQuestionCell.h"
+#import "SWQuestionStatusHeaderViewController.h"
 
 #define SW_QUESTION_ITESM_STATUS_VIEW_INIT_HIEGHT 80.0
 @interface SWQuestionPageViewController () <UIScrollViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 @property(nonatomic) NSInteger pageNumBeforePageScroll;
 
 @property(nonatomic, strong) UIView *dragMoveView;
-@property(nonatomic, strong) UIView *dragMoveViewHeader;
+@property(nonatomic, strong) SWQuestionStatusHeaderViewController *dragMoveViewHeader;
 @property(nonatomic) NSInteger initHeight;
 @property(nonatomic) NSInteger beginHeight;
 @property(nonatomic) NSInteger maxHeight;
@@ -233,9 +234,19 @@
     [self.dragMoveView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[collectionView]|" options:0 metrics:nil views:viewDict]];
     [self.dragMoveView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(20)-[collectionView]|" options:0 metrics:nil views:viewDict]];
     
-    _dragMoveViewHeader = [[UIView alloc] init];
+    _dragMoveViewHeader = [[SWQuestionStatusHeaderViewController alloc] initWithNibName:@"SWQuestionStatusHeaderViewController" bundle:nil];
     
-
+    _dragMoveViewHeader.view.backgroundColor = [UIColor redColor];
+    _dragMoveViewHeader.view.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.dragMoveView addSubview:_dragMoveViewHeader.view];
+    viewDict = @{@"headerView":_dragMoveViewHeader.view};
+    [self.dragMoveView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[headerView]|" options:0 metrics:nil views:viewDict]];
+    [self.dragMoveView addConstraint:[NSLayoutConstraint constraintWithItem:_dragMoveViewHeader.view attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.dragMoveView attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.0]];
+    [self.dragMoveView addConstraint:[NSLayoutConstraint constraintWithItem:_dragMoveViewHeader.view attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:20.0]];
+    _dragMoveViewHeader.headImage.image = [UIImage imageNamed:@"List"];
+    _dragMoveViewHeader.headImage.backgroundColor = [UIColor greenColor];
+    
+    
 }
 
 -(void) panViewResponse:(UIPanGestureRecognizer *) panGesture
