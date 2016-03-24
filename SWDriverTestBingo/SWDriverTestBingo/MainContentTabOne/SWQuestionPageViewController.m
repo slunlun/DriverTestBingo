@@ -16,6 +16,7 @@
 #import "SWQuestionStatusHeaderViewController.h"
 
 #define SW_QUESTION_ITESM_STATUS_VIEW_INIT_HIEGHT 80.0
+#define COUNT_DOWN_TIME 2700  // 45 mins
 @interface SWQuestionPageViewController () <UIScrollViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 @property(nonatomic) NSInteger pageNumBeforePageScroll;
 
@@ -27,6 +28,10 @@
 @property(nonatomic, strong) NSLayoutConstraint *heightConstraint;
 @property(nonatomic, strong) UICollectionView *contentCollectionView;
 @property(nonatomic) CGPoint beginPoint;
+
+@property(nonatomic, strong) NSTimer *countDownTimer;
+@property(nonatomic, strong) UILabel *timerCountdownLabel;
+@property(nonatomic) NSInteger examTimeLeft;
 @end
 
 @implementation SWQuestionPageViewController
@@ -46,6 +51,9 @@
     self.scrollView.delegate = self;
     self.scrollView.backgroundColor = [UIColor whiteColor];
     self.pageNumBeforePageScroll = self.initPageNum;
+    if (self.questionPageType == kTestQuestionViewTest) {
+        _examTimeLeft = COUNT_DOWN_TIME;
+    }
 }
 
 
@@ -84,35 +92,44 @@
 #pragma mark INIT/SETTER/GETTER
 -(void) makeUpNavigationBarView
 {
-    FlexibleAlignButton *questionIndexBtn = [[FlexibleAlignButton alloc] initWithFrame:CGRectMake(0, 0, 48, 48)];
-    questionIndexBtn.alignment = kButtonAlignmentImageTop;
-    questionIndexBtn.gap = 2;
-    [questionIndexBtn setImage:[UIImage imageNamed:@"questionIndex"] forState:UIControlStateNormal];
-    [questionIndexBtn setTitle:[NSString stringWithFormat:@"%ld/%ld", ([self currentPageNum] + 1), self.pageCount] forState:UIControlStateNormal];
-    questionIndexBtn.titleLabel.font = [UIFont systemFontOfSize:9];
-    [questionIndexBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
-    
-   // [questionIndexBtn centerImageAndTitle:1.0];
-    
-    UIButton *markBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 48, 48)];
-    SWQuestionItems *questionItem = [self currentQuestionItem];
-    if (questionItem.markQuestionsLib) {
-        [markBtn setImage:[UIImage imageNamed:@"mark"] forState:UIControlStateNormal];
-    }else
+    if (self.questionPageType != kTestQuestionViewTest) {
+        
+        FlexibleAlignButton *questionIndexBtn = [[FlexibleAlignButton alloc] initWithFrame:CGRectMake(0, 0, 48, 48)];
+        questionIndexBtn.alignment = kButtonAlignmentImageTop;
+        questionIndexBtn.gap = 2;
+        [questionIndexBtn setImage:[UIImage imageNamed:@"questionIndex"] forState:UIControlStateNormal];
+        [questionIndexBtn setTitle:[NSString stringWithFormat:@"%ld/%ld", ([self currentPageNum] + 1), self.pageCount] forState:UIControlStateNormal];
+        questionIndexBtn.titleLabel.font = [UIFont systemFontOfSize:9];
+        [questionIndexBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+        
+        // [questionIndexBtn centerImageAndTitle:1.0];
+        
+        UIButton *markBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 48, 48)];
+        SWQuestionItems *questionItem = [self currentQuestionItem];
+        if (questionItem.markQuestionsLib) {
+            [markBtn setImage:[UIImage imageNamed:@"mark"] forState:UIControlStateNormal];
+        }else
+        {
+            [markBtn setImage:[UIImage imageNamed:@"markNot"] forState:UIControlStateNormal];
+        }
+        [markBtn setTitle: NSLocalizedString(@"MarkQuestion", NULL) forState:UIControlStateNormal];
+        markBtn.titleLabel.font = [UIFont systemFontOfSize:9];
+        [markBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+        [markBtn addTarget:self action:@selector(markQuestion:) forControlEvents:UIControlEventTouchUpInside];
+        [markBtn centerImageAndTitle:1.0];
+        
+        
+        UIBarButtonItem *btnQuestionIndex = [[UIBarButtonItem alloc] initWithCustomView:questionIndexBtn];
+        UIBarButtonItem *btnMakrQuestion = [[UIBarButtonItem alloc] initWithCustomView:markBtn];
+        NSArray *barBtnItemArray = @[btnMakrQuestion, btnQuestionIndex];
+        self.navigationItem.rightBarButtonItems = barBtnItemArray;
+        
+    }else if(self.questionPageType == kTestQuestionViewTest)
     {
-        [markBtn setImage:[UIImage imageNamed:@"markNot"] forState:UIControlStateNormal];
+        _timerCountdownLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 90, 45)];
+        _timerCountdownLabel.text =
     }
-    [markBtn setTitle: NSLocalizedString(@"MarkQuestion", NULL) forState:UIControlStateNormal];
-    markBtn.titleLabel.font = [UIFont systemFontOfSize:9];
-    [markBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
-    [markBtn addTarget:self action:@selector(markQuestion:) forControlEvents:UIControlEventTouchUpInside];
-    [markBtn centerImageAndTitle:1.0];
-    
-    
-    UIBarButtonItem *btnQuestionIndex = [[UIBarButtonItem alloc] initWithCustomView:questionIndexBtn];
-    UIBarButtonItem *btnMakrQuestion = [[UIBarButtonItem alloc] initWithCustomView:markBtn];
-    NSArray *barBtnItemArray = @[btnMakrQuestion, btnQuestionIndex];
-    self.navigationItem.rightBarButtonItems = barBtnItemArray;
+   
 }
 #pragma mark UI response
 -(void) updataQuestionIndexTitle
@@ -374,5 +391,14 @@
         }
     }];
 
+}
+
+#pragma mark - Private Method
+-(NSString *) convertLeftTimeToString:(NSInteger) leftTime
+{
+    NSInteger min = leftTime / 60;
+    NSInteger sec = leftTime % 60;
+    NSString *leftTimeStr = [NSString stringWithFormat:@"%02ld:%02ld", (long)min, (long)sec];
+    return leftTimeStr;
 }
 @end
