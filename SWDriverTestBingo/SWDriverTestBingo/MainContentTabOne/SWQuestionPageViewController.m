@@ -30,7 +30,7 @@
 @property(nonatomic) CGPoint beginPoint;
 
 @property(nonatomic, strong) NSTimer *countDownTimer;
-@property(nonatomic, strong) UILabel *timerCountdownLabel;
+@property(nonatomic, strong) FlexibleAlignButton *timerCountdownButton;
 @property(nonatomic) NSInteger examTimeLeft;
 @end
 
@@ -76,6 +76,7 @@
     [self makeUpNavigationBarView];
     if (self.questionPageType == kTestQuestionViewTest) {
         [self AddTestQuestionStatusItemsView];
+        _countDownTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(updateCountDownTime:) userInfo:nil repeats:YES];
     }
 
 }
@@ -126,12 +127,41 @@
         
     }else if(self.questionPageType == kTestQuestionViewTest)
     {
-        _timerCountdownLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 90, 45)];
-        _timerCountdownLabel.text =
+        _timerCountdownButton = [[FlexibleAlignButton alloc] initWithFrame:CGRectMake(0, 0, 48, 48)];
+        _timerCountdownButton.alignment = kButtonAlignmentImageTop;
+        _timerCountdownButton.gap = 2;
+        [_timerCountdownButton setImage:[UIImage imageNamed:@"time"] forState:UIControlStateNormal];
+        [_timerCountdownButton setTitle:[self convertLeftTimeToString:self.examTimeLeft] forState:UIControlStateNormal];
+        _timerCountdownButton.titleLabel.font = [UIFont systemFontOfSize:9];
+        [_timerCountdownButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+
+
+        FlexibleAlignButton *submitTest = [[FlexibleAlignButton alloc] initWithFrame:CGRectMake(0, 0, 48, 48)];
+        [submitTest addTarget:self action:@selector(submitPaperPressed:) forControlEvents:UIControlEventTouchUpInside];
+        submitTest.alignment = kButtonAlignmentImageTop;
+        submitTest.gap = 2;
+        [submitTest setImage:[UIImage imageNamed:@"paper"] forState:UIControlStateNormal];
+        [submitTest setTitle:NSLocalizedString(@"SubmitPaper", nil) forState:UIControlStateNormal];
+        submitTest.titleLabel.font = [UIFont systemFontOfSize:9];
+        [submitTest setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+
+        UIBarButtonItem *btnExamLeft = [[UIBarButtonItem alloc] initWithCustomView:_timerCountdownButton];
+        UIBarButtonItem *btnSubmitText = [[UIBarButtonItem alloc] initWithCustomView:submitTest];
+        NSArray *barBtnItemArray = @[btnExamLeft, btnSubmitText];
+        self.navigationItem.rightBarButtonItems = barBtnItemArray;
+        
+        
+
     }
    
 }
 #pragma mark UI response
+
+-(void) submitPaperPressed:(UIButton *) btn
+{
+    NSLog(@"Submit paper");
+}
+
 -(void) updataQuestionIndexTitle
 {
     UIButton *btnQuestionIndex = (UIButton *)self.navigationItem.rightBarButtonItems[1].customView;
@@ -400,5 +430,16 @@
     NSInteger sec = leftTime % 60;
     NSString *leftTimeStr = [NSString stringWithFormat:@"%02ld:%02ld", (long)min, (long)sec];
     return leftTimeStr;
+}
+
+-(void) updateCountDownTime:(NSTimer *) timer
+{
+    NSString *timeLeftStr = [self convertLeftTimeToString:--self.examTimeLeft];
+    if (self.examTimeLeft < 0) {
+        [timer invalidate];
+    }else
+    {
+        [self.timerCountdownButton setTitle:timeLeftStr forState:UIControlStateNormal];
+    }
 }
 @end
