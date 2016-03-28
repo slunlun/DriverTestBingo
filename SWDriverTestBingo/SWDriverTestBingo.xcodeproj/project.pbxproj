@@ -38,6 +38,8 @@
 		8033EB511C316CBD00299527 /* SWRoundButtonTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8033EB4F1C316CBD00299527 /* SWRoundButtonTableViewCell.xib */; };
 		805109101C1C5B8300CB1D18 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 805109121C1C5B8300CB1D18 /* Localizable.strings */; };
 		8052BEF71C3D39C900D7994E /* SWLoginUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 8052BEF61C3D39C800D7994E /* SWLoginUser.m */; };
+		8076A1D11CA7B01C00E42728 /* NSTimer+SWCountDownTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8076A1D01CA7B01C00E42728 /* NSTimer+SWCountDownTimer.m */; };
+		8076A1D41CA7B45600E42728 /* SWMessageBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 8076A1D31CA7B45600E42728 /* SWMessageBox.m */; };
 		8089F0DA1C81C99E00FB2E4E /* SWDriverTestBingo.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 8089F0D91C81C99E00FB2E4E /* SWDriverTestBingo.sqlite */; };
 		808AC43E1C8C34AC00A05F6D /* SWTestQuestionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 808AC43C1C8C34AC00A05F6D /* SWTestQuestionCell.m */; };
 		808AC43F1C8C34AC00A05F6D /* SWTestQuestionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 808AC43D1C8C34AC00A05F6D /* SWTestQuestionCell.xib */; };
@@ -55,6 +57,7 @@
 		80D779681C3AACC4004C9151 /* SWCommonUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 80D779671C3AACC4004C9151 /* SWCommonUtils.m */; };
 		80D7796D1C3AAD7C004C9151 /* SWTableMaxIndex+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 80D7796A1C3AAD7C004C9151 /* SWTableMaxIndex+CoreDataProperties.m */; };
 		80D7796E1C3AAD7C004C9151 /* SWTableMaxIndex.m in Sources */ = {isa = PBXBuildFile; fileRef = 80D7796C1C3AAD7C004C9151 /* SWTableMaxIndex.m */; };
+		80E001BB1CA68A8E00ABF396 /* SWDragToMoveView.m in Sources */ = {isa = PBXBuildFile; fileRef = 80E001BA1CA68A8E00ABF396 /* SWDragToMoveView.m */; };
 		80F29C431C8738A70062F096 /* 1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 80F299FD1C8738A40062F096 /* 1.jpg */; };
 		80F29C441C8738A70062F096 /* 2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 80F299FE1C8738A40062F096 /* 2.jpg */; };
 		80F29C451C8738A70062F096 /* 3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 80F299FF1C8738A40062F096 /* 3.jpg */; };
@@ -698,6 +701,10 @@
 		805109111C1C5B8300CB1D18 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		8052BEF51C3D39C800D7994E /* SWLoginUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWLoginUser.h; sourceTree = "<group>"; };
 		8052BEF61C3D39C800D7994E /* SWLoginUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWLoginUser.m; sourceTree = "<group>"; };
+		8076A1CF1CA7B01C00E42728 /* NSTimer+SWCountDownTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSTimer+SWCountDownTimer.h"; sourceTree = "<group>"; };
+		8076A1D01CA7B01C00E42728 /* NSTimer+SWCountDownTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTimer+SWCountDownTimer.m"; sourceTree = "<group>"; };
+		8076A1D21CA7B45600E42728 /* SWMessageBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWMessageBox.h; sourceTree = "<group>"; };
+		8076A1D31CA7B45600E42728 /* SWMessageBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWMessageBox.m; sourceTree = "<group>"; };
 		8089F0D91C81C99E00FB2E4E /* SWDriverTestBingo.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = SWDriverTestBingo.sqlite; sourceTree = "<group>"; };
 		808AC43B1C8C34AC00A05F6D /* SWTestQuestionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWTestQuestionCell.h; sourceTree = "<group>"; };
 		808AC43C1C8C34AC00A05F6D /* SWTestQuestionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWTestQuestionCell.m; sourceTree = "<group>"; };
@@ -730,6 +737,8 @@
 		80D7796A1C3AAD7C004C9151 /* SWTableMaxIndex+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SWTableMaxIndex+CoreDataProperties.m"; sourceTree = "<group>"; };
 		80D7796B1C3AAD7C004C9151 /* SWTableMaxIndex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWTableMaxIndex.h; sourceTree = "<group>"; };
 		80D7796C1C3AAD7C004C9151 /* SWTableMaxIndex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWTableMaxIndex.m; sourceTree = "<group>"; };
+		80E001B91CA68A8E00ABF396 /* SWDragToMoveView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWDragToMoveView.h; sourceTree = "<group>"; };
+		80E001BA1CA68A8E00ABF396 /* SWDragToMoveView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWDragToMoveView.m; sourceTree = "<group>"; };
 		80ECE7931C204EBE00B6EBF5 /* SWRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRootViewController.h; sourceTree = "<group>"; };
 		80F299FD1C8738A40062F096 /* 1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 1.jpg; sourceTree = "<group>"; };
 		80F299FE1C8738A40062F096 /* 2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 2.jpg; sourceTree = "<group>"; };
@@ -1392,6 +1401,8 @@
 				805109121C1C5B8300CB1D18 /* Localizable.strings */,
 				80D779661C3AACC4004C9151 /* SWCommonUtils.h */,
 				80D779671C3AACC4004C9151 /* SWCommonUtils.m */,
+				8076A1CF1CA7B01C00E42728 /* NSTimer+SWCountDownTimer.h */,
+				8076A1D01CA7B01C00E42728 /* NSTimer+SWCountDownTimer.m */,
 			);
 			path = SWDriverTestBingo;
 			sourceTree = "<group>";
@@ -1414,6 +1425,10 @@
 				5E1CC4361C1FBD500025B4F5 /* PageViewController */,
 				5EEF42971C1A73630050B91B /* Layout */,
 				5E80479E1C194E6500B0587A /* Drag2ShowMenu */,
+				80E001B91CA68A8E00ABF396 /* SWDragToMoveView.h */,
+				80E001BA1CA68A8E00ABF396 /* SWDragToMoveView.m */,
+				8076A1D21CA7B45600E42728 /* SWMessageBox.h */,
+				8076A1D31CA7B45600E42728 /* SWMessageBox.m */,
 			);
 			name = SWUILib;
 			sourceTree = "<group>";
@@ -2819,6 +2834,7 @@
 				80D779681C3AACC4004C9151 /* SWCommonUtils.m in Sources */,
 				5E6973411C5226DD00483D27 /* SWTitleImageCellView.m in Sources */,
 				5EEF429C1C1A756D0050B91B /* CollectionLayoutForDriverTestMain.m in Sources */,
+				8076A1D41CA7B45600E42728 /* SWMessageBox.m in Sources */,
 				80D7796E1C3AAD7C004C9151 /* SWTableMaxIndex.m in Sources */,
 				80D7794C1C3AA50D004C9151 /* SWQuestionStatus+CoreDataProperties.m in Sources */,
 				5E1CC4391C1FBD9E0025B4F5 /* SWPageViewController.m in Sources */,
@@ -2830,6 +2846,8 @@
 				80D779581C3AA5B3004C9151 /* SWUserInfo+CoreDataProperties.m in Sources */,
 				5E8047851C19243600B0587A /* main.m in Sources */,
 				80D7796D1C3AAD7C004C9151 /* SWTableMaxIndex+CoreDataProperties.m in Sources */,
+				80E001BB1CA68A8E00ABF396 /* SWDragToMoveView.m in Sources */,
+				8076A1D11CA7B01C00E42728 /* NSTimer+SWCountDownTimer.m in Sources */,
 				5E8826A81C328616007225E2 /* SWUserInfoConfigViewController.m in Sources */,
 				5EEF42991C1A74350050B91B /* SWDriverTestMainCollectionViewCell.m in Sources */,
 				8052BEF71C3D39C900D7994E /* SWLoginUser.m in Sources */,

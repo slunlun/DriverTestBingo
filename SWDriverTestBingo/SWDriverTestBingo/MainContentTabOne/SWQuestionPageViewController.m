@@ -14,13 +14,18 @@
 #import "SWLoginUser.h"
 #import "SWTestQuestionCell.h"
 #import "SWQuestionStatusHeaderViewController.h"
+#import "SWDragToMoveView.h"
+#import "NSTimer+SWCountDownTimer.h"
+#import "SWDriverTestBigoDef.h"
+#import "SWMessageBox.h"
 
 #define SW_QUESTION_ITESM_STATUS_VIEW_INIT_HIEGHT 80.0
+#define SW_BACK_GROUND_COVER_VIEW_TAG 6001
 #define COUNT_DOWN_TIME 2700  // 45 mins
 @interface SWQuestionPageViewController () <UIScrollViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 @property(nonatomic) NSInteger pageNumBeforePageScroll;
 
-@property(nonatomic, strong) UIView *dragMoveView;
+@property(nonatomic, strong) SWDragToMoveView *dragMoveView;
 @property(nonatomic, strong) SWQuestionStatusHeaderViewController *dragMoveViewHeader;
 @property(nonatomic) NSInteger initHeight;
 @property(nonatomic) NSInteger beginHeight;
@@ -53,6 +58,8 @@
     self.pageNumBeforePageScroll = self.initPageNum;
     if (self.questionPageType == kTestQuestionViewTest) {
         _examTimeLeft = COUNT_DOWN_TIME;
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appWillResignActiveResponse:) name:APP_WILL_RESIGNACTIVE_NOTIFICATION object:nil];
+        
     }
 }
 
@@ -155,6 +162,12 @@
     }
    
 }
+
+-(void) dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
+}
 #pragma mark UI response
 
 -(void) submitPaperPressed:(UIButton *) btn
@@ -242,7 +255,7 @@
 #pragma makr - For Questions Test Page
 -(void) AddTestQuestionStatusItemsView
 {
-    _dragMoveView = [[UIView alloc] init];
+    _dragMoveView = [[SWDragToMoveView alloc] init];
     _dragMoveView.backgroundColor = [UIColor whiteColor];
     _dragMoveView.translatesAutoresizingMaskIntoConstraints = NO;
     
@@ -331,12 +344,16 @@
         
         if (newY < 0) { // down
             self.heightConstraint = [NSLayoutConstraint constraintWithItem:self.dragMoveView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:self.initHeight];
+            self.dragMoveView.status = dragToMoveViewDown;
+            
         }else if(newY > 0) // up
         {
             self.heightConstraint = [NSLayoutConstraint constraintWithItem:self.dragMoveView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:self.maxHeight];
+            self.dragMoveView.status = dragToMoveViewUp;
+
         }
         
-        
+     //   self.countDownTimer
         
         [UIView animateWithDuration:0.5 animations:^{
             
@@ -345,7 +362,16 @@
             
             
         } completion:^(BOOL finished) {
+            if(self.dragMoveView.status == dragToMoveViewDown){
+                NSIndexPath *index = [NSIndexPath indexPathForRow:[self currentPageNum] inSection:0];
+                [self.contentCollectionView scrollToItemAtIndexPath:index atScrollPosition:UICollectionViewScrollPositionTop animated:YES];
+                [self removeBackgroundConverView];
+            }
             
+            if (self.dragMoveView.status == dragToMoveViewUp) {
+                [self addBackgroudConverView];
+                [self.view bringSubviewToFront:self.dragMoveView];
+            }
         }];
     }
 }
@@ -441,5 +467,38 @@
     {
         [self.timerCountdownButton setTitle:timeLeftStr forState:UIControlStateNormal];
     }
+}
+
+-(void) addBackgroudConverView
+{
+    UIView *backGroudView = [[UIView alloc] init];
+    backGroudView.backgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.6];
+    backGroudView.translatesAutoresizingMaskIntoConstraints = NO;
+    backGroudView.tag = SW_BACK_GROUND_COVER_VIEW_TAG;
+    [self.view addSubview:backGroudView];
+
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:backGroudView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.bottomLayoutGuide attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.0]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:backGroudView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.topLayoutGuide attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:backGroudView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1.0 constant:0.0]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:backGroudView attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTrailing multiplier:1.0 constant:0.0]];
+    
+}
+
+-(void) removeBackgroundConverView
+{
+    UIView *backgourndView = [self.view viewWithTag:SW_BACK_GROUND_COVER_VIEW_TAG];
+    [backgourndView removeFromSuperview];
+    
+}
+
+#pragma mark - Notification Response
+-(void) appWillResignActiveResponse:(NSNotification *) notification
+{
+    SWMessageBox *messageBox = [[SWMessageBox alloc]initWithTitle:@"休息一下" boxImage:[UIImage imageNamed:@"testUserHead"] boxType:SWMessageBoxType_OK completeBlock:^(NSInteger btnIndex) {
+    
+        NSLog(@"OK");
+    }];
+    
+    [messageBox showMessageBoxInView:self.view];
 }
 @end
