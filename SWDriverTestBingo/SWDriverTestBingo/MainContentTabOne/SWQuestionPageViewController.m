@@ -21,6 +21,7 @@
 
 #define SW_QUESTION_ITESM_STATUS_VIEW_INIT_HIEGHT 80.0
 #define SW_BACK_GROUND_COVER_VIEW_TAG 6001
+#define TEST_PAUSE_MESSAGE_BOX_TAG 6002
 #define COUNT_DOWN_TIME 2700  // 45 mins
 @interface SWQuestionPageViewController () <UIScrollViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 @property(nonatomic) NSInteger pageNumBeforePageScroll;
@@ -463,6 +464,7 @@
     NSString *timeLeftStr = [self convertLeftTimeToString:--self.examTimeLeft];
     if (self.examTimeLeft < 0) {
         [timer invalidate];
+        
     }else
     {
         [self.timerCountdownButton setTitle:timeLeftStr forState:UIControlStateNormal];
@@ -494,11 +496,25 @@
 #pragma mark - Notification Response
 -(void) appWillResignActiveResponse:(NSNotification *) notification
 {
-    SWMessageBox *messageBox = [[SWMessageBox alloc]initWithTitle:@"休息一下" boxImage:[UIImage imageNamed:@"testUserHead"] boxType:SWMessageBoxType_OK completeBlock:^(NSInteger btnIndex) {
+    if (![self.view viewWithTag:TEST_PAUSE_MESSAGE_BOX_TAG]) {
+        SWMessageBox *messageBox = [[SWMessageBox alloc]initWithTitle:@"共100题，还剩100题未做" boxImage:[UIImage imageNamed:@"testUserHead"] boxType:SWMessageBoxType_OK completeBlock:^(NSInteger btnIndex) {
+            
+            [self removeBackgroundConverView];
+            [self.countDownTimer resumeTimer];
+            
+        }];
+        
+        messageBox.tag = TEST_PAUSE_MESSAGE_BOX_TAG;
+        
+        [self addBackgroudConverView];
+        [messageBox showMessageBoxInView:self.view];
+        [self.countDownTimer pauseTimer];
+    }
+}
+
+#pragma mark - For test Page View
+-(void) testTimeOut
+{
     
-        NSLog(@"OK");
-    }];
-    
-    [messageBox showMessageBoxInView:self.view];
 }
 @end

@@ -22,5 +22,7 @@
 
 "SubmitPaper"="交卷";
 
-"OK" = "确定";
-"Cancle" = "取消";
+"OK" = "确 定";
+"Cancle" = "取 消";
+
+"ContinueTest" = "继续答题";

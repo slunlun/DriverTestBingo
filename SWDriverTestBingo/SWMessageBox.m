@@ -8,8 +8,8 @@
 
 #import "SWMessageBox.h"
 
-#define DEFAULT_BOX_WIDTH 100
-#define DEFAULT_BOX_HEIGHT 60
+#define DEFAULT_BOX_WIDTH 250
+#define DEFAULT_BOX_HEIGHT 200
 
 #define MESSAGE_BOX_VIEW_TAG 95001
 #define MESSAGE_BOX_OK_BTN_TAG 85001
@@ -51,10 +51,12 @@ typedef void (^callBackBlock)(NSInteger);
         self.translatesAutoresizingMaskIntoConstraints = NO;
         self.tag = MESSAGE_BOX_VIEW_TAG;
         [view addSubview:self];
+        [view addConstraint:[NSLayoutConstraint constraintWithItem:self attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:_boxWidth]];
+        [view addConstraint:[NSLayoutConstraint constraintWithItem:self attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:_boxHeight]];
         [view addConstraint:[NSLayoutConstraint constraintWithItem:self attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:view attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0.0]];
         
-        [view addConstraint:[NSLayoutConstraint constraintWithItem:self attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:view attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0.0]];
-      //  [self makeUpMessageBox];
+        [view addConstraint:[NSLayoutConstraint constraintWithItem:self attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:view attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:-60.0]];  //减去navigation bar之类的
+        [self makeUpMessageBox];
         
     }
     
@@ -63,12 +65,27 @@ typedef void (^callBackBlock)(NSInteger);
 #pragma makr - Response to UI
 -(void) messageBoxBtnClicked:(UIButton *) button
 {
-    
+    NSInteger buttonIndex;
+    switch (button.tag) {
+        case MESSAGE_BOX_OK_BTN_TAG:
+        {
+            buttonIndex = 0;
+        }
+            break;
+        case MESSAGE_BOX_CANCEL_BTN_TAG:
+        {
+            buttonIndex = 1;
+        }
+        default:
+            break;
+    }
+    self.callBack(buttonIndex);
+    [self removeFromSuperview];
 }
 #pragma mark - Private method
 -(void) makeUpMessageBox
 {
-    self.backgroundColor = [UIColor yellowColor];
+    self.backgroundColor = [UIColor clearColor];
     
     UIView *contentView = [[UIView alloc] init];
     contentView.backgroundColor = [UIColor whiteColor];
@@ -77,8 +94,11 @@ typedef void (^callBackBlock)(NSInteger);
     
     UILabel *titleLabel = [[UILabel alloc] init];
     titleLabel.text = self.title;
+    titleLabel.font = [UIFont systemFontOfSize:15.0];
+    titleLabel.textColor = [UIColor grayColor];
     titleLabel.textAlignment = NSTextAlignmentCenter;
     titleLabel.backgroundColor = [UIColor clearColor];
+    titleLabel.numberOfLines = 0;
     titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview:titleLabel];
     
@@ -90,14 +110,22 @@ typedef void (^callBackBlock)(NSInteger);
     
     UIButton *OKButton = [[UIButton alloc] init];
     OKButton.tag = MESSAGE_BOX_OK_BTN_TAG;
-    [OKButton setTitle:NSLocalizedString(@"OK", nil) forState:UIControlStateNormal];
-    OKButton.backgroundColor = [UIColor greenColor];
+    OKButton.titleLabel.font = [UIFont systemFontOfSize:14.0];
+    if (self.boxType == SWMessageBoxType_ContinueTest) {
+        [OKButton setTitle:NSLocalizedString(@"ContinueTest", nil) forState:UIControlStateNormal];
+        
+    }else
+    {
+        [OKButton setTitle:NSLocalizedString(@"OK", nil) forState:UIControlStateNormal];
+
+    }
+    OKButton.backgroundColor = [UIColor colorWithRed:25.f/255.f green:184.f/255.f blue:121.f/255.f alpha:1.f];
     [OKButton addTarget:self action:@selector(messageBoxBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
     OKButton.translatesAutoresizingMaskIntoConstraints = NO;
    [self addSubview:OKButton];
     
     NSInteger headMargin = 10;
-    NSInteger leftRightMargin = 20;
+    NSInteger leftRightMargin = 40;
    
     
     NSInteger boxImageViewHeight = self.boxWidth / 3;
@@ -105,11 +133,12 @@ typedef void (^callBackBlock)(NSInteger);
     
     
     NSInteger boxTitleHeight = (self.boxHeight/8) * 3;
-    NSInteger OKButtonHeight = (self.boxHeight/8) * 3;
+    //NSInteger OKButtonHeight = 44;
     // set up contentView
     [self addConstraint:[NSLayoutConstraint constraintWithItem:contentView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeWidth multiplier:1.0 constant:0.0]];
     [self addConstraint:[NSLayoutConstraint constraintWithItem:contentView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeTop multiplier:1.0 constant:headMargin + boxImageViewHeight/2]];
     [self addConstraint:[NSLayoutConstraint constraintWithItem:contentView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0.0]];
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:contentView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0]];
 
     
     
@@ -123,17 +152,24 @@ typedef void (^callBackBlock)(NSInteger);
     [self addConstraint:[NSLayoutConstraint constraintWithItem:titleLabel attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeWidth multiplier:1.0 constant:0.0]];
     [self addConstraint:[NSLayoutConstraint constraintWithItem:titleLabel attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:boxTitleHeight]];
     [self addConstraint:[NSLayoutConstraint constraintWithItem:titleLabel   attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self  attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0.0]];
-    [self addConstraint:[NSLayoutConstraint constraintWithItem:titleLabel attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:boxImageView  attribute:NSLayoutAttributeBottom multiplier:1.0 constant:5.0]];
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:titleLabel attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:boxImageView  attribute:NSLayoutAttributeBottom multiplier:1.0 constant:-(boxTitleHeight/2) + 15]];
     
 //    // set up OK button
-    [self addConstraint:[NSLayoutConstraint constraintWithItem:OKButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeWidth multiplier:1.0 constant:leftRightMargin]];
-    [self addConstraint:[NSLayoutConstraint constraintWithItem:OKButton attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeWidth multiplier:1.0 constant:OKButtonHeight]];
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:OKButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant: (self.boxWidth - leftRightMargin)]];
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:OKButton attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:titleLabel attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0]];
     [self addConstraint:[NSLayoutConstraint constraintWithItem:OKButton attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0.0]];
-    [self addConstraint:[NSLayoutConstraint constraintWithItem:OKButton attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:titleLabel attribute:NSLayoutAttributeBottom multiplier:1.0 constant:3.0]];
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:OKButton attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeBottom multiplier:1.0 constant:-10.0]];
 //
 //    
     boxImageView.layer.cornerRadius = boxImageViewWidth / 2;
     boxImageView.clipsToBounds = YES;
     boxImageView.layer.borderWidth = 1.0f;
+    
+    contentView.layer.cornerRadius = 10;
+    contentView.clipsToBounds = YES;
+    
+    OKButton.layer.cornerRadius = 5.0f;
+    OKButton.clipsToBounds = YES;
+    
 }
 @end
