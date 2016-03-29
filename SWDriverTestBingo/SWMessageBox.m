@@ -46,7 +46,7 @@ typedef void (^callBackBlock)(NSInteger);
 }
 -(void) showMessageBoxInView:(UIView *) view
 {
-    if (view && self) {
+    if (view && self && ![view viewWithTag:MESSAGE_BOX_VIEW_TAG]) {
         //self.frame = CGRectMake(0, 0, _boxWidth, _boxHeight);
         self.translatesAutoresizingMaskIntoConstraints = NO;
         self.tag = MESSAGE_BOX_VIEW_TAG;

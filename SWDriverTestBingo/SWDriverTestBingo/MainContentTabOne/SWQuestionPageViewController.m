@@ -23,6 +23,7 @@
 #define SW_BACK_GROUND_COVER_VIEW_TAG 6001
 #define TEST_PAUSE_MESSAGE_BOX_TAG 6002
 #define COUNT_DOWN_TIME 2700  // 45 mins
+#define QUESTION_STATUS_CELL_SIZE 46
 @interface SWQuestionPageViewController () <UIScrollViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 @property(nonatomic) NSInteger pageNumBeforePageScroll;
 
@@ -33,6 +34,11 @@
 @property(nonatomic) NSInteger maxHeight;
 @property(nonatomic, strong) NSLayoutConstraint *heightConstraint;
 @property(nonatomic, strong) UICollectionView *contentCollectionView;
+@property(nonatomic, strong) UIButton *dragViewHeadButton;
+
+@property(nonatomic, strong) UILabel *testWrongNum;
+@property(nonatomic, strong) UILabel *testRightNum;
+
 @property(nonatomic) CGPoint beginPoint;
 
 @property(nonatomic, strong) NSTimer *countDownTimer;
@@ -85,6 +91,7 @@
     if (self.questionPageType == kTestQuestionViewTest) {
         [self AddTestQuestionStatusItemsView];
         _countDownTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(updateCountDownTime:) userInfo:nil repeats:YES];
+        [[NSRunLoop currentRunLoop] addTimer:_countDownTimer forMode:NSRunLoopCommonModes]; // add timer to other mode, avoid UI event interupts
     }
 
 }
@@ -101,6 +108,20 @@
 #pragma mark INIT/SETTER/GETTER
 -(void) makeUpNavigationBarView
 {
+    UIButton *markBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 48, 48)];
+    SWQuestionItems *questionItem = [self currentQuestionItem];
+    if (questionItem.markQuestionsLib) {
+        [markBtn setImage:[UIImage imageNamed:@"mark"] forState:UIControlStateNormal];
+    }else
+    {
+        [markBtn setImage:[UIImage imageNamed:@"markNot"] forState:UIControlStateNormal];
+    }
+    [markBtn setTitle: NSLocalizedString(@"MarkQuestion", NULL) forState:UIControlStateNormal];
+    markBtn.titleLabel.font = [UIFont systemFontOfSize:9];
+    [markBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+    [markBtn addTarget:self action:@selector(markQuestion:) forControlEvents:UIControlEventTouchUpInside];
+    [markBtn centerImageAndTitle:1.0];
+    
     if (self.questionPageType != kTestQuestionViewTest) {
         
         FlexibleAlignButton *questionIndexBtn = [[FlexibleAlignButton alloc] initWithFrame:CGRectMake(0, 0, 48, 48)];
@@ -110,23 +131,6 @@
         [questionIndexBtn setTitle:[NSString stringWithFormat:@"%ld/%ld", ([self currentPageNum] + 1), self.pageCount] forState:UIControlStateNormal];
         questionIndexBtn.titleLabel.font = [UIFont systemFontOfSize:9];
         [questionIndexBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
-        
-        // [questionIndexBtn centerImageAndTitle:1.0];
-        
-        UIButton *markBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 48, 48)];
-        SWQuestionItems *questionItem = [self currentQuestionItem];
-        if (questionItem.markQuestionsLib) {
-            [markBtn setImage:[UIImage imageNamed:@"mark"] forState:UIControlStateNormal];
-        }else
-        {
-            [markBtn setImage:[UIImage imageNamed:@"markNot"] forState:UIControlStateNormal];
-        }
-        [markBtn setTitle: NSLocalizedString(@"MarkQuestion", NULL) forState:UIControlStateNormal];
-        markBtn.titleLabel.font = [UIFont systemFontOfSize:9];
-        [markBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
-        [markBtn addTarget:self action:@selector(markQuestion:) forControlEvents:UIControlEventTouchUpInside];
-        [markBtn centerImageAndTitle:1.0];
-        
         
         UIBarButtonItem *btnQuestionIndex = [[UIBarButtonItem alloc] initWithCustomView:questionIndexBtn];
         UIBarButtonItem *btnMakrQuestion = [[UIBarButtonItem alloc] initWithCustomView:markBtn];
@@ -153,9 +157,10 @@
         submitTest.titleLabel.font = [UIFont systemFontOfSize:9];
         [submitTest setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
 
+        UIBarButtonItem *btnMakrQuestion = [[UIBarButtonItem alloc] initWithCustomView:markBtn];
         UIBarButtonItem *btnExamLeft = [[UIBarButtonItem alloc] initWithCustomView:_timerCountdownButton];
         UIBarButtonItem *btnSubmitText = [[UIBarButtonItem alloc] initWithCustomView:submitTest];
-        NSArray *barBtnItemArray = @[btnExamLeft, btnSubmitText];
+        NSArray *barBtnItemArray = @[btnMakrQuestion, btnExamLeft, btnSubmitText];
         self.navigationItem.rightBarButtonItems = barBtnItemArray;
         
         
@@ -170,6 +175,19 @@
     
 }
 #pragma mark UI response
+-(void) dragToMoveViewHeadButtonClick:(UIButton *) headButton
+{
+    NSLog(@"HeadButton Click");
+    if(self.dragMoveView.status == dragToMoveViewUp)
+    {
+        [self downTestQuestionItemStatusView];
+        
+    }else if(self.dragMoveView.status == dragToMoveViewDown)
+    {
+        [self upTestQuestionItemStatusView];
+    }
+}
+
 
 -(void) submitPaperPressed:(UIButton *) btn
 {
@@ -216,7 +234,9 @@
 #pragma mark UIScrollViewDelegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    [self updataQuestionIndexTitle];
+    if (self.questionPageType != kTestQuestionViewTest) {
+        [self updataQuestionIndexTitle];
+    }
     [self updateMarkBtn];
     
     // 当前的pageVC为优化模式，需要显示实时补充新的page
@@ -236,7 +256,7 @@
             [self createPageAtIndex:(pageNum - 1)];
             // release page that can not see
             [self releasePageAtIndex:(pageNum + 2)];
-             NSLog(@"The subview count is %ld", self.scrollView.subviews.count);
+            NSLog(@"The subview count is %ld", self.scrollView.subviews.count);
             
         }
         self.pageNumBeforePageScroll = pageNum;
@@ -247,7 +267,7 @@
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-    if (self.questionPageType == kTestQuestionViewTest) {
+    if (self.questionPageType == kTestQuestionViewTest && self.dragMoveView.status == dragToMoveViewDown) {
         NSIndexPath *index = [NSIndexPath indexPathForRow:[self currentPageNum] inSection:0];
         [self.contentCollectionView scrollToItemAtIndexPath:index atScrollPosition:UICollectionViewScrollPositionTop animated:YES];
     }
@@ -275,7 +295,7 @@
     [self.view addConstraint:self.heightConstraint];
     
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
-    flowLayout.itemSize = CGSizeMake(50.0, 50.0);
+    flowLayout.itemSize = CGSizeMake(QUESTION_STATUS_CELL_SIZE, QUESTION_STATUS_CELL_SIZE);
     flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
     flowLayout.minimumInteritemSpacing = 0.0f;
     
@@ -293,28 +313,72 @@
     [self.dragMoveView addSubview:_contentCollectionView];
     viewDict = @{@"collectionView":_contentCollectionView};
     [self.dragMoveView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[collectionView]|" options:0 metrics:nil views:viewDict]];
-    [self.dragMoveView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(20)-[collectionView]|" options:0 metrics:nil views:viewDict]];
+    [self.dragMoveView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(25)-[collectionView]|" options:0 metrics:nil views:viewDict]];
     
-    _dragMoveViewHeader = [[SWQuestionStatusHeaderViewController alloc] initWithNibName:@"SWQuestionStatusHeaderViewController" bundle:nil];
+    _dragViewHeadButton = [[UIButton alloc] init];
+    _dragViewHeadButton.backgroundColor = [UIColor whiteColor];
+    _dragViewHeadButton.translatesAutoresizingMaskIntoConstraints = NO;
+    [_dragViewHeadButton setImage:[UIImage imageNamed:@"upArrow"] forState:UIControlStateNormal];
+    [_dragViewHeadButton addTarget:self action:@selector(dragToMoveViewHeadButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+    _dragViewHeadButton.layer.cornerRadius = 5.0;
+    _dragViewHeadButton.layer.borderWidth = 0.5;
+    _dragViewHeadButton.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+    [_dragViewHeadButton addGestureRecognizer:pan];
     
-    _dragMoveViewHeader.view.backgroundColor = [UIColor redColor];
-    _dragMoveViewHeader.view.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.dragMoveView addSubview:_dragMoveViewHeader.view];
-    viewDict = @{@"headerView":_dragMoveViewHeader.view};
-    [self.dragMoveView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[headerView]|" options:0 metrics:nil views:viewDict]];
-    [self.dragMoveView addConstraint:[NSLayoutConstraint constraintWithItem:_dragMoveViewHeader.view attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.dragMoveView attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.0]];
-    [self.dragMoveView addConstraint:[NSLayoutConstraint constraintWithItem:_dragMoveViewHeader.view attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:20.0]];
-    _dragMoveViewHeader.headImage.image = [UIImage imageNamed:@"List"];
-    _dragMoveViewHeader.headImage.backgroundColor = [UIColor greenColor];
+    [self.dragMoveView addSubview:_dragViewHeadButton];
+    viewDict = @{@"headerButton":_dragViewHeadButton};
+    [self.dragMoveView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[headerButton]|" options:0 metrics:nil views:viewDict]];
+    [self.dragMoveView addConstraint:[NSLayoutConstraint constraintWithItem:_dragViewHeadButton attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.dragMoveView attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.0]];
+    [self.dragMoveView addConstraint:[NSLayoutConstraint constraintWithItem:_dragViewHeadButton attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:25.0]];
+    
+    UILabel *rightTitleLabel = [[UILabel alloc] init];
+    rightTitleLabel.text = NSLocalizedString(@"Right", nil);
+    rightTitleLabel.font = [UIFont systemFontOfSize:9];
+    rightTitleLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    
+    _testRightNum = [[UILabel alloc] init];
+    _testRightNum.text = @"0";
+    _testRightNum.font = [UIFont systemFontOfSize:8];
+    _testRightNum.textColor = [UIColor greenColor];
+    _testWrongNum.translatesAutoresizingMaskIntoConstraints = NO;
+    
+    UILabel *wrongTitleLabel = [[UILabel alloc] init];
+    wrongTitleLabel.text = NSLocalizedString(@"Wrong", nil);
+    wrongTitleLabel.font = [UIFont systemFontOfSize:9];
+    wrongTitleLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    
+    _testWrongNum = [[UILabel alloc] init];
+    _testWrongNum.text = @"0";
+    _testWrongNum.font = [UIFont systemFontOfSize:8];
+    _testWrongNum.textColor = [UIColor redColor];
+    _testWrongNum.translatesAutoresizingMaskIntoConstraints = NO;
+    
+    viewDict = @{@"rightTitleLabel":rightTitleLabel, @"testRightNum":_testRightNum, @"wrongTitleLabel":wrongTitleLabel, @"testWrongNum":_testWrongNum};
+    NSDictionary *viewMetric = @{@"titleLabelWidth":@15, @"numLabelWidth":@15};
+    
+    [_dragViewHeadButton addSubview:rightTitleLabel];
+    [_dragViewHeadButton addSubview:_testRightNum];
+    [_dragViewHeadButton addSubview:wrongTitleLabel];
+    [_dragViewHeadButton addSubview:_testWrongNum];
+    
+    [_dragViewHeadButton addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[rightTitleLabel]|" options:0 metrics:nil views:viewDict]];
+    [_dragViewHeadButton addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[testRightNum]|" options:0 metrics:nil views:viewDict]];
+//    [_dragViewHeadButton addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[wrongTitleLabel]|" options:0 metrics:nil views:viewDict]];
+//    [_dragViewHeadButton addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[testWrongNum]|" options:0 metrics:nil views:viewDict]];
+    
+    [_dragViewHeadButton addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[rightTitleLabel(==15)][testRightNum(==15)]" options:NSLayoutFormatAlignAllRight metrics:nil views:viewDict]];
     
     
+    self.dragMoveView.status = dragToMoveViewDown;
+    self.maxHeight = (self.view.frame.size.height * 2)/3;
 }
 
 -(void) panViewResponse:(UIPanGestureRecognizer *) panGesture
 {
+    NSLog(@"Pan Pan");
     if (panGesture.state == UIGestureRecognizerStateBegan) {
         self.beginPoint = [panGesture locationInView:self.view];
-        self.maxHeight = (self.view.frame.size.height * 2)/3;
+        
         self.beginHeight = self.dragMoveView.frame.size.height;
     }else if(panGesture.state == UIGestureRecognizerStateChanged)
     {
@@ -344,36 +408,36 @@
         
         
         if (newY < 0) { // down
-            self.heightConstraint = [NSLayoutConstraint constraintWithItem:self.dragMoveView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:self.initHeight];
-            self.dragMoveView.status = dragToMoveViewDown;
+//            self.heightConstraint = [NSLayoutConstraint constraintWithItem:self.dragMoveView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:self.initHeight];
+//            self.dragMoveView.status = dragToMoveViewDown;
+            [self downTestQuestionItemStatusView];
             
         }else if(newY > 0) // up
         {
-            self.heightConstraint = [NSLayoutConstraint constraintWithItem:self.dragMoveView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:self.maxHeight];
-            self.dragMoveView.status = dragToMoveViewUp;
+            [self upTestQuestionItemStatusView];
+//            self.heightConstraint = [NSLayoutConstraint constraintWithItem:self.dragMoveView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:self.maxHeight];
+//            self.dragMoveView.status = dragToMoveViewUp;
 
         }
         
-     //   self.countDownTimer
-        
-        [UIView animateWithDuration:0.5 animations:^{
-            
-            [self.view addConstraint:self.heightConstraint];
-            [self.view layoutIfNeeded];
-            
-            
-        } completion:^(BOOL finished) {
-            if(self.dragMoveView.status == dragToMoveViewDown){
-                NSIndexPath *index = [NSIndexPath indexPathForRow:[self currentPageNum] inSection:0];
-                [self.contentCollectionView scrollToItemAtIndexPath:index atScrollPosition:UICollectionViewScrollPositionTop animated:YES];
-                [self removeBackgroundConverView];
-            }
-            
-            if (self.dragMoveView.status == dragToMoveViewUp) {
-                [self addBackgroudConverView];
-                [self.view bringSubviewToFront:self.dragMoveView];
-            }
-        }];
+//        [UIView animateWithDuration:0.5 animations:^{
+//            
+//            [self.view addConstraint:self.heightConstraint];
+//            [self.view layoutIfNeeded];
+//            
+//            
+//        } completion:^(BOOL finished) {
+//            if(self.dragMoveView.status == dragToMoveViewDown){
+//                NSIndexPath *index = [NSIndexPath indexPathForRow:[self currentPageNum] inSection:0];
+//                [self.contentCollectionView scrollToItemAtIndexPath:index atScrollPosition:UICollectionViewScrollPositionTop animated:YES];
+//                [self removeBackgroundConverView];
+//            }
+//            
+//            if (self.dragMoveView.status == dragToMoveViewUp) {
+//                [self addBackgroudConverView];
+//                [self.view bringSubviewToFront:self.dragMoveView];
+//            }
+//        }];
     }
 }
 #pragma mark - UICollectionViewDataSource
@@ -394,9 +458,10 @@
     NSString * stringTitle = [NSString stringWithFormat:@"%ld", (long)(indexPath.row + 1)];
     [cell.SWQuestionNumLabel setText:stringTitle];
     [cell.SWQuestionNumLabel setBackgroundColor:[UIColor colorWithRed:(180.0f/255.0f) green:(228.0f/255.0f) blue:(247.0f/255.0f) alpha:0.6]];
-    cell.SWQuestionNumLabel.layer.cornerRadius = 25.0f;
+    cell.SWQuestionNumLabel.layer.cornerRadius = QUESTION_STATUS_CELL_SIZE / 2;
     cell.SWQuestionNumLabel.layer.masksToBounds = YES;
-    [cell.SWQuestionNumLabel.layer setBorderWidth:1.0];
+    [cell.SWQuestionNumLabel.layer setBorderWidth:0.3];
+    cell.SWQuestionNumLabel.layer.borderColor = [[UIColor lightGrayColor] CGColor];
     
     return cell;
 }
@@ -426,7 +491,10 @@
         
         
     } completion:^(BOOL finished) {
-    
+        [self addBackgroudConverView];
+        [self.view bringSubviewToFront:self.dragMoveView];
+        [self.dragViewHeadButton setImage:[UIImage imageNamed:@"downArrow"] forState:UIControlStateNormal];
+        self.dragMoveView.status = dragToMoveViewUp;
     }];
 
 }
@@ -445,6 +513,9 @@
         if (finished) {
             NSIndexPath *index = [NSIndexPath indexPathForRow:[self currentPageNum] inSection:0];
             [self.contentCollectionView scrollToItemAtIndexPath:index atScrollPosition:UICollectionViewScrollPositionTop animated:YES];
+            [self removeBackgroundConverView];
+            [self.dragViewHeadButton setImage:[UIImage imageNamed:@"upArrow"] forState:UIControlStateNormal];
+            self.dragMoveView.status = dragToMoveViewDown;
         }
     }];
 
@@ -473,17 +544,18 @@
 
 -(void) addBackgroudConverView
 {
-    UIView *backGroudView = [[UIView alloc] init];
-    backGroudView.backgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.6];
-    backGroudView.translatesAutoresizingMaskIntoConstraints = NO;
-    backGroudView.tag = SW_BACK_GROUND_COVER_VIEW_TAG;
-    [self.view addSubview:backGroudView];
-
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:backGroudView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.bottomLayoutGuide attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.0]];
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:backGroudView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.topLayoutGuide attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0]];
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:backGroudView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1.0 constant:0.0]];
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:backGroudView attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTrailing multiplier:1.0 constant:0.0]];
-    
+    if (![self.view viewWithTag:SW_BACK_GROUND_COVER_VIEW_TAG]) {
+        UIView *backGroudView = [[UIView alloc] init];
+        backGroudView.backgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.6];
+        backGroudView.translatesAutoresizingMaskIntoConstraints = NO;
+        backGroudView.tag = SW_BACK_GROUND_COVER_VIEW_TAG;
+        [self.view addSubview:backGroudView];
+        
+        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:backGroudView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.bottomLayoutGuide attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.0]];
+        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:backGroudView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.topLayoutGuide attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0]];
+        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:backGroudView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1.0 constant:0.0]];
+        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:backGroudView attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTrailing multiplier:1.0 constant:0.0]];
+    }
 }
 
 -(void) removeBackgroundConverView
@@ -496,20 +568,19 @@
 #pragma mark - Notification Response
 -(void) appWillResignActiveResponse:(NSNotification *) notification
 {
-    if (![self.view viewWithTag:TEST_PAUSE_MESSAGE_BOX_TAG]) {
-        SWMessageBox *messageBox = [[SWMessageBox alloc]initWithTitle:@"共100题，还剩100题未做" boxImage:[UIImage imageNamed:@"testUserHead"] boxType:SWMessageBoxType_OK completeBlock:^(NSInteger btnIndex) {
+    SWMessageBox *messageBox = [[SWMessageBox alloc]initWithTitle:@"共100题，还剩100题未做" boxImage:[UIImage imageNamed:@"testUserHead"] boxType:SWMessageBoxType_ContinueTest completeBlock:^(NSInteger btnIndex) {
             
             [self removeBackgroundConverView];
             [self.countDownTimer resumeTimer];
             
         }];
         
-        messageBox.tag = TEST_PAUSE_MESSAGE_BOX_TAG;
-        
-        [self addBackgroudConverView];
-        [messageBox showMessageBoxInView:self.view];
-        [self.countDownTimer pauseTimer];
-    }
+    messageBox.tag = TEST_PAUSE_MESSAGE_BOX_TAG;
+    
+    [self addBackgroudConverView];
+    [messageBox showMessageBoxInView:self.view];
+    [self.countDownTimer pauseTimer];
+    
 }
 
 #pragma mark - For test Page View

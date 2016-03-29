@@ -23,4 +23,8 @@ typedef enum{
 
 //Notification define
 #define APP_WILL_RESIGNACTIVE_NOTIFICATION @"APP_WILL_RESIGNACTIVE_NOTIFICATION"
+
+
+#define DRIVE_TEST_CHOOSE_QUESTION_TYPE 1
+#define DRIVE_TEST_ADJUST_QUESTION_TYPE 2
 #endif /* SWDriverTestBigoDef_h */

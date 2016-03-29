@@ -336,15 +336,39 @@ static NSString *IMG_COL_CELL_IDENTITY = @"IMG_COL_CELL_IDENTITY";
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"SWQuestionItems" inManagedObjectContext:appDelegate.managedObjectContext];
     [fetchRequest setEntity:entity];
     
-    // Specify how the fetched objects should be sorted
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"questionID"
-                                                                   ascending:YES];
-    [fetchRequest setSortDescriptors:[NSArray arrayWithObjects:sortDescriptor, nil]];
+    // 选择题
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:[NSString stringWithFormat:@"questionType=%ld", (long)DRIVE_TEST_CHOOSE_QUESTION_TYPE]];
+    fetchRequest.predicate = predicate;
+//    // Specify how the fetched objects should be sorted
+//    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"questionID"
+//                                                                   ascending:YES];
+//    [fetchRequest setSortDescriptors:[NSArray arrayWithObjects:sortDescriptor, nil]];
     
     
     NSError *error = nil;
-    NSArray *fetchedObjects = [appDelegate.managedObjectContext executeFetchRequest:fetchRequest error:&error];
-    self.pageDataArray = fetchedObjects;
+    NSMutableArray *chooseQuestions = [NSMutableArray arrayWithArray:[appDelegate.managedObjectContext executeFetchRequest:fetchRequest error:&error]];
+    
+    predicate = [NSPredicate predicateWithFormat:[NSString stringWithFormat:@"questionType=%ld", (long)DRIVE_TEST_ADJUST_QUESTION_TYPE]];
+    fetchRequest.predicate = predicate;
+    NSMutableArray *adjustQuestions = [NSMutableArray arrayWithArray:[appDelegate.managedObjectContext executeFetchRequest:fetchRequest error:&error]];
+   
+    NSMutableArray *testQuestions = [[NSMutableArray alloc] init];
+    // get adjust question
+    while (testQuestions.count < 40) {
+        NSInteger selectIndex = arc4random() % adjustQuestions.count;
+        [testQuestions addObject:adjustQuestions[selectIndex]];
+        [adjustQuestions removeObjectAtIndex:selectIndex];
+        
+    }
+    
+    // get choose quest
+    while (testQuestions.count < 100) {
+        NSInteger selectIndex = arc4random() % chooseQuestions.count;
+        [testQuestions addObject:chooseQuestions[selectIndex]];
+        [chooseQuestions removeObjectAtIndex:selectIndex];
+    }
+    
+    self.pageDataArray = testQuestions;
     return self.pageDataArray.count;
 }
 
