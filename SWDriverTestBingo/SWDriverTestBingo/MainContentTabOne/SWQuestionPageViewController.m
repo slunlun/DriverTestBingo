@@ -24,7 +24,93 @@
 #define TEST_PAUSE_MESSAGE_BOX_TAG 6002
 #define COUNT_DOWN_TIME 2700  // 45 mins
 #define QUESTION_STATUS_CELL_SIZE 46
-@interface SWQuestionPageViewController () <UIScrollViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
+
+@class SWTestScoreCounter;
+@protocol SWTestScoreCounterDelegate <NSObject>
+
+-(void) userDidAnserQuestion:(NSInteger) questionIndex result:(BOOL) isRight scoreCounter:(SWTestScoreCounter *) scoreCounter;
+
+@end
+
+typedef enum AnswerStatus{
+    kAnswerStatusUnset = 1,
+    kAnswerStatusRight = 2,
+    kAnswerStatusWrong = 3,
+}AnswerStatus;
+@interface SWTestScoreCounter : NSObject
+-(void) answerQuestionAtIndex:(NSInteger) questionIndex result:(NSDictionary *) result;
+-(NSArray *) answeredStatus;
+-(NSInteger) testScore;
+@property(nonatomic, weak) id<SWTestScoreCounterDelegate> delegate;
+@property(nonatomic) NSInteger rightAnswerNum;
+@property(nonatomic) NSInteger wrongAnswerNum;
+@property(nonatomic) NSInteger unDoneAnswerNum;
+@end
+
+@interface SWTestScoreCounter()
+@property(nonatomic, strong) NSMutableArray *answerStatusArray;
+@end
+@implementation SWTestScoreCounter
+
+-(instancetype) init
+{
+    self = [super init];
+    if (self) {
+        _unDoneAnswerNum = 100;
+        _rightAnswerNum = 0;
+        _wrongAnswerNum = 0;
+    }
+    return self;
+}
+-(NSMutableArray *) answerStatusArray
+{
+    if (_answerStatusArray == nil) {
+        _answerStatusArray = [[NSMutableArray alloc] init];
+        for (NSInteger i = 0; i < 100; ++i) {
+            [_answerStatusArray addObject:[NSNumber numberWithInteger:kAnswerStatusUnset]];
+        }
+        
+    }
+    return _answerStatusArray;
+}
+
+-(void) answerQuestionAtIndex:(NSInteger) questionIndex result:(NSDictionary *) result
+{
+    NSNumber *answerResult = nil;
+    BOOL isRight = NO;
+    --self.unDoneAnswerNum;
+    NSString *answerStatusStr = (NSString *)result[SELECTED_ANSWER__USERINFO_IS_RIGHT_KEY];
+    if ([answerStatusStr isEqualToString:@"RIGHT"]) {
+        answerResult = [NSNumber numberWithInteger:kAnswerStatusRight];
+        isRight = YES;
+        ++self.rightAnswerNum;
+        
+    }else
+    {
+        answerResult = [NSNumber numberWithInteger:kAnswerStatusWrong];
+        isRight = NO;
+        ++self.wrongAnswerNum;
+    }
+    
+    [self.answerStatusArray insertObject:answerResult atIndex:questionIndex];
+    if ([self.delegate respondsToSelector:@selector(userDidAnserQuestion:result:scoreCounter:)]) {
+        [self.delegate userDidAnserQuestion:questionIndex result:isRight scoreCounter:self];
+    }
+}
+
+-(NSArray *) answeredStatus
+{
+    return self.answerStatusArray;
+}
+-(NSInteger) testScore
+{
+    return self.rightAnswerNum;
+}
+
+@end
+
+
+@interface SWQuestionPageViewController () <UIScrollViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, SWTestScoreCounterDelegate>
 @property(nonatomic) NSInteger pageNumBeforePageScroll;
 
 @property(nonatomic, strong) SWDragToMoveView *dragMoveView;
@@ -44,6 +130,7 @@
 @property(nonatomic, strong) NSTimer *countDownTimer;
 @property(nonatomic, strong) FlexibleAlignButton *timerCountdownButton;
 @property(nonatomic) NSInteger examTimeLeft;
+@property(nonatomic, strong) SWTestScoreCounter *scoreCounter;
 @end
 
 @implementation SWQuestionPageViewController
@@ -65,8 +152,10 @@
     self.pageNumBeforePageScroll = self.initPageNum;
     if (self.questionPageType == kTestQuestionViewTest) {
         _examTimeLeft = COUNT_DOWN_TIME;
+        _scoreCounter = [[SWTestScoreCounter alloc] init];
+        _scoreCounter.delegate = self;
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appWillResignActiveResponse:) name:APP_WILL_RESIGNACTIVE_NOTIFICATION object:nil];
-        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userSelectedTestAnswer:) name:USER_SELECTED_TEST_ANSWER_NOTIFICATION object:nil];
     }
 }
 
@@ -329,44 +418,59 @@
     viewDict = @{@"headerButton":_dragViewHeadButton};
     [self.dragMoveView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[headerButton]|" options:0 metrics:nil views:viewDict]];
     [self.dragMoveView addConstraint:[NSLayoutConstraint constraintWithItem:_dragViewHeadButton attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.dragMoveView attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.0]];
-    [self.dragMoveView addConstraint:[NSLayoutConstraint constraintWithItem:_dragViewHeadButton attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:25.0]];
+    [self.dragMoveView addConstraint:[NSLayoutConstraint constraintWithItem:_dragViewHeadButton attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:30.0]];
     
     UILabel *rightTitleLabel = [[UILabel alloc] init];
     rightTitleLabel.text = NSLocalizedString(@"Right", nil);
-    rightTitleLabel.font = [UIFont systemFontOfSize:9];
+    rightTitleLabel.font = [UIFont systemFontOfSize:15];
     rightTitleLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    //rightTitleLabel.userInteractionEnabled = NO;
     
     _testRightNum = [[UILabel alloc] init];
     _testRightNum.text = @"0";
-    _testRightNum.font = [UIFont systemFontOfSize:8];
+    _testRightNum.font = [UIFont systemFontOfSize:15];
     _testRightNum.textColor = [UIColor greenColor];
-    _testWrongNum.translatesAutoresizingMaskIntoConstraints = NO;
+    _testRightNum.translatesAutoresizingMaskIntoConstraints = NO;
+   // _testRightNum.userInteractionEnabled = NO;
     
     UILabel *wrongTitleLabel = [[UILabel alloc] init];
     wrongTitleLabel.text = NSLocalizedString(@"Wrong", nil);
-    wrongTitleLabel.font = [UIFont systemFontOfSize:9];
+    wrongTitleLabel.font = [UIFont systemFontOfSize:15];
     wrongTitleLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    //wrongTitleLabel.userInteractionEnabled = NO;
     
     _testWrongNum = [[UILabel alloc] init];
     _testWrongNum.text = @"0";
-    _testWrongNum.font = [UIFont systemFontOfSize:8];
+    _testWrongNum.font = [UIFont systemFontOfSize:15];
     _testWrongNum.textColor = [UIColor redColor];
     _testWrongNum.translatesAutoresizingMaskIntoConstraints = NO;
+    //_testWrongNum.userInteractionEnabled = NO;
     
-    viewDict = @{@"rightTitleLabel":rightTitleLabel, @"testRightNum":_testRightNum, @"wrongTitleLabel":wrongTitleLabel, @"testWrongNum":_testWrongNum};
-    NSDictionary *viewMetric = @{@"titleLabelWidth":@15, @"numLabelWidth":@15};
     
-    [_dragViewHeadButton addSubview:rightTitleLabel];
-    [_dragViewHeadButton addSubview:_testRightNum];
-    [_dragViewHeadButton addSubview:wrongTitleLabel];
-    [_dragViewHeadButton addSubview:_testWrongNum];
+   
+    UIView *testScoreView = [[UIView alloc] init];
+    testScoreView.translatesAutoresizingMaskIntoConstraints = NO;
+    testScoreView.backgroundColor = [UIColor clearColor];
+    testScoreView.userInteractionEnabled = NO;
     
-    [_dragViewHeadButton addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[rightTitleLabel]|" options:0 metrics:nil views:viewDict]];
-    [_dragViewHeadButton addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[testRightNum]|" options:0 metrics:nil views:viewDict]];
-//    [_dragViewHeadButton addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[wrongTitleLabel]|" options:0 metrics:nil views:viewDict]];
-//    [_dragViewHeadButton addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[testWrongNum]|" options:0 metrics:nil views:viewDict]];
+     viewDict = @{@"rightTitleLabel":rightTitleLabel, @"testRightNum":_testRightNum, @"wrongTitleLabel":wrongTitleLabel, @"testWrongNum":_testWrongNum, @"testScoreView":testScoreView};
     
-    [_dragViewHeadButton addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[rightTitleLabel(==15)][testRightNum(==15)]" options:NSLayoutFormatAlignAllRight metrics:nil views:viewDict]];
+    [_dragViewHeadButton addSubview:testScoreView];
+    [testScoreView addSubview:rightTitleLabel];
+    [testScoreView addSubview:_testRightNum];
+    [testScoreView addSubview:wrongTitleLabel];
+    [testScoreView addSubview:_testWrongNum];
+    
+    [_dragViewHeadButton addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[testScoreView]|" options:0 metrics:nil views:viewDict]];
+    [_dragViewHeadButton addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[testScoreView(==90)]-|" options:0 metrics:nil views:viewDict]];
+    
+    [testScoreView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[rightTitleLabel]|" options:0 metrics:nil views:viewDict]];
+    [testScoreView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[testRightNum]|" options:0 metrics:nil views:viewDict]];
+    [testScoreView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[wrongTitleLabel]|" options:0 metrics:nil views:viewDict]];
+    [testScoreView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[testWrongNum]|" options:0 metrics:nil views:viewDict]];
+    [testScoreView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[rightTitleLabel]-[testRightNum]-[wrongTitleLabel]-[testWrongNum]-|" options:0 metrics:nil views:viewDict]];
+    
+    
     
     
     self.dragMoveView.status = dragToMoveViewDown;
@@ -408,36 +512,13 @@
         
         
         if (newY < 0) { // down
-//            self.heightConstraint = [NSLayoutConstraint constraintWithItem:self.dragMoveView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:self.initHeight];
-//            self.dragMoveView.status = dragToMoveViewDown;
+
             [self downTestQuestionItemStatusView];
             
         }else if(newY > 0) // up
         {
             [self upTestQuestionItemStatusView];
-//            self.heightConstraint = [NSLayoutConstraint constraintWithItem:self.dragMoveView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:self.maxHeight];
-//            self.dragMoveView.status = dragToMoveViewUp;
-
         }
-        
-//        [UIView animateWithDuration:0.5 animations:^{
-//            
-//            [self.view addConstraint:self.heightConstraint];
-//            [self.view layoutIfNeeded];
-//            
-//            
-//        } completion:^(BOOL finished) {
-//            if(self.dragMoveView.status == dragToMoveViewDown){
-//                NSIndexPath *index = [NSIndexPath indexPathForRow:[self currentPageNum] inSection:0];
-//                [self.contentCollectionView scrollToItemAtIndexPath:index atScrollPosition:UICollectionViewScrollPositionTop animated:YES];
-//                [self removeBackgroundConverView];
-//            }
-//            
-//            if (self.dragMoveView.status == dragToMoveViewUp) {
-//                [self addBackgroudConverView];
-//                [self.view bringSubviewToFront:self.dragMoveView];
-//            }
-//        }];
     }
 }
 #pragma mark - UICollectionViewDataSource
@@ -530,6 +611,15 @@
     return leftTimeStr;
 }
 
+-(void) changeToNextTestPage
+{
+    [self releasePageAtIndex:[self currentPageNum]];
+    [self releasePageAtIndex:[self currentPageNum] - 1];
+    [self releasePageAtIndex:[self currentPageNum] + 1];
+    
+    [self changeToPage:([self currentPageNum] + 1)];
+}
+
 -(void) updateCountDownTime:(NSTimer *) timer
 {
     NSString *timeLeftStr = [self convertLeftTimeToString:--self.examTimeLeft];
@@ -568,7 +658,8 @@
 #pragma mark - Notification Response
 -(void) appWillResignActiveResponse:(NSNotification *) notification
 {
-    SWMessageBox *messageBox = [[SWMessageBox alloc]initWithTitle:@"共100题，还剩100题未做" boxImage:[UIImage imageNamed:@"testUserHead"] boxType:SWMessageBoxType_ContinueTest completeBlock:^(NSInteger btnIndex) {
+    NSString *title = [NSString stringWithFormat:@"共100题，还剩%ld题未做", (long)self.scoreCounter.unDoneAnswerNum];
+    SWMessageBox *messageBox = [[SWMessageBox alloc]initWithTitle:title boxImage:[UIImage imageNamed:@"testUserHead"] boxType:SWMessageBoxType_ContinueTest completeBlock:^(NSInteger btnIndex) {
             
             [self removeBackgroundConverView];
             [self.countDownTimer resumeTimer];
@@ -583,9 +674,36 @@
     
 }
 
+-(void) userSelectedTestAnswer:(NSNotification *) notification
+{
+    [self.scoreCounter answerQuestionAtIndex: [self currentPageNum]  result:notification.userInfo];
+}
+
 #pragma mark - For test Page View
 -(void) testTimeOut
 {
+    
+}
+
+#pragma mark - SWTestScoreCounterDelegate
+-(void) userDidAnserQuestion:(NSInteger) questionIndex result:(BOOL) isRight scoreCounter:(SWTestScoreCounter *) scoreCounter
+{
+    NSIndexPath *cellIndexPath = [NSIndexPath indexPathForItem:questionIndex inSection:0];
+    UICollectionViewCell* cell = [self.contentCollectionView cellForItemAtIndexPath:cellIndexPath];
+    if (isRight) {
+        cell.backgroundColor = [UIColor greenColor];
+        
+    }else
+    {
+        cell.backgroundColor = [UIColor redColor];
+    }
+    
+    //[self.contentCollectionView reloadItemsAtIndexPaths:@[cellIndexPath]];
+    self.testRightNum.text = [NSString stringWithFormat:@"%ld", (long)scoreCounter.rightAnswerNum];
+    self.testWrongNum.text = [NSString stringWithFormat:@"%ld", (long)scoreCounter.wrongAnswerNum];
+ //   [self changeToNextTestPage];
+    
+    
     
 }
 @end

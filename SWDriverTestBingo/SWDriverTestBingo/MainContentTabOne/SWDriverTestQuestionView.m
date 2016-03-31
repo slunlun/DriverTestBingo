@@ -321,7 +321,7 @@ static NSString *QUESTION_RIGHT_ANSWER_CELL_IDENTITY = @"QUESTION_RIGHT_ANSWER_C
             
             
             UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-            if (indexPath.row + 1 == self.question.questionRightAnswer.integerValue) {
+            if (indexPath.row + 1 == self.question.questionRightAnswer.integerValue) {  // select right answer
                 self.didSelectedRightAnswer = YES;
                 cell.textLabel.textColor = [UIColor greenColor];
                 if (self.questionViewType == kTestQuestionViewWrongQuestions) {
@@ -330,7 +330,11 @@ static NSString *QUESTION_RIGHT_ANSWER_CELL_IDENTITY = @"QUESTION_RIGHT_ANSWER_C
                 NSIndexPath *explansPath = [NSIndexPath indexPathForRow:0 inSection:SECTION_RIGHT_ANSWER];
                 [tableView insertRowsAtIndexPaths:@[explansPath] withRowAnimation:YES];
                 
-            }else
+               
+                NSDictionary *userInfo = @{SELECTED_ANSWER__USERINFO_IS_RIGHT_KEY:@"RIGHT"};
+                [[NSNotificationCenter defaultCenter] postNotificationName:USER_SELECTED_TEST_ANSWER_NOTIFICATION object:nil userInfo:userInfo];
+                
+            }else  // select wrong answer
             {
                 cell.textLabel.textColor = [UIColor redColor];
                 // Show right Answer
@@ -339,6 +343,8 @@ static NSString *QUESTION_RIGHT_ANSWER_CELL_IDENTITY = @"QUESTION_RIGHT_ANSWER_C
                 [tableView insertRowsAtIndexPaths:@[rightIndexPath, explansPath] withRowAnimation:YES];
                 // Auto store into user's wrong lib
                 [SWLoginUser addWrongQuestion:self.question];
+                NSDictionary *userInfo = @{SELECTED_ANSWER__USERINFO_IS_RIGHT_KEY:@"WRONG"};
+                [[NSNotificationCenter defaultCenter] postNotificationName:USER_SELECTED_TEST_ANSWER_NOTIFICATION object:nil userInfo:userInfo];
             }
         }
     }

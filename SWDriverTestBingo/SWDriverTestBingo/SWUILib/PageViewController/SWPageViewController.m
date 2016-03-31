@@ -221,10 +221,15 @@
 {
     if (pageNum >= 0 && pageNum < self.pageCount) {
         NSLog(@"The width is %lf", self.scrollView.frame.size.width);
-        self.scrollView.contentOffset = CGPointMake(self.scrollView.frame.size.width * pageNum, self.scrollView.contentOffset.y);
         [self createPageAtIndex:pageNum];
         [self createPageAtIndex:pageNum -1];
         [self createPageAtIndex:pageNum + 1];
+
+        [UIView animateWithDuration:0.5 animations:^{
+            self.scrollView.contentOffset = CGPointMake(self.scrollView.frame.size.width * pageNum, self.scrollView.contentOffset.y);
+        } completion:^(BOOL finished) {
+        }];
+        
     }
 }
 

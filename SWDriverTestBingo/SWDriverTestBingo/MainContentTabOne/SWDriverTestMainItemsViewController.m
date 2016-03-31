@@ -453,7 +453,7 @@ static NSString *IMG_COL_CELL_IDENTITY = @"IMG_COL_CELL_IDENTITY";
     if (pageNum < self.pageDataArray.count) {
         SWQuestionItems *question = self.pageDataArray[pageNum];
         SWQuestionPageViewController* questionPageVC = (SWQuestionPageViewController *)pageViewController;
-         SWDriverTestQuestionView *questionView = [[SWDriverTestQuestionView alloc] initWithQuestion:question viewType:questionPageVC.questionPageType];
+        SWDriverTestQuestionView *questionView = [[SWDriverTestQuestionView alloc] initWithQuestion:question viewType:questionPageVC.questionPageType];
         return questionView;
     }
     
