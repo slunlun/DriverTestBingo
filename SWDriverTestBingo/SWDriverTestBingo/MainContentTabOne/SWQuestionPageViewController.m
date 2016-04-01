@@ -705,11 +705,14 @@ typedef enum AnswerStatus{
         backGroudView.translatesAutoresizingMaskIntoConstraints = NO;
         backGroudView.tag = backGroundTag;
         [window addSubview:backGroudView];
-        
-        [window addConstraint:[NSLayoutConstraint constraintWithItem:backGroudView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.bottomLayoutGuide attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.0]];
-        [window addConstraint:[NSLayoutConstraint constraintWithItem:backGroudView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.topLayoutGuide attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0]];
-        [window addConstraint:[NSLayoutConstraint constraintWithItem:backGroudView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1.0 constant:0.0]];
-        [window addConstraint:[NSLayoutConstraint constraintWithItem:backGroudView attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTrailing multiplier:1.0 constant:0.0]];
+    
+    NSDictionary *viewDict = @{@"backView":backGroudView};
+    [window addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[backView]|" options:0 metrics:nil views:viewDict]];
+    [window addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[backView]|" options:0 metrics:nil views:viewDict]];
+//        [window addConstraint:[NSLayoutConstraint constraintWithItem:backGroudView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.bottomLayoutGuide attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.0]];
+//        [window addConstraint:[NSLayoutConstraint constraintWithItem:backGroudView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.topLayoutGuide attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0]];
+//        [window addConstraint:[NSLayoutConstraint constraintWithItem:backGroudView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1.0 constant:0.0]];
+//        [window addConstraint:[NSLayoutConstraint constraintWithItem:backGroudView attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTrailing multiplier:1.0 constant:0.0]];
     [window bringSubviewToFront:backGroudView];
    // }
 }
