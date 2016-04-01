@@ -10,10 +10,9 @@
 typedef enum SWMessageBoxType {
     SWMessageBoxType_OK = 1,
     SWMessageBoxType_OKCancel,
-    SWMessageBoxType_ContinueTest,
 }SWMessageBoxType;
 @interface SWMessageBox : UIView
--(instancetype) initWithTitle:(NSString *) title boxImage:(UIImage *) image boxType:(SWMessageBoxType) messageBoxType completeBlock:(void(^)(NSInteger)) completeBlock;
+-(instancetype) initWithTitle:(NSString *) title boxImage:(UIImage *) image boxType:(SWMessageBoxType) messageBoxType buttonTitles:(NSArray *) buttonTitles completeBlock:(void(^)(NSInteger)) completeBlock;
 -(void) showMessageBoxInView:(UIView *) view;
 
 @property(nonatomic) NSInteger boxWidth;

@@ -19,9 +19,15 @@
 #import "SWDriverTestBigoDef.h"
 #import "SWMessageBox.h"
 
-#define SW_QUESTION_ITESM_STATUS_VIEW_INIT_HIEGHT 80.0
-#define SW_BACK_GROUND_COVER_VIEW_TAG 6001
+#define SW_QUESTION_ITESM_STATUS_VIEW_INIT_HIEGHT 90.0
+#define SW_BACK_GROUND_COVER_VIEW_TAG 5001
+
 #define TEST_PAUSE_MESSAGE_BOX_TAG 6002
+#define TEST_PAUSE_MESSAGE_BACK_GROUND_TAG 5002
+
+#define TEST_SUBMIT_MESSAGE_BOX_TAG 6003
+#define TEST_SUBMIT_MESSAGE_BACK_GROUND_TAG 5003
+
 #define COUNT_DOWN_TIME 2700  // 45 mins
 #define QUESTION_STATUS_CELL_SIZE 46
 
@@ -102,6 +108,11 @@ typedef enum AnswerStatus{
 {
     return self.answerStatusArray;
 }
+
+-(AnswerStatus) answeredStatusAtIndex:(NSInteger) index
+{
+    return (AnswerStatus)((NSNumber *)self.answerStatusArray[index]).integerValue;
+}
 -(NSInteger) testScore
 {
     return self.rightAnswerNum;
@@ -131,9 +142,15 @@ typedef enum AnswerStatus{
 @property(nonatomic, strong) FlexibleAlignButton *timerCountdownButton;
 @property(nonatomic) NSInteger examTimeLeft;
 @property(nonatomic, strong) SWTestScoreCounter *scoreCounter;
+@property(nonatomic, strong) UIColor *testCellDefaultColor;
+@property(nonatomic, strong) UIColor *testCellRightColor;
+@property(nonatomic, strong) UIColor *testCellWrongColor;
 @end
 
+
 @implementation SWQuestionPageViewController
+
+
 
 -(instancetype) initWithContentViewsCount:(NSInteger) pageCount type:(SWPageViewControllerType) type questinPageType:(TestQuestionViewType) questionPageType
 {
@@ -143,7 +160,7 @@ typedef enum AnswerStatus{
 -(instancetype) initWithContentViewsCount:(NSInteger) pageCount type:(SWPageViewControllerType) type switchToPage:(NSUInteger) pageNum questinPageType:(TestQuestionViewType) questionPageType
 {
     _questionPageType = questionPageType;
-    return [super initWithContentViewsCount:pageCount type:type switchToPage:questionPageType];
+    return [super initWithContentViewsCount:pageCount type:type switchToPage:pageNum];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -156,6 +173,10 @@ typedef enum AnswerStatus{
         _scoreCounter.delegate = self;
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appWillResignActiveResponse:) name:APP_WILL_RESIGNACTIVE_NOTIFICATION object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userSelectedTestAnswer:) name:USER_SELECTED_TEST_ANSWER_NOTIFICATION object:nil];
+        
+        _testCellDefaultColor = [UIColor whiteColor];
+        _testCellRightColor = [UIColor colorWithRed:(206.0f/255.0f) green:(248.0f/255.0f) blue:(205.0f/255.0f) alpha:0.6];
+        _testCellWrongColor = [UIColor colorWithRed:(252.0f/255.0f) green:(211.0f/255.0f) blue:(213.0f/255.0f) alpha:0.6];
     }
 }
 
@@ -190,6 +211,7 @@ typedef enum AnswerStatus{
     [super viewWillDisappear:animated];
     self.pageNumBeforePageScroll = [self currentPageNum];
     if (self.questionPageType == kTestQuestionViewSequence) { // 只有顺序答题 才需要保存答题页数
+        NSLog(@"The page Num is %ld", (long)[self currentPageNum]);
         [SWLoginUser savaUserQuestionStatus:[NSNumber numberWithInteger:[self currentPageNum]]];
     }
 }
@@ -280,7 +302,32 @@ typedef enum AnswerStatus{
 
 -(void) submitPaperPressed:(UIButton *) btn
 {
-    NSLog(@"Submit paper");
+    UIWindow *window = [[[UIApplication sharedApplication] delegate] window];
+    
+    if (![self.view viewWithTag:TEST_SUBMIT_MESSAGE_BOX_TAG]) {
+        [self addBackgroudConverView:TEST_SUBMIT_MESSAGE_BACK_GROUND_TAG];
+        if (self.scoreCounter.unDoneAnswerNum != 0) {
+            NSString *title = [NSString stringWithFormat:@"您还有%ld题未做，确定交卷吗？", self.scoreCounter.unDoneAnswerNum];
+            SWMessageBox *messageBox = [[SWMessageBox alloc] initWithTitle:title boxImage:[UIImage imageNamed:@"testUserHead"] boxType:SWMessageBoxType_OKCancel buttonTitles:@[NSLocalizedString(@"ContinueTest", nil), NSLocalizedString(@"SubmitPaper", nil)] completeBlock:^(NSInteger selectIndex) {
+                if (selectIndex == 0) {  // go on test
+                    [self removeBackgroundConverView:TEST_SUBMIT_MESSAGE_BACK_GROUND_TAG];
+                }else if(selectIndex == 1)
+                {
+                    [self removeBackgroundConverView:TEST_SUBMIT_MESSAGE_BACK_GROUND_TAG];
+                    [self submitTestPaper];
+                }
+            }];
+            
+            messageBox.tag = TEST_SUBMIT_MESSAGE_BOX_TAG;
+        
+            
+            [messageBox showMessageBoxInView:window];
+            
+        }else
+        {
+            [self submitTestPaper];
+        }
+    }
 }
 
 -(void) updataQuestionIndexTitle
@@ -402,7 +449,7 @@ typedef enum AnswerStatus{
     [self.dragMoveView addSubview:_contentCollectionView];
     viewDict = @{@"collectionView":_contentCollectionView};
     [self.dragMoveView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[collectionView]|" options:0 metrics:nil views:viewDict]];
-    [self.dragMoveView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(25)-[collectionView]|" options:0 metrics:nil views:viewDict]];
+    [self.dragMoveView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(30)-[collectionView]|" options:0 metrics:nil views:viewDict]];
     
     _dragViewHeadButton = [[UIButton alloc] init];
     _dragViewHeadButton.backgroundColor = [UIColor whiteColor];
@@ -538,7 +585,20 @@ typedef enum AnswerStatus{
     SWTestQuestionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"SW_QUESTION_NUM_CELL" forIndexPath:indexPath];
     NSString * stringTitle = [NSString stringWithFormat:@"%ld", (long)(indexPath.row + 1)];
     [cell.SWQuestionNumLabel setText:stringTitle];
-    [cell.SWQuestionNumLabel setBackgroundColor:[UIColor colorWithRed:(180.0f/255.0f) green:(228.0f/255.0f) blue:(247.0f/255.0f) alpha:0.6]];
+    AnswerStatus status = [self.scoreCounter answeredStatusAtIndex:indexPath.row];
+    if (status == kAnswerStatusUnset) {
+        
+        [cell.SWQuestionNumLabel setBackgroundColor:self.testCellDefaultColor];
+        
+    }else if(status == kAnswerStatusRight)
+    {
+        [cell.SWQuestionNumLabel setBackgroundColor:self.testCellRightColor];
+        
+    }else if(status == kAnswerStatusWrong)
+    {
+        [cell.SWQuestionNumLabel setBackgroundColor:self.testCellWrongColor];
+    }
+    
     cell.SWQuestionNumLabel.layer.cornerRadius = QUESTION_STATUS_CELL_SIZE / 2;
     cell.SWQuestionNumLabel.layer.masksToBounds = YES;
     [cell.SWQuestionNumLabel.layer setBorderWidth:0.3];
@@ -572,7 +632,7 @@ typedef enum AnswerStatus{
         
         
     } completion:^(BOOL finished) {
-        [self addBackgroudConverView];
+        [self addBackgroudConverView:SW_BACK_GROUND_COVER_VIEW_TAG];
         [self.view bringSubviewToFront:self.dragMoveView];
         [self.dragViewHeadButton setImage:[UIImage imageNamed:@"downArrow"] forState:UIControlStateNormal];
         self.dragMoveView.status = dragToMoveViewUp;
@@ -594,7 +654,7 @@ typedef enum AnswerStatus{
         if (finished) {
             NSIndexPath *index = [NSIndexPath indexPathForRow:[self currentPageNum] inSection:0];
             [self.contentCollectionView scrollToItemAtIndexPath:index atScrollPosition:UICollectionViewScrollPositionTop animated:YES];
-            [self removeBackgroundConverView];
+            [self removeBackgroundConverView:SW_BACK_GROUND_COVER_VIEW_TAG];
             [self.dragViewHeadButton setImage:[UIImage imageNamed:@"upArrow"] forState:UIControlStateNormal];
             self.dragMoveView.status = dragToMoveViewDown;
         }
@@ -603,6 +663,10 @@ typedef enum AnswerStatus{
 }
 
 #pragma mark - Private Method
+-(void) submitTestPaper
+{
+    
+}
 -(NSString *) convertLeftTimeToString:(NSInteger) leftTime
 {
     NSInteger min = leftTime / 60;
@@ -632,25 +696,28 @@ typedef enum AnswerStatus{
     }
 }
 
--(void) addBackgroudConverView
+-(void) addBackgroudConverView:(NSInteger) backGroundTag
 {
-    if (![self.view viewWithTag:SW_BACK_GROUND_COVER_VIEW_TAG]) {
+   // if (![self.view viewWithTag:SW_BACK_GROUND_COVER_VIEW_TAG]) {
+    UIWindow *window = [[[UIApplication sharedApplication] delegate] window];
         UIView *backGroudView = [[UIView alloc] init];
         backGroudView.backgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.6];
         backGroudView.translatesAutoresizingMaskIntoConstraints = NO;
-        backGroudView.tag = SW_BACK_GROUND_COVER_VIEW_TAG;
-        [self.view addSubview:backGroudView];
+        backGroudView.tag = backGroundTag;
+        [window addSubview:backGroudView];
         
-        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:backGroudView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.bottomLayoutGuide attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.0]];
-        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:backGroudView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.topLayoutGuide attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0]];
-        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:backGroudView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1.0 constant:0.0]];
-        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:backGroudView attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTrailing multiplier:1.0 constant:0.0]];
-    }
+        [window addConstraint:[NSLayoutConstraint constraintWithItem:backGroudView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.bottomLayoutGuide attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.0]];
+        [window addConstraint:[NSLayoutConstraint constraintWithItem:backGroudView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.topLayoutGuide attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0]];
+        [window addConstraint:[NSLayoutConstraint constraintWithItem:backGroudView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1.0 constant:0.0]];
+        [window addConstraint:[NSLayoutConstraint constraintWithItem:backGroudView attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTrailing multiplier:1.0 constant:0.0]];
+    [window bringSubviewToFront:backGroudView];
+   // }
 }
 
--(void) removeBackgroundConverView
+-(void) removeBackgroundConverView:(NSInteger) backGroundTag
 {
-    UIView *backgourndView = [self.view viewWithTag:SW_BACK_GROUND_COVER_VIEW_TAG];
+    UIWindow *window = [[[UIApplication sharedApplication] delegate] window];
+    UIView *backgourndView = [window viewWithTag:backGroundTag];
     [backgourndView removeFromSuperview];
     
 }
@@ -658,20 +725,22 @@ typedef enum AnswerStatus{
 #pragma mark - Notification Response
 -(void) appWillResignActiveResponse:(NSNotification *) notification
 {
-    NSString *title = [NSString stringWithFormat:@"共100题，还剩%ld题未做", (long)self.scoreCounter.unDoneAnswerNum];
-    SWMessageBox *messageBox = [[SWMessageBox alloc]initWithTitle:title boxImage:[UIImage imageNamed:@"testUserHead"] boxType:SWMessageBoxType_ContinueTest completeBlock:^(NSInteger btnIndex) {
+    if (![self.view viewWithTag:TEST_PAUSE_MESSAGE_BOX_TAG]) {
+        NSString *title = [NSString stringWithFormat:@"共100题，还剩%ld题未做", (long)self.scoreCounter.unDoneAnswerNum];
+        SWMessageBox *messageBox = [[SWMessageBox alloc]initWithTitle:title boxImage:[UIImage imageNamed:@"testUserHead"] boxType:SWMessageBoxType_OK buttonTitles:@[NSLocalizedString(@"ContinueTest", nil)] completeBlock:^(NSInteger btnIndex) {
             
-            [self removeBackgroundConverView];
+            [self removeBackgroundConverView:TEST_PAUSE_MESSAGE_BACK_GROUND_TAG];
             [self.countDownTimer resumeTimer];
             
         }];
         
-    messageBox.tag = TEST_PAUSE_MESSAGE_BOX_TAG;
-    
-    [self addBackgroudConverView];
-    [messageBox showMessageBoxInView:self.view];
-    [self.countDownTimer pauseTimer];
-    
+        messageBox.tag = TEST_PAUSE_MESSAGE_BOX_TAG;
+        
+        [self addBackgroudConverView:TEST_PAUSE_MESSAGE_BACK_GROUND_TAG];
+        [messageBox showMessageBoxInView:self.view];
+        [self.countDownTimer pauseTimer];
+
+    }
 }
 
 -(void) userSelectedTestAnswer:(NSNotification *) notification
@@ -689,19 +758,23 @@ typedef enum AnswerStatus{
 -(void) userDidAnserQuestion:(NSInteger) questionIndex result:(BOOL) isRight scoreCounter:(SWTestScoreCounter *) scoreCounter
 {
     NSIndexPath *cellIndexPath = [NSIndexPath indexPathForItem:questionIndex inSection:0];
-    UICollectionViewCell* cell = [self.contentCollectionView cellForItemAtIndexPath:cellIndexPath];
+    SWTestQuestionCell* cell = (SWTestQuestionCell *)[self.contentCollectionView cellForItemAtIndexPath:cellIndexPath];
     if (isRight) {
-        cell.backgroundColor = [UIColor greenColor];
+        cell.SWQuestionNumLabel.backgroundColor = self.testCellRightColor;
         
     }else
     {
-        cell.backgroundColor = [UIColor redColor];
+        cell.SWQuestionNumLabel.backgroundColor = self.testCellWrongColor;
     }
     
-    //[self.contentCollectionView reloadItemsAtIndexPaths:@[cellIndexPath]];
+    [self.contentCollectionView reloadItemsAtIndexPaths:@[cellIndexPath]];
     self.testRightNum.text = [NSString stringWithFormat:@"%ld", (long)scoreCounter.rightAnswerNum];
     self.testWrongNum.text = [NSString stringWithFormat:@"%ld", (long)scoreCounter.wrongAnswerNum];
- //   [self changeToNextTestPage];
+    [self changeToNextTestPage];
+    NSIndexPath *index = [NSIndexPath indexPathForRow:[self currentPageNum] inSection:0];
+    [self.contentCollectionView scrollToItemAtIndexPath:index atScrollPosition:UICollectionViewScrollPositionTop animated:YES];
+
+    
     
     
     

@@ -35,6 +35,7 @@ static SWUserInfo *userInfo = nil;
             if (userInstance) {
                 userInstance.userName = userInfo.userName;
                 userInstance.userImage = [UIImage imageWithData:userInfo.userImage];
+               
                 NSLog(@"user ID is %ld", userInfo.userID.integerValue);
             }
         });

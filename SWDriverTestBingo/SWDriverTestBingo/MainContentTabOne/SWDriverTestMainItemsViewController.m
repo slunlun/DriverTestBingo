@@ -27,6 +27,7 @@ static NSString *IMG_COL_CELL_IDENTITY = @"IMG_COL_CELL_IDENTITY";
 @interface SWDriverTestMainItemsViewController () <UICollectionViewDataSource, UICollectionViewDelegate, SWPageViewControllerDelegate>
 @property(nonatomic, strong) UICollectionView *collectionView;
 @property(nonatomic, strong) NSArray *pageDataArray;
+@property(nonatomic, strong) NSArray *pageDisplayDataArray;
 @end
 
 @implementation SWDriverTestMainItemsViewController
@@ -339,12 +340,6 @@ static NSString *IMG_COL_CELL_IDENTITY = @"IMG_COL_CELL_IDENTITY";
     // 选择题
     NSPredicate *predicate = [NSPredicate predicateWithFormat:[NSString stringWithFormat:@"questionType=%ld", (long)DRIVE_TEST_CHOOSE_QUESTION_TYPE]];
     fetchRequest.predicate = predicate;
-//    // Specify how the fetched objects should be sorted
-//    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"questionID"
-//                                                                   ascending:YES];
-//    [fetchRequest setSortDescriptors:[NSArray arrayWithObjects:sortDescriptor, nil]];
-    
-    
     NSError *error = nil;
     NSMutableArray *chooseQuestions = [NSMutableArray arrayWithArray:[appDelegate.managedObjectContext executeFetchRequest:fetchRequest error:&error]];
     
@@ -369,6 +364,7 @@ static NSString *IMG_COL_CELL_IDENTITY = @"IMG_COL_CELL_IDENTITY";
     }
     
     self.pageDataArray = testQuestions;
+    [self genDisplayDatas:testQuestions questionType:kTestQuestionViewTest];
     return self.pageDataArray.count;
 }
 
@@ -388,6 +384,7 @@ static NSString *IMG_COL_CELL_IDENTITY = @"IMG_COL_CELL_IDENTITY";
     NSError *error = nil;
     NSArray *fetchedObjects = [appDelegate.managedObjectContext executeFetchRequest:fetchRequest error:&error];
     self.pageDataArray = fetchedObjects;
+    [self genDisplayDatas:fetchedObjects questionType:kTestQuestionViewSequence];
     return self.pageDataArray.count;
 }
 
@@ -399,6 +396,8 @@ static NSString *IMG_COL_CELL_IDENTITY = @"IMG_COL_CELL_IDENTITY";
         [markedQuestionDatas addObject:question];
     }
     self.pageDataArray = markedQuestionDatas;
+    [self genDisplayDatas:markedQuestionDatas questionType:kTestQuestionViewMark];
+
     return self.pageDataArray.count;
 }
 
@@ -410,6 +409,7 @@ static NSString *IMG_COL_CELL_IDENTITY = @"IMG_COL_CELL_IDENTITY";
         [wrongQuestionDatas addObject:question];
     }
     self.pageDataArray = wrongQuestionDatas;
+    [self genDisplayDatas:wrongQuestionDatas questionType:kTestQuestionViewWrongQuestions];
     return self.pageDataArray.count;
 }
 
@@ -426,10 +426,22 @@ static NSString *IMG_COL_CELL_IDENTITY = @"IMG_COL_CELL_IDENTITY";
     NSError *error = nil;
     NSArray *fetchedObjects = [appDelegate.managedObjectContext executeFetchRequest:fetchRequest error:&error];
     self.pageDataArray = fetchedObjects;
+    [self genDisplayDatas:fetchedObjects questionType:kTestQuestionViewGlance];
     return self.pageDataArray.count;
 }
 
-
+-(NSInteger) genDisplayDatas:(NSArray *) questionItems questionType:(TestQuestionViewType) type
+{
+    // generate display data
+    NSMutableArray *displayDatas = [[NSMutableArray alloc] init];
+    for (SWQuestionItems *item in questionItems) {
+        SWDriverTestQuestionViewDisplayData* displayData = [[SWDriverTestQuestionViewDisplayData alloc] initWithQuestionItem:item questionType:type];
+        [displayDatas addObject:displayData];
+    }
+    
+    self.pageDisplayDataArray = displayDatas;
+    return [self.pageDisplayDataArray count];
+}
 #pragma mark NavigationItem Response
 - (void) showSlideMenuBtnPressed:(UIBarButtonItem *) barItem
 {
@@ -452,8 +464,9 @@ static NSString *IMG_COL_CELL_IDENTITY = @"IMG_COL_CELL_IDENTITY";
 {
     if (pageNum < self.pageDataArray.count) {
         SWQuestionItems *question = self.pageDataArray[pageNum];
+        SWDriverTestQuestionViewDisplayData *displayData = self.pageDisplayDataArray[pageNum];
         SWQuestionPageViewController* questionPageVC = (SWQuestionPageViewController *)pageViewController;
-        SWDriverTestQuestionView *questionView = [[SWDriverTestQuestionView alloc] initWithQuestion:question viewType:questionPageVC.questionPageType];
+        SWDriverTestQuestionView *questionView = [[SWDriverTestQuestionView alloc] initWithQuestion:question viewType:questionPageVC.questionPageType displayData:displayData];
         return questionView;
     }
     
