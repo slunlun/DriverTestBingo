@@ -29,3 +29,6 @@
 
 "Right" = "对";
 "Wrong" = "错";
+
+"TestTimeOut" = "考试时间结束";
+"TestCommitPaper" = "确认交卷";

@@ -18,6 +18,7 @@
 #import "NSTimer+SWCountDownTimer.h"
 #import "SWDriverTestBigoDef.h"
 #import "SWMessageBox.h"
+#import "SWTestResultViewController.h"
 
 #define SW_QUESTION_ITESM_STATUS_VIEW_INIT_HIEGHT 90.0
 #define SW_BACK_GROUND_COVER_VIEW_TAG 5001
@@ -25,10 +26,13 @@
 #define TEST_PAUSE_MESSAGE_BOX_TAG 6002
 #define TEST_PAUSE_MESSAGE_BACK_GROUND_TAG 5002
 
+#define TEST_TIME_OUT_MESSAGE_BOX_TAG 6001
+#define TEST_TIME_OUT_MESAGE_BACK_GROUND_TAG 5001
+
 #define TEST_SUBMIT_MESSAGE_BOX_TAG 6003
 #define TEST_SUBMIT_MESSAGE_BACK_GROUND_TAG 5003
 
-#define COUNT_DOWN_TIME 2700  // 45 mins
+#define COUNT_DOWN_TIME 10  // 45 mins
 #define QUESTION_STATUS_CELL_SIZE 46
 
 @class SWTestScoreCounter;
@@ -214,6 +218,10 @@ typedef enum AnswerStatus{
         NSLog(@"The page Num is %ld", (long)[self currentPageNum]);
         [SWLoginUser savaUserQuestionStatus:[NSNumber numberWithInteger:[self currentPageNum]]];
     }
+    
+    // when view disappear, invalidate the timer, otherwise the timer target is strong refer, there will be cycle refer, SWQuestionPageViewController
+    // won't dealloc
+    [_countDownTimer invalidate];
 }
 
 #pragma mark INIT/SETTER/GETTER
@@ -665,7 +673,10 @@ typedef enum AnswerStatus{
 #pragma mark - Private Method
 -(void) submitTestPaper
 {
-    
+    [self.navigationController popViewControllerAnimated:YES];
+    SWTestResultViewController *vc = [[SWTestResultViewController alloc] initWithUserTestScore:self.scoreCounter.testScore];
+    vc.view.backgroundColor = [UIColor whiteColor];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 -(NSString *) convertLeftTimeToString:(NSInteger) leftTime
 {
@@ -689,6 +700,7 @@ typedef enum AnswerStatus{
     NSString *timeLeftStr = [self convertLeftTimeToString:--self.examTimeLeft];
     if (self.examTimeLeft < 0) {
         [timer invalidate];
+        [self testTimeOut];
         
     }else
     {
@@ -778,7 +790,23 @@ typedef enum AnswerStatus{
 #pragma mark - For test Page View
 -(void) testTimeOut
 {
-    
+    UIWindow *window = [[[UIApplication sharedApplication] delegate] window];
+    if (![window viewWithTag:TEST_TIME_OUT_MESSAGE_BOX_TAG]) {
+        NSString *title = NSLocalizedString(@"TestTimeOut", nil);
+        SWMessageBox *messageBox = [[SWMessageBox alloc]initWithTitle:title boxImage:[UIImage imageNamed:@"testUserHead"] boxType:SWMessageBoxType_OK buttonTitles:@[NSLocalizedString(@"TestCommitPaper", nil)] completeBlock:^(NSInteger btnIndex) {
+            
+            [self removeBackgroundConverView:TEST_TIME_OUT_MESAGE_BACK_GROUND_TAG];
+            [self removeBackgroundConverView:SW_BACK_GROUND_COVER_VIEW_TAG];
+            [self submitTestPaper];
+            
+        }];
+        
+        messageBox.tag = TEST_TIME_OUT_MESSAGE_BOX_TAG;
+        
+        [self addWindowBackgroudConverView:TEST_TIME_OUT_MESAGE_BACK_GROUND_TAG];
+        
+        [messageBox showMessageBoxInView:window];
+    }
 }
 
 #pragma mark - SWTestScoreCounterDelegate
