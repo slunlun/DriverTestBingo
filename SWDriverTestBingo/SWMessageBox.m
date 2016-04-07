@@ -11,7 +11,6 @@
 #define DEFAULT_BOX_WIDTH 250
 #define DEFAULT_BOX_HEIGHT 200
 
-#define MESSAGE_BOX_VIEW_TAG 95001
 #define MESSAGE_BOX_OK_BTN_TAG 85001
 #define MESSAGE_BOX_CANCEL_BTN_TAG 85002
 
@@ -50,7 +49,6 @@ typedef void (^callBackBlock)(NSInteger);
    // if (view && self && ![view viewWithTag:MESSAGE_BOX_VIEW_TAG]) {
         //self.frame = CGRectMake(0, 0, _boxWidth, _boxHeight);
         self.translatesAutoresizingMaskIntoConstraints = NO;
-        self.tag = MESSAGE_BOX_VIEW_TAG;
         [view addSubview:self];
         [view addConstraint:[NSLayoutConstraint constraintWithItem:self attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:_boxWidth]];
         [view addConstraint:[NSLayoutConstraint constraintWithItem:self attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:_boxHeight]];

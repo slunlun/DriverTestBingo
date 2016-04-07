@@ -304,8 +304,8 @@ typedef enum AnswerStatus{
 {
     UIWindow *window = [[[UIApplication sharedApplication] delegate] window];
     
-    if (![self.view viewWithTag:TEST_SUBMIT_MESSAGE_BOX_TAG]) {
-        [self addBackgroudConverView:TEST_SUBMIT_MESSAGE_BACK_GROUND_TAG];
+    if (![window viewWithTag:TEST_SUBMIT_MESSAGE_BOX_TAG]) {
+        [self addWindowBackgroudConverView:TEST_SUBMIT_MESSAGE_BACK_GROUND_TAG];
         if (self.scoreCounter.unDoneAnswerNum != 0) {
             NSString *title = [NSString stringWithFormat:@"您还有%ld题未做，确定交卷吗？", self.scoreCounter.unDoneAnswerNum];
             SWMessageBox *messageBox = [[SWMessageBox alloc] initWithTitle:title boxImage:[UIImage imageNamed:@"testUserHead"] boxType:SWMessageBoxType_OKCancel buttonTitles:@[NSLocalizedString(@"ContinueTest", nil), NSLocalizedString(@"SubmitPaper", nil)] completeBlock:^(NSInteger selectIndex) {
@@ -698,23 +698,40 @@ typedef enum AnswerStatus{
 
 -(void) addBackgroudConverView:(NSInteger) backGroundTag
 {
-   // if (![self.view viewWithTag:SW_BACK_GROUND_COVER_VIEW_TAG]) {
-    UIWindow *window = [[[UIApplication sharedApplication] delegate] window];
+    if (![self.view viewWithTag:backGroundTag]) {
         UIView *backGroudView = [[UIView alloc] init];
         backGroudView.backgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.6];
         backGroudView.translatesAutoresizingMaskIntoConstraints = NO;
         backGroudView.tag = backGroundTag;
-        [window addSubview:backGroudView];
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(backgroundConverViewClicked:)];
+        [backGroudView addGestureRecognizer:tap];
+        [self.view addSubview:backGroudView];
+        
+        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:backGroudView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.bottomLayoutGuide attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.0]];
+        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:backGroudView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.topLayoutGuide attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0]];
+        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:backGroudView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1.0 constant:0.0]];
+        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:backGroudView attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTrailing multiplier:1.0 constant:0.0]];
+    }
+
+}
+
+-(void) backgroundConverViewClicked:(UITapGestureRecognizer *) tap
+{
+    [self downTestQuestionItemStatusView];
+}
+-(void) addWindowBackgroudConverView:(NSInteger) backGroundTag
+{
+    UIWindow *window = [[[UIApplication sharedApplication] delegate] window];
+    UIView *backGroudView = [[UIView alloc] init];
+    backGroudView.backgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.6];
+    backGroudView.translatesAutoresizingMaskIntoConstraints = NO;
+    backGroudView.tag = backGroundTag;
+    [window addSubview:backGroudView];
     
     NSDictionary *viewDict = @{@"backView":backGroudView};
     [window addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[backView]|" options:0 metrics:nil views:viewDict]];
     [window addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[backView]|" options:0 metrics:nil views:viewDict]];
-//        [window addConstraint:[NSLayoutConstraint constraintWithItem:backGroudView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.bottomLayoutGuide attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.0]];
-//        [window addConstraint:[NSLayoutConstraint constraintWithItem:backGroudView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.topLayoutGuide attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0]];
-//        [window addConstraint:[NSLayoutConstraint constraintWithItem:backGroudView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1.0 constant:0.0]];
-//        [window addConstraint:[NSLayoutConstraint constraintWithItem:backGroudView attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTrailing multiplier:1.0 constant:0.0]];
     [window bringSubviewToFront:backGroudView];
-   // }
 }
 
 -(void) removeBackgroundConverView:(NSInteger) backGroundTag
@@ -728,7 +745,13 @@ typedef enum AnswerStatus{
 #pragma mark - Notification Response
 -(void) appWillResignActiveResponse:(NSNotification *) notification
 {
-    if (![self.view viewWithTag:TEST_PAUSE_MESSAGE_BOX_TAG]) {
+    [self showPauseTestMessageBox];
+}
+
+-(void) showPauseTestMessageBox
+{
+    UIWindow *window = [[[UIApplication sharedApplication] delegate] window];
+    if (![window viewWithTag:TEST_PAUSE_MESSAGE_BOX_TAG]) {
         NSString *title = [NSString stringWithFormat:@"共100题，还剩%ld题未做", (long)self.scoreCounter.unDoneAnswerNum];
         SWMessageBox *messageBox = [[SWMessageBox alloc]initWithTitle:title boxImage:[UIImage imageNamed:@"testUserHead"] boxType:SWMessageBoxType_OK buttonTitles:@[NSLocalizedString(@"ContinueTest", nil)] completeBlock:^(NSInteger btnIndex) {
             
@@ -739,10 +762,11 @@ typedef enum AnswerStatus{
         
         messageBox.tag = TEST_PAUSE_MESSAGE_BOX_TAG;
         
-        [self addBackgroudConverView:TEST_PAUSE_MESSAGE_BACK_GROUND_TAG];
-        [messageBox showMessageBoxInView:self.view];
+        [self addWindowBackgroudConverView:TEST_PAUSE_MESSAGE_BACK_GROUND_TAG];
+        
+        [messageBox showMessageBoxInView:window];
         [self.countDownTimer pauseTimer];
-
+        
     }
 }
 
