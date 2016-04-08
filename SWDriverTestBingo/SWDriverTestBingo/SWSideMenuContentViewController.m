@@ -64,6 +64,7 @@
     if (indexPath.section == 0) {
         SWRoundButtonTableViewCell *cell = [SWRoundButtonTableViewCell initWithTableView:tableView userInfoCellWithUserName:@"EShi" userHeadImage:[UIImage imageNamed:@"testUserHead"]];
         cell.backgroundColor = [UIColor clearColor];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }
     // other opeartions 0 考试锦囊 1 考前许愿 2 设置 3 关于
@@ -104,7 +105,7 @@
         default:
             break;
     }
-    
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
 

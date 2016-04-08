@@ -8,8 +8,8 @@
 
 #import "SWUserInfoConfigViewController.h"
 #import "SWInputTableViewCellView.h"
-#import "SWTitleImageCellView.h"
 #import "SWLoginUser.h"
+#import "SWImageLabelTableViewCell.h"
 
 #define USER_INFO_SECTION 0
 #define USER_PSW_SECTION 1
@@ -69,7 +69,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (section == 0) {
-        return 2;
+        return 1;
     }else if(section == 1){
         if (self.isEditPSW) {
             return 5;
@@ -94,61 +94,21 @@
     UITableViewCell * cell = nil;
     static NSString *INPUT_CELL_IDENTIFY = @"INPUT_CELL_IDENTIFY";
     static NSString *TITLE_CELL_IDENTIFY = @"TITLE_CELL_IDENTIFY";
-    static NSString *TITLE_IMAGE_CELL_IDENTIFY = @"IMAGE_CELL_IDENTIFY";
+    static NSString *TITLE_IMAGE_CELL_IDENTIFY = @"SWImageLabelTableViewCell";
     
     switch (indexPath.section) {
         case USER_INFO_SECTION:
         {
-            if (indexPath.row == 0) {
-                cell = [tableView dequeueReusableCellWithIdentifier:INPUT_CELL_IDENTIFY];
-                if(cell == nil)
-                {
-                    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:INPUT_CELL_IDENTIFY];
-                }
-                SWInputTableViewCellView *inputCellView = nil;
-                if ([cell.contentView viewWithTag:INPUT_CELL_TAG]) {
-                    inputCellView = (SWInputTableViewCellView *)[cell.contentView viewWithTag:INPUT_CELL_TAG];
-                    
-                }else
-                {
-                    inputCellView = [[SWInputTableViewCellView alloc] initWithTitle:@"" inputContent:@"" placeHolder:@""];
-                    inputCellView.tag = INPUT_CELL_TAG;
-                    inputCellView.frame = cell.contentView.frame;
-                    [inputCellView layoutIfNeeded];
-                    [cell.contentView addSubview:inputCellView];
-                }
-                inputCellView.inputTitleLable.text = @"昵称";
-                inputCellView.inputContentTextField.text = [SWLoginUser sharedInstance].userName;
-                inputCellView.inputContentTextField.placeholder = @"请输入您的昵称";
-                inputCellView.inputContentTextField.secureTextEntry = NO;
-                cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            }else if (indexPath.row == 1)
-            {
+            SWImageLabelTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:TITLE_IMAGE_CELL_IDENTIFY];
+            if (cell == nil) {
+                [tableView registerNib:[UINib nibWithNibName:@"SWImageLabelTableViewCell" bundle:nil] forCellReuseIdentifier:TITLE_IMAGE_CELL_IDENTIFY];
                 cell = [tableView dequeueReusableCellWithIdentifier:TITLE_IMAGE_CELL_IDENTIFY];
-                if(cell == nil)
-                {
-                    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:TITLE_IMAGE_CELL_IDENTIFY];
-                }
-                SWTitleImageCellView *titleImageCellView = nil;
-                if ([cell.contentView viewWithTag:TITLE_IMAGE_CELL_TAG]) {
-                    titleImageCellView = (SWTitleImageCellView *)[cell.contentView viewWithTag:TITLE_IMAGE_CELL_TAG];
-                    
-                }else
-                {
-                    UIImage *headImage = nil;
-                    if ([SWLoginUser sharedInstance].userImage == nil) {
-                        headImage= [UIImage imageNamed:@"noUserImage"];
-                    }else
-                    {
-                        headImage = [SWLoginUser sharedInstance].userImage;
-                    }
-                    titleImageCellView = [[SWTitleImageCellView alloc] initWithTitle:@"头像" image:headImage frame:cell.contentView.frame];
-                    titleImageCellView.tag = INPUT_CELL_TAG;
-                    [cell.contentView addSubview:titleImageCellView];
-                }
-                cell.selectionStyle = UITableViewCellSelectionStyleNone;
             }
-            
+            cell.SWCellImageView.image = [SWLoginUser sharedInstance].userImage;
+            cell.SWCellLabel.text = [SWLoginUser sharedInstance].userName;
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            return cell;
         }
             break;
         case USER_PSW_SECTION:
@@ -278,7 +238,7 @@
         default:
             break;
     }
-  
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
 
@@ -305,6 +265,16 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     return 10.0;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section == USER_INFO_SECTION) {
+        return 80.0;
+    }else
+    {
+        return 50.0;
+    }
 }
 
 @end
