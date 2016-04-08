@@ -30,6 +30,7 @@
 		5E94FE3E1C8D7C6700BD2DBE /* SWQuestionStatusHeaderViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5E94FE3C1C8D7C6700BD2DBE /* SWQuestionStatusHeaderViewController.xib */; };
 		5E9D50E61CB7897D0052C921 /* SWImageLabelTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E9D50E41CB7897D0052C921 /* SWImageLabelTableViewCell.m */; };
 		5E9D50E71CB7897D0052C921 /* SWImageLabelTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5E9D50E51CB7897D0052C921 /* SWImageLabelTableViewCell.xib */; };
+		5E9D50EB1CB7B9F40052C921 /* SWUserNameImageConfigTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E9D50EA1CB7B9F40052C921 /* SWUserNameImageConfigTableViewController.m */; };
 		5EA7553B1CB6529A00065002 /* SWTestResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EA7553A1CB6529A00065002 /* SWTestResultViewController.m */; };
 		5EEF42921C1A69800050B91B /* SWRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EEF42911C1A69800050B91B /* SWRootViewController.m */; };
 		5EEF42961C1A6CF10050B91B /* SWDriverTestApplyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EEF42951C1A6CF10050B91B /* SWDriverTestApplyViewController.m */; };
@@ -688,6 +689,8 @@
 		5E9D50E31CB7897D0052C921 /* SWImageLabelTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWImageLabelTableViewCell.h; sourceTree = "<group>"; };
 		5E9D50E41CB7897D0052C921 /* SWImageLabelTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWImageLabelTableViewCell.m; sourceTree = "<group>"; };
 		5E9D50E51CB7897D0052C921 /* SWImageLabelTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SWImageLabelTableViewCell.xib; sourceTree = "<group>"; };
+		5E9D50E91CB7B9F40052C921 /* SWUserNameImageConfigTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWUserNameImageConfigTableViewController.h; sourceTree = "<group>"; };
+		5E9D50EA1CB7B9F40052C921 /* SWUserNameImageConfigTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWUserNameImageConfigTableViewController.m; sourceTree = "<group>"; };
 		5EA755391CB6529A00065002 /* SWTestResultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWTestResultViewController.h; sourceTree = "<group>"; };
 		5EA7553A1CB6529A00065002 /* SWTestResultViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWTestResultViewController.m; sourceTree = "<group>"; };
 		5ECBD9121C3F4D6A00A656DE /* SWDriverTestBigoDef.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWDriverTestBigoDef.h; sourceTree = "<group>"; };
@@ -1474,6 +1477,8 @@
 				5E8826A71C328616007225E2 /* SWUserInfoConfigViewController.m */,
 				5E8826A91C328634007225E2 /* SWGoodIdeasViewController.h */,
 				5E8826AA1C328634007225E2 /* SWGoodIdeasViewController.m */,
+				5E9D50E91CB7B9F40052C921 /* SWUserNameImageConfigTableViewController.h */,
+				5E9D50EA1CB7B9F40052C921 /* SWUserNameImageConfigTableViewController.m */,
 			);
 			name = SideMenu;
 			sourceTree = "<group>";
@@ -2874,6 +2879,7 @@
 				80D779641C3AA61F004C9151 /* SWWrongItems+CoreDataProperties.m in Sources */,
 				80D7795F1C3AA5F8004C9151 /* SWMarkItems.m in Sources */,
 				80D779591C3AA5B3004C9151 /* SWUserInfo.m in Sources */,
+				5E9D50EB1CB7B9F40052C921 /* SWUserNameImageConfigTableViewController.m in Sources */,
 				5E8047D11C19851800B0587A /* SWMainContentTabBarController.m in Sources */,
 				5EEF42961C1A6CF10050B91B /* SWDriverTestApplyViewController.m in Sources */,
 				5E1A172C1C51D15F00C02B20 /* SWInputTableViewCellView.m in Sources */,

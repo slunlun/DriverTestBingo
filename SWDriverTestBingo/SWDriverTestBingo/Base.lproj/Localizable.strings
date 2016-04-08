@@ -32,3 +32,6 @@
 
 "TestTimeOut" = "考试时间结束";
 "TestCommitPaper" = "确认交卷";
+
+"UserHeadImage" = "头像";
+"UserName" = "名字";

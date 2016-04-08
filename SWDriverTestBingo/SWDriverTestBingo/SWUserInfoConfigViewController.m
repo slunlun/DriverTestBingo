@@ -10,6 +10,7 @@
 #import "SWInputTableViewCellView.h"
 #import "SWLoginUser.h"
 #import "SWImageLabelTableViewCell.h"
+#import "SWUserNameImageConfigTableViewController.h"
 
 #define USER_INFO_SECTION 0
 #define USER_PSW_SECTION 1
@@ -259,6 +260,10 @@
         {
             [tableView deleteRowsAtIndexPaths:indexArray withRowAnimation:UITableViewRowAnimationTop];
         }
+    }else if(indexPath.section == USER_INFO_SECTION)
+    {
+        SWUserNameImageConfigTableViewController *userNameImageVC = [[SWUserNameImageConfigTableViewController alloc] init];
+        [self.navigationController pushViewController:userNameImageVC animated:YES];
     }
 }
 
