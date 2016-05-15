@@ -13,6 +13,9 @@
 #import "SWMarkItems+CoreDataProperties.h"
 #import "SWWrongItems+CoreDataProperties.h"
 #import "SWQuestionStatus+CoreDataProperties.h"
+#import "SWCommonUtils.h"
+
+#define SW_USER_HEAD_IMAGE_NAME @"UserHeadImage"
 
 @implementation SWLoginUser
 static SWLoginUser *userInstance = nil;
@@ -34,7 +37,7 @@ static SWUserInfo *userInfo = nil;
             userInstance = [[self alloc] init];
             if (userInstance) {
                 userInstance.userName = userInfo.userName;
-                userInstance.userImage = [UIImage imageWithData:userInfo.userImage];
+                [userInstance getUserHeadImage];
                
                 NSLog(@"user ID is %ld", userInfo.userID.integerValue);
             }
@@ -49,7 +52,7 @@ static SWUserInfo *userInfo = nil;
 }
 
 #pragma mark Mark questions
-+ (void) markQuestion:(SWQuestionItems *) markedQuestion
+- (void) markQuestion:(SWQuestionItems *) markedQuestion
 {
     AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
     
@@ -79,7 +82,7 @@ static SWUserInfo *userInfo = nil;
     [appDelegate saveContext];
 }
 
-+ (void) unmarkQuestion:(SWQuestionItems *) markedQuestion
+- (void) unmarkQuestion:(SWQuestionItems *) markedQuestion
 {
     AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
@@ -103,7 +106,7 @@ static SWUserInfo *userInfo = nil;
     [appDelegate saveContext];
 }
 
-+ (NSSet *) getUserMarkedQuestions
+- (NSSet *) getUserMarkedQuestions
 {
     AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
@@ -122,7 +125,7 @@ static SWUserInfo *userInfo = nil;
     return nil;
 }
 #pragma mark Wrong QUestions
-+ (void) addWrongQuestion:(SWQuestionItems *) wrongQuestion
+- (void) addWrongQuestion:(SWQuestionItems *) wrongQuestion
 {
     AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
@@ -148,7 +151,7 @@ static SWUserInfo *userInfo = nil;
     
     [appDelegate saveContext];
 }
-+ (void) removeWrongQuestion:(SWQuestionItems *) wrongQuestion
+- (void) removeWrongQuestion:(SWQuestionItems *) wrongQuestion
 {
     AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
@@ -173,7 +176,7 @@ static SWUserInfo *userInfo = nil;
 
 }
 
-+ (NSSet *) getUserWrongQuestions
+- (NSSet *) getUserWrongQuestions
 {
     
     AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
@@ -194,7 +197,7 @@ static SWUserInfo *userInfo = nil;
 
 }
 
-+ (void) savaUserQuestionStatus:(NSNumber *) questionIndex
+- (void) savaUserQuestionStatus:(NSNumber *) questionIndex
 {
     AppDelegate *appDelegate = [[AppDelegate alloc] init];
     
@@ -218,7 +221,7 @@ static SWUserInfo *userInfo = nil;
     [appDelegate saveContext];
 }
 
-+ (NSNumber *) loadUserQuestionIndex
+- (NSNumber *) loadUserQuestionIndex
 {
     AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
@@ -238,10 +241,67 @@ static SWUserInfo *userInfo = nil;
 
 }
 
-+(void) saveUserAnsweredQuestion:(SWQuestionItems *) answeredQuestion
+-(void) saveUserAnsweredQuestion:(SWQuestionItems *) answeredQuestion
 {
     AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
     [appDelegate saveContext];
 }
+
+- (BOOL) updateUserHeadImage:(UIImage *) headImage
+{
+    NSString *savePath = [SWLoginUser userImageSavedDiectoryPath];
+    savePath = [savePath stringByAppendingPathComponent:SW_USER_HEAD_IMAGE_NAME];
+    NSData * imageData = nil;
+    if((imageData = UIImagePNGRepresentation(headImage)) ||
+       (imageData = UIImageJPEGRepresentation(headImage, 0.6)))
+    {
+        if([SWCommonUtils saveFile:imageData ToPath:savePath withMode:kSaveFileAlways])
+        {
+            _userImage = headImage;
+            return YES;
+        }
+    }
+    
+    return NO;
+}
+
+- (UIImage *) getUserHeadImage
+{
+    if (_userImage) {
+        return _userImage;
+    }
+    
+    NSString *savePath = [SWLoginUser userImageSavedDiectoryPath];
+    savePath = [savePath stringByAppendingPathComponent:SW_USER_HEAD_IMAGE_NAME];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    BOOL isDirectory;
+    if ([fileManager fileExistsAtPath:savePath isDirectory:&isDirectory]) {
+        if (!isDirectory) {
+            _userImage =  [UIImage imageWithContentsOfFile:savePath];
+        }
+    }else
+    {
+        _userImage = [UIImage imageNamed:@"defUserHeadImg"];
+    }
+    
+    return _userImage;
+}
+
+-(NSString *) getUserName
+{
+    return _userName;
+}
+
+#pragma mark - private tool functions
++(NSString *) userImageSavedDiectoryPath
+{
+    NSString *savepath = [[SWCommonUtils appDocumentFolderPath] stringByAppendingPathComponent:@"UserData"];
+    if([SWCommonUtils createSubDirectory:@"UserData" atPath:[SWCommonUtils appDocumentFolderPath]])
+    {
+        return savepath;
+    }
+    return nil;
+}
+
 
 @end

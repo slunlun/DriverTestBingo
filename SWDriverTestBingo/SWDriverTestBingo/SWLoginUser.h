@@ -14,18 +14,23 @@
 + (SWLoginUser *) loginWithUserName:(NSString *) userName PassWord:(NSString *) psw;
 + (SWLoginUser *) sharedInstance;
 
-+ (void) markQuestion:(SWQuestionItems *) markedQuestion;
-+ (void) unmarkQuestion:(SWQuestionItems *) markedQuestion;
-+ (NSSet *) getUserMarkedQuestions;
+- (void) markQuestion:(SWQuestionItems *) markedQuestion;
+- (void) unmarkQuestion:(SWQuestionItems *) markedQuestion;
+- (NSSet *) getUserMarkedQuestions;
 
-+ (void) addWrongQuestion:(SWQuestionItems *) wrongQuestion;
-+ (void) removeWrongQuestion:(SWQuestionItems *) wrongQuestion;
-+ (NSSet *) getUserWrongQuestions;
+- (void) addWrongQuestion:(SWQuestionItems *) wrongQuestion;
+- (void) removeWrongQuestion:(SWQuestionItems *) wrongQuestion;
+- (NSSet *) getUserWrongQuestions;
 
-+ (void) savaUserQuestionStatus:(NSNumber *) questionIndex;
-+ (NSNumber *) loadUserQuestionIndex;
+- (void) savaUserQuestionStatus:(NSNumber *) questionIndex;
+- (NSNumber *) loadUserQuestionIndex;
 
-+(void) saveUserAnsweredQuestion:(SWQuestionItems *) answeredQuestion;
+- (BOOL) updateUserHeadImage:(UIImage *) headImage;
+
+- (UIImage *) getUserHeadImage;
+- (NSString *) getUserName;
+
+- (void) saveUserAnsweredQuestion:(SWQuestionItems *) answeredQuestion;
 @property(nonatomic, strong) NSString* userName;
 @property(nonatomic, strong) UIImage *userImage;
 @end

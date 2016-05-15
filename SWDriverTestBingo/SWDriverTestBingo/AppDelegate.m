@@ -11,6 +11,7 @@
 #import "SWUserInfo+CoreDataProperties.h"
 #import "SWCommonUtils.h"
 #import "SWDriverTestBigoDef.h"
+#import "SWLoginUser.h"
 @interface AppDelegate ()
 
 @end
@@ -138,15 +139,15 @@
 #pragma mark - JUST FOR TEST
 - (void) initUserInfo
 {
+    // JUST FOR TEST!!!!!!
+    [SWLoginUser loginWithUserName:@"John" PassWord:@"123"];
+    
     if(![[NSUserDefaults standardUserDefaults] boolForKey:@"firstStart"]){
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"firstStart"];
         NSLog(@"第一次启动");
         
-        // userInfo
-        SWUserInfo *userInfo = [NSEntityDescription insertNewObjectForEntityForName:@"SWUserInfo" inManagedObjectContext:[self managedObjectContext]];
-        userInfo.userName = @"John";
-        userInfo.userID = [SWCommonUtils getTableMaxIndex:@"SWUserInfo"];
         
+
         
         // questionItem
 //        for (int i = 1; i < 600; i++) {

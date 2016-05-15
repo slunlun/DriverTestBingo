@@ -62,7 +62,7 @@ typedef void (^callBackBlock)(NSInteger);
 #pragma makr - Response to UI
 -(void) messageBoxBtnClicked:(UIButton *) button
 {
-    NSInteger buttonIndex;
+    NSInteger buttonIndex = 0;
     switch (button.tag) {
         case MESSAGE_BOX_OK_BTN_TAG:
         {
@@ -76,7 +76,11 @@ typedef void (^callBackBlock)(NSInteger);
         default:
             break;
     }
-    self.callBack(buttonIndex);
+    if(self.callBack)
+    {
+        self.callBack(buttonIndex);
+    }
+    
     [self removeFromSuperview];
 }
 #pragma mark - Private method

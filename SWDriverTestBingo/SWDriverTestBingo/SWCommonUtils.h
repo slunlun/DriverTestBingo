@@ -14,7 +14,17 @@
 #import "SWQuestionStatus+CoreDataProperties.h"
 #import "SWTableMaxIndex+CoreDataProperties.h"
 
+typedef enum : NSUInteger {
+    kSaveFileAlways = 1,
+    kSaveFileIfNotExist,
+} SWFileSaveMode;
+
 @interface SWCommonUtils : NSObject
 + (NSNumber *) getTableMaxIndex:(NSString *) tableName;
 + (void) updataTableIndex:(NSString *) tableName;
+
++(NSString *) appDocumentFolderPath;
+
++(BOOL) createSubDirectory:(NSString *) directoryName atPath:(NSString *) parentPath;
++(BOOL) saveFile:(NSData *) fileData ToPath:(NSString *) filePath withMode:(SWFileSaveMode) saveMode;
 @end

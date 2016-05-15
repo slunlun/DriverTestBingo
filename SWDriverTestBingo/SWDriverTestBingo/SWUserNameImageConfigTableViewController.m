@@ -8,7 +8,7 @@
 
 #import "SWUserNameImageConfigTableViewController.h"
 #import "SWLoginUser.h"
-
+#import "SWUserHeadImageViewController.h"
 @interface SWUserNameImageConfigTableViewController ()
 
 @end
@@ -33,6 +33,11 @@ static NSString  *DETAIL_CELL_IDENTITY = @"DETAIL_CELL_IDENTITY";
     // Dispose of any resources that can be recreated.
 }
 
+-(void) viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self.tableView reloadData];
+}
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -90,6 +95,18 @@ static NSString  *DETAIL_CELL_IDENTITY = @"DETAIL_CELL_IDENTITY";
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     return 10.0;
+}
+
+- (void) tableView:(UITableView *) tableView didSelectRowAtIndexPath:(nonnull NSIndexPath *)indexPath
+{
+    if (indexPath.row == 0) { // Change user image
+        
+        SWUserHeadImageViewController *vc = [[SWUserHeadImageViewController alloc] init];
+        [self.navigationController pushViewController:vc animated:YES];
+        
+    }else if (indexPath.row == 1) // Change user name
+    {
+    }
 }
 
 @end

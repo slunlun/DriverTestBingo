@@ -216,7 +216,7 @@ typedef enum AnswerStatus{
     self.pageNumBeforePageScroll = [self currentPageNum];
     if (self.questionPageType == kTestQuestionViewSequence) { // 只有顺序答题 才需要保存答题页数
         NSLog(@"The page Num is %ld", (long)[self currentPageNum]);
-        [SWLoginUser savaUserQuestionStatus:[NSNumber numberWithInteger:[self currentPageNum]]];
+        [[SWLoginUser sharedInstance] savaUserQuestionStatus:[NSNumber numberWithInteger:[self currentPageNum]]];
     }
     
     // when view disappear, invalidate the timer, otherwise the timer target is strong refer, there will be cycle refer, SWQuestionPageViewController
@@ -316,7 +316,8 @@ typedef enum AnswerStatus{
         [self addWindowBackgroudConverView:TEST_SUBMIT_MESSAGE_BACK_GROUND_TAG];
         if (self.scoreCounter.unDoneAnswerNum != 0) {
             NSString *title = [NSString stringWithFormat:@"您还有%ld题未做，确定交卷吗？", self.scoreCounter.unDoneAnswerNum];
-            SWMessageBox *messageBox = [[SWMessageBox alloc] initWithTitle:title boxImage:[UIImage imageNamed:@"testUserHead"] boxType:SWMessageBoxType_OKCancel buttonTitles:@[NSLocalizedString(@"ContinueTest", nil), NSLocalizedString(@"SubmitPaper", nil)] completeBlock:^(NSInteger selectIndex) {
+            UIImage *boxImage = [[SWLoginUser sharedInstance] getUserHeadImage];
+            SWMessageBox *messageBox = [[SWMessageBox alloc] initWithTitle:title boxImage:boxImage boxType:SWMessageBoxType_OKCancel buttonTitles:@[NSLocalizedString(@"ContinueTest", nil), NSLocalizedString(@"SubmitPaper", nil)] completeBlock:^(NSInteger selectIndex) {
                 if (selectIndex == 0) {  // go on test
                     [self removeBackgroundConverView:TEST_SUBMIT_MESSAGE_BACK_GROUND_TAG];
                 }else if(selectIndex == 1)
@@ -362,11 +363,11 @@ typedef enum AnswerStatus{
     SWQuestionItems *question = [self currentQuestionItem];
     UIButton *btnMark = (UIButton *)self.navigationItem.rightBarButtonItems[0].customView;
     if (question.markQuestionsLib) {
-        [SWLoginUser unmarkQuestion:question];
+        [[SWLoginUser sharedInstance] unmarkQuestion:question];
         [btnMark setImage:[UIImage imageNamed:@"markNot"] forState:UIControlStateNormal];
     }else
     {
-        [SWLoginUser markQuestion:question];
+        [[SWLoginUser sharedInstance] markQuestion:question];
         [btnMark setImage:[UIImage imageNamed:@"mark"] forState:UIControlStateNormal];
     }
 }
@@ -765,7 +766,8 @@ typedef enum AnswerStatus{
     UIWindow *window = [[[UIApplication sharedApplication] delegate] window];
     if (![window viewWithTag:TEST_PAUSE_MESSAGE_BOX_TAG]) {
         NSString *title = [NSString stringWithFormat:@"共100题，还剩%ld题未做", (long)self.scoreCounter.unDoneAnswerNum];
-        SWMessageBox *messageBox = [[SWMessageBox alloc]initWithTitle:title boxImage:[UIImage imageNamed:@"testUserHead"] boxType:SWMessageBoxType_OK buttonTitles:@[NSLocalizedString(@"ContinueTest", nil)] completeBlock:^(NSInteger btnIndex) {
+        UIImage *boxImage = [[SWLoginUser sharedInstance] getUserHeadImage];
+        SWMessageBox *messageBox = [[SWMessageBox alloc]initWithTitle:title boxImage:boxImage boxType:SWMessageBoxType_OK buttonTitles:@[NSLocalizedString(@"ContinueTest", nil)] completeBlock:^(NSInteger btnIndex) {
             
             [self removeBackgroundConverView:TEST_PAUSE_MESSAGE_BACK_GROUND_TAG];
             [self.countDownTimer resumeTimer];
@@ -793,7 +795,8 @@ typedef enum AnswerStatus{
     UIWindow *window = [[[UIApplication sharedApplication] delegate] window];
     if (![window viewWithTag:TEST_TIME_OUT_MESSAGE_BOX_TAG]) {
         NSString *title = NSLocalizedString(@"TestTimeOut", nil);
-        SWMessageBox *messageBox = [[SWMessageBox alloc]initWithTitle:title boxImage:[UIImage imageNamed:@"testUserHead"] boxType:SWMessageBoxType_OK buttonTitles:@[NSLocalizedString(@"TestCommitPaper", nil)] completeBlock:^(NSInteger btnIndex) {
+        UIImage *boxImage = [[SWLoginUser sharedInstance] getUserHeadImage];
+        SWMessageBox *messageBox = [[SWMessageBox alloc]initWithTitle:title boxImage:boxImage boxType:SWMessageBoxType_OK buttonTitles:@[NSLocalizedString(@"TestCommitPaper", nil)] completeBlock:^(NSInteger btnIndex) {
             
             [self removeBackgroundConverView:TEST_TIME_OUT_MESAGE_BACK_GROUND_TAG];
             [self removeBackgroundConverView:SW_BACK_GROUND_COVER_VIEW_TAG];
