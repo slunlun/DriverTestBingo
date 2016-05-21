@@ -10,9 +10,16 @@
 #import "AppDelegate.h"
 #import "SWQuestionItems+CoreDataProperties.h"
 
+typedef NS_ENUM(NSInteger, SWUserRegisterRetType)
+{
+    kUserNameExisted = 1,
+    kUserRegisterSuccessed,
+};
+
 @interface SWLoginUser : NSObject
 + (SWLoginUser *) loginWithUserName:(NSString *) userName PassWord:(NSString *) psw;
 + (SWLoginUser *) sharedInstance;
++ (SWUserRegisterRetType) registerUserWithName:(NSString *) userName PassWord:(NSString *) psw;
 
 - (void) markQuestion:(SWQuestionItems *) markedQuestion;
 - (void) unmarkQuestion:(SWQuestionItems *) markedQuestion;
@@ -26,6 +33,7 @@
 - (NSNumber *) loadUserQuestionIndex;
 
 - (BOOL) updateUserHeadImage:(UIImage *) headImage;
+- (BOOL) updateUserName:(NSString *) userName;
 
 - (UIImage *) getUserHeadImage;
 - (NSString *) getUserName;

@@ -11,6 +11,7 @@
 #import "SWLoginUser.h"
 #import "SWImageLabelTableViewCell.h"
 #import "SWUserNameImageConfigTableViewController.h"
+#import "SWDriverTestBigoDef.h"
 
 #define USER_INFO_SECTION 0
 #define USER_PSW_SECTION 1
@@ -45,6 +46,9 @@
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_userInfoTableView attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTrailing multiplier:1.0 constant:0.0]];
     
     _isEditPSW = NO;
+    
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(responseToUserInfoUpdatedNotification:) name:USER_INFO_UPDATED object:nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -58,8 +62,6 @@
     self.navigationController.navigationBarHidden = NO;
     [self.navigationController.navigationBar setTranslucent:NO];
     
-    [self.userInfoTableView reloadData];
-
 }
 
 -(void) viewWillDisappear:(BOOL)animated
@@ -282,6 +284,16 @@
     {
         return 50.0;
     }
+}
+
+-(void) dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+#pragma mark - Response to Notification
+-(void) responseToUserInfoUpdatedNotification:(NSNotification *) notification
+{
+    [self.userInfoTableView reloadData];
 }
 
 @end

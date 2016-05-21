@@ -12,6 +12,7 @@
 #import "SWUserInfoConfigViewController.h"
 #import "SWGoodIdeasViewController.h"
 #import "SWLoginUser.h"
+#import "SWDriverTestBigoDef.h"
 
 @interface SWSideMenuContentViewController ()
 
@@ -23,6 +24,8 @@
     [super viewDidLoad];
     
     [self.navigationController.navigationBar setTranslucent:NO];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(responseToUserInfoUpdatedNotification:) name:USER_INFO_UPDATED object:nil];
 
 }
 
@@ -32,8 +35,6 @@
     self.tableView.contentInset = UIEdgeInsetsMake(20, self.tableView.contentInset.left, self.tableView.contentInset.bottom, self.tableView.contentInset.right);
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.backgroundColor = [UIColor colorWithRed:0.96 green:0.96 blue:0.96 alpha:1.0];
-    
-    [self.tableView reloadData];
     
 }
 - (void)didReceiveMemoryWarning {
@@ -154,6 +155,18 @@
                 break;
         }
     }
+}
+
+-(void) dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+#pragma mark - Response to Notification
+-(void) responseToUserInfoUpdatedNotification:(NSNotification *) notification
+{
+    NSIndexPath *userInfoIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+    [self.tableView reloadRowsAtIndexPaths:@[userInfoIndexPath] withRowAnimation:UITableViewRowAnimationFade];
 }
 
 @end

@@ -14,6 +14,7 @@
 #import "SWWrongItems+CoreDataProperties.h"
 #import "SWQuestionStatus+CoreDataProperties.h"
 #import "SWCommonUtils.h"
+#import "SWDriverTestBigoDef.h"
 
 #define SW_USER_HEAD_IMAGE_NAME @"UserHeadImage"
 
@@ -49,6 +50,30 @@ static SWUserInfo *userInfo = nil;
 + (SWLoginUser *) sharedInstance
 {
     return userInstance;
+}
+
++ (SWUserRegisterRetType) registerUserWithName:(NSString *) userName PassWord:(NSString *) psw
+{
+    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+    NSEntityDescription *userInfoEntity = [NSEntityDescription entityForName:@"SWUserInfo" inManagedObjectContext:appDelegate.managedObjectContext];
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    [fetchRequest setEntity:userInfoEntity];
+    // Specify criteria for filtering which objects to fetch
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"userName=%@", userName];
+    [fetchRequest setPredicate:predicate];
+    
+    NSError *error = nil;
+    NSArray *fetchedObjects = [appDelegate.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    if (fetchedObjects.count > 0) {
+        return kUserNameExisted;
+    }
+    
+    // insert the new user
+    SWUserInfo *userInfoItem =  (SWUserInfo *)[NSEntityDescription insertNewObjectForEntityForName:@"SWUserInfo" inManagedObjectContext:appDelegate.managedObjectContext];
+    userInfoItem.userName = userName;
+    [appDelegate saveContext];
+    return kUserRegisterSuccessed;
+    
 }
 
 #pragma mark Mark questions
@@ -258,11 +283,22 @@ static SWUserInfo *userInfo = nil;
         if([SWCommonUtils saveFile:imageData ToPath:savePath withMode:kSaveFileAlways])
         {
             _userImage = headImage;
+            [[NSNotificationCenter defaultCenter] postNotificationName:USER_INFO_UPDATED object:nil];
             return YES;
         }
     }
     
     return NO;
+}
+
+- (BOOL) updateUserName:(NSString *) userName
+{
+    userInfo.userName = userName;
+    userInstance.userName = userName;
+    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+    [appDelegate saveContext];
+    [[NSNotificationCenter defaultCenter] postNotificationName:USER_INFO_UPDATED object:nil];
+    return YES;
 }
 
 - (UIImage *) getUserHeadImage

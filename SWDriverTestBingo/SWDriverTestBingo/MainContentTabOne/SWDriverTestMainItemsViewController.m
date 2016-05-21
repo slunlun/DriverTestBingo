@@ -57,6 +57,9 @@ static NSString *IMG_COL_CELL_IDENTITY = @"IMG_COL_CELL_IDENTITY";
     
     UIBarButtonItem *userInfoBtn = [[UIBarButtonItem alloc] initWithCustomView:userPic];
     self.navigationItem.rightBarButtonItem = userInfoBtn;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(responseToUserInfoUpdatedNotification:) name:USER_INFO_UPDATED object:nil];
+
 }
 
 -(void) viewWillAppear:(BOOL)animated
@@ -66,8 +69,6 @@ static NSString *IMG_COL_CELL_IDENTITY = @"IMG_COL_CELL_IDENTITY";
     
     [self.navigationController.navigationBar setTranslucent:NO];
     self.navigationController.interactivePopGestureRecognizer.enabled = NO;
-    
-    ((UIImageView *)self.navigationItem.rightBarButtonItem.customView).image = [[SWLoginUser sharedInstance] getUserHeadImage];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -480,5 +481,14 @@ static NSString *IMG_COL_CELL_IDENTITY = @"IMG_COL_CELL_IDENTITY";
     return nil;
 }
 
+-(void) dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+#pragma mark - Response to Notification
+-(void) responseToUserInfoUpdatedNotification:(NSNotification *) notification
+{
+    ((UIImageView *)self.navigationItem.rightBarButtonItem.customView).image = [[SWLoginUser sharedInstance] getUserHeadImage];
+}
 
 @end

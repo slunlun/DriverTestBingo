@@ -9,6 +9,8 @@
 #import "SWUserNameImageConfigTableViewController.h"
 #import "SWLoginUser.h"
 #import "SWUserHeadImageViewController.h"
+#import "SWUserNameViewController.h"
+#import "SWDriverTestBigoDef.h"
 @interface SWUserNameImageConfigTableViewController ()
 
 @end
@@ -26,6 +28,9 @@ static NSString  *DETAIL_CELL_IDENTITY = @"DETAIL_CELL_IDENTITY";
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     self.navigationController.navigationBarHidden = NO;
     self.tableView  = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(responseToUserInfoUpdatedNotification:) name:USER_INFO_UPDATED object:nil];
+
 }
 
 - (void)didReceiveMemoryWarning {
@@ -36,7 +41,6 @@ static NSString  *DETAIL_CELL_IDENTITY = @"DETAIL_CELL_IDENTITY";
 -(void) viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self.tableView reloadData];
 }
 #pragma mark - Table view data source
 
@@ -106,7 +110,19 @@ static NSString  *DETAIL_CELL_IDENTITY = @"DETAIL_CELL_IDENTITY";
         
     }else if (indexPath.row == 1) // Change user name
     {
+        SWUserNameViewController *vc = [[SWUserNameViewController alloc] init];
+        [self.navigationController pushViewController:vc animated:YES];
     }
+}
+
+-(void) dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+#pragma mark - Response to Notification
+-(void) responseToUserInfoUpdatedNotification:(NSNotification *) notification
+{
+    [self.tableView reloadData];
 }
 
 @end

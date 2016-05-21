@@ -140,7 +140,11 @@
 - (void) initUserInfo
 {
     // JUST FOR TEST!!!!!!
-    [SWLoginUser loginWithUserName:@"John" PassWord:@"123"];
+    SWLoginUser *userInfo = [SWLoginUser loginWithUserName:@"John" PassWord:@"123"];
+    if (userInfo == nil) {
+        [SWLoginUser registerUserWithName:@"John" PassWord:@"123"];
+        [SWLoginUser loginWithUserName:@"John" PassWord:@"123"];
+    }
     
     if(![[NSUserDefaults standardUserDefaults] boolForKey:@"firstStart"]){
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"firstStart"];
