@@ -47,6 +47,7 @@
 		8089F0DA1C81C99E00FB2E4E /* SWDriverTestBingo.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 8089F0D91C81C99E00FB2E4E /* SWDriverTestBingo.sqlite */; };
 		808AC43E1C8C34AC00A05F6D /* SWTestQuestionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 808AC43C1C8C34AC00A05F6D /* SWTestQuestionCell.m */; };
 		808AC43F1C8C34AC00A05F6D /* SWTestQuestionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 808AC43D1C8C34AC00A05F6D /* SWTestQuestionCell.xib */; };
+		80BA5A3B1CF06431005D3A74 /* SWLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 80BA5A3A1CF06431005D3A74 /* SWLoginViewController.m */; };
 		80CE62FD1C1BD32B0076816A /* SWDriverTestCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 80CE62FC1C1BD32B0076816A /* SWDriverTestCellView.m */; };
 		80D7794C1C3AA50D004C9151 /* SWQuestionStatus+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 80D7793B1C3AA50D004C9151 /* SWQuestionStatus+CoreDataProperties.m */; };
 		80D7794D1C3AA50D004C9151 /* SWQuestionStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 80D7793D1C3AA50D004C9151 /* SWQuestionStatus.m */; };
@@ -721,6 +722,8 @@
 		808AC43B1C8C34AC00A05F6D /* SWTestQuestionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWTestQuestionCell.h; sourceTree = "<group>"; };
 		808AC43C1C8C34AC00A05F6D /* SWTestQuestionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWTestQuestionCell.m; sourceTree = "<group>"; };
 		808AC43D1C8C34AC00A05F6D /* SWTestQuestionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SWTestQuestionCell.xib; sourceTree = "<group>"; };
+		80BA5A391CF06431005D3A74 /* SWLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWLoginViewController.h; sourceTree = "<group>"; };
+		80BA5A3A1CF06431005D3A74 /* SWLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWLoginViewController.m; sourceTree = "<group>"; };
 		80CE62FB1C1BD32B0076816A /* SWDriverTestCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWDriverTestCellView.h; sourceTree = "<group>"; };
 		80CE62FC1C1BD32B0076816A /* SWDriverTestCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWDriverTestCellView.m; sourceTree = "<group>"; };
 		80D7793A1C3AA50D004C9151 /* SWQuestionStatus+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SWQuestionStatus+CoreDataProperties.h"; sourceTree = "<group>"; };
@@ -1392,6 +1395,7 @@
 		5E8047821C19243600B0587A /* SWDriverTestBingo */ = {
 			isa = PBXGroup;
 			children = (
+				80BA5A381CF0640E005D3A74 /* LoginViewController */,
 				8052BEF41C3D39B400D7994E /* UserInfo */,
 				80D779351C3AA49A004C9151 /* CoreData */,
 				5E8826A51C3285E4007225E2 /* SideMenu */,
@@ -1566,6 +1570,15 @@
 				808AC43D1C8C34AC00A05F6D /* SWTestQuestionCell.xib */,
 			);
 			name = TestQuestionCell;
+			sourceTree = "<group>";
+		};
+		80BA5A381CF0640E005D3A74 /* LoginViewController */ = {
+			isa = PBXGroup;
+			children = (
+				80BA5A391CF06431005D3A74 /* SWLoginViewController.h */,
+				80BA5A3A1CF06431005D3A74 /* SWLoginViewController.m */,
+			);
+			name = LoginViewController;
 			sourceTree = "<group>";
 		};
 		80D779351C3AA49A004C9151 /* CoreData */ = {
@@ -2860,6 +2873,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				80BA5A3B1CF06431005D3A74 /* SWLoginViewController.m in Sources */,
 				808AC43E1C8C34AC00A05F6D /* SWTestQuestionCell.m in Sources */,
 				5E8826AB1C328634007225E2 /* SWGoodIdeasViewController.m in Sources */,
 				80D779531C3AA50D004C9151 /* SWQuestionItems.m in Sources */,

@@ -133,6 +133,7 @@
         NSDictionary *viewDict = @{@"userNameTextField" : _userNameTextField};
         [cell.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[userNameTextField]|" options:0 metrics:nil views:viewDict]];
         [cell.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[userNameTextField]-|" options:0 metrics:nil views:viewDict]];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
     }
    
