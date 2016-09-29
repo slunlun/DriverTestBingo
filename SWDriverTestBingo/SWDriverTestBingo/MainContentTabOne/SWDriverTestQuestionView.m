@@ -347,6 +347,8 @@ static NSString *QUESTION_RIGHT_ANSWER_CELL_IDENTITY = @"QUESTION_RIGHT_ANSWER_C
     if (self.questionViewType != kTestQuestionViewGlance) {
         if (indexPath.section == SECTION_QUESTION_ANSWERS) {
             
+            // update user answer question num
+            [[SWLoginUser sharedInstance] increaseAnsweredQuestion];
             self.didUserSelectedAnswer = YES;
             // store selected status into displaydata, when use display again, can rebulid the UI
             self.displayData.questionSelectedIndex = [NSNumber numberWithInteger:(indexPath.row + 1)];

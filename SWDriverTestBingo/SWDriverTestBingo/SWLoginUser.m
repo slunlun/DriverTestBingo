@@ -173,7 +173,8 @@ static SWUserInfo *userInfo = nil;
         [wrongQuestionLib addQuestionsObject:wrongQuestion];
         wrongQuestion.wrongQuestionsLib = wrongQuestionLib;
     }
-    
+    // update wrong question
+    [self increaseWrongQuestoion];
     [appDelegate saveContext];
 }
 - (void) removeWrongQuestion:(SWQuestionItems *) wrongQuestion
@@ -270,6 +271,99 @@ static SWUserInfo *userInfo = nil;
 {
     AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
     [appDelegate saveContext];
+}
+
+- (NSInteger) increaseAnsweredQuestion
+{
+    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"SWUserInfo" inManagedObjectContext:appDelegate.managedObjectContext];
+    [fetchRequest setEntity:entity];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"userID=%ld", userInfo.userID.integerValue];
+    [fetchRequest setPredicate:predicate];
+    
+    NSError *error = nil;
+    NSArray *result = [appDelegate.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    if (result.count) {
+        SWUserInfo *userInfo = result.lastObject;
+        userInfo.totalAnswersNum = [NSNumber numberWithInteger:(userInfo.totalAnswersNum.integerValue+1)];
+        [appDelegate saveContext];
+    }
+    return userInfo.totalAnswersNum.integerValue;
+    
+}
+- (NSInteger) increaseWrongQuestoion
+{
+    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"SWUserInfo" inManagedObjectContext:appDelegate.managedObjectContext];
+    [fetchRequest setEntity:entity];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"userID=%ld", userInfo.userID.integerValue];
+    [fetchRequest setPredicate:predicate];
+    
+    NSError *error = nil;
+    NSArray *result = [appDelegate.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    if (result.count) {
+        SWUserInfo *userInfo = result.lastObject;
+        userInfo.wrongAnswersNum = [NSNumber numberWithInteger:(userInfo.wrongAnswersNum.integerValue+1)];
+        [appDelegate saveContext];
+    }
+    return userInfo.wrongAnswersNum.integerValue;
+}
+
+- (NSInteger) totalAnsweredQuestions
+{
+    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"SWUserInfo" inManagedObjectContext:appDelegate.managedObjectContext];
+    [fetchRequest setEntity:entity];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"userID=%ld", userInfo.userID.integerValue];
+    [fetchRequest setPredicate:predicate];
+    
+    NSError *error = nil;
+    NSArray *result = [appDelegate.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    if (result.count) {
+        SWUserInfo *userInfo = result.lastObject;
+        return userInfo.totalAnswersNum.integerValue;
+    }
+    return 0;
+
+}
+- (NSInteger) totalWrongQuestions
+{
+    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"SWUserInfo" inManagedObjectContext:appDelegate.managedObjectContext];
+    [fetchRequest setEntity:entity];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"userID=%ld", userInfo.userID.integerValue];
+    [fetchRequest setPredicate:predicate];
+    
+    NSError *error = nil;
+    NSArray *result = [appDelegate.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    if (result.count) {
+        SWUserInfo *userInfo = result.lastObject;
+        return userInfo.wrongAnswersNum.integerValue;
+    }
+    return 0;
+}
+
+- (void) cleanUpAnswerStatistic
+{
+    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"SWUserInfo" inManagedObjectContext:appDelegate.managedObjectContext];
+    [fetchRequest setEntity:entity];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"userID=%ld", userInfo.userID.integerValue];
+    [fetchRequest setPredicate:predicate];
+    
+    NSError *error = nil;
+    NSArray *result = [appDelegate.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    if (result.count) {
+        SWUserInfo *userInfo = result.lastObject;
+        userInfo.totalAnswersNum = nil;
+        userInfo.wrongAnswersNum = nil;
+    }
+
 }
 
 - (BOOL) updateUserHeadImage:(UIImage *) headImage

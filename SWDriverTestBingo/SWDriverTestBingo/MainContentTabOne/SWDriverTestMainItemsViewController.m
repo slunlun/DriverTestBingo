@@ -20,6 +20,7 @@
 #import "SWDriverTestBigoDef.h"
 #import "SWDriverTestCustomLibCellView.h"
 #import "SWUserInfoConfigViewController.h"
+#import "SWQuestionStatisticsPageViewController.h"
 
 
 
@@ -296,7 +297,11 @@ static NSString *IMG_COL_CELL_IDENTITY = @"IMG_COL_CELL_IDENTITY";
             }
                 break;
             case 1:  // 做题统计
-            {}
+            {
+                SWQuestionStatisticsPageViewController *vc = [[SWQuestionStatisticsPageViewController alloc] initWithTotalQuestionCount:[[SWLoginUser sharedInstance] totalAnsweredQuestions] wrongQustionCount:[[SWLoginUser sharedInstance] totalWrongQuestions]];
+                AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+                [appDelegate.rootNavigationController pushViewController:vc animated:YES];
+            }
                 break;
             default:
                 break;

@@ -39,6 +39,7 @@
 		5EFA71461C472EF2007F88D0 /* SWDriverTestCustomLibCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EFA71451C472EF2007F88D0 /* SWDriverTestCustomLibCellView.m */; };
 		8033EB501C316CBD00299527 /* SWRoundButtonTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8033EB4E1C316CBD00299527 /* SWRoundButtonTableViewCell.m */; };
 		8033EB511C316CBD00299527 /* SWRoundButtonTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8033EB4F1C316CBD00299527 /* SWRoundButtonTableViewCell.xib */; };
+		8045C87D1D9A729000FAA8C4 /* SWQuestionStatisticsPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8045C87C1D9A729000FAA8C4 /* SWQuestionStatisticsPageViewController.m */; };
 		805109101C1C5B8300CB1D18 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 805109121C1C5B8300CB1D18 /* Localizable.strings */; };
 		8052BEF71C3D39C900D7994E /* SWLoginUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 8052BEF61C3D39C800D7994E /* SWLoginUser.m */; };
 		8076A1D11CA7B01C00E42728 /* NSTimer+SWCountDownTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8076A1D01CA7B01C00E42728 /* NSTimer+SWCountDownTimer.m */; };
@@ -709,6 +710,8 @@
 		8033EB4D1C316CBD00299527 /* SWRoundButtonTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRoundButtonTableViewCell.h; sourceTree = "<group>"; };
 		8033EB4E1C316CBD00299527 /* SWRoundButtonTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRoundButtonTableViewCell.m; sourceTree = "<group>"; };
 		8033EB4F1C316CBD00299527 /* SWRoundButtonTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SWRoundButtonTableViewCell.xib; sourceTree = "<group>"; };
+		8045C87B1D9A729000FAA8C4 /* SWQuestionStatisticsPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWQuestionStatisticsPageViewController.h; sourceTree = "<group>"; };
+		8045C87C1D9A729000FAA8C4 /* SWQuestionStatisticsPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWQuestionStatisticsPageViewController.m; sourceTree = "<group>"; };
 		805109111C1C5B8300CB1D18 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		8052BEF51C3D39C800D7994E /* SWLoginUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWLoginUser.h; sourceTree = "<group>"; };
 		8052BEF61C3D39C800D7994E /* SWLoginUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWLoginUser.m; sourceTree = "<group>"; };
@@ -1474,6 +1477,8 @@
 				80F6C7641C25307E00A7E9DB /* SWQuestionPageViewController.m */,
 				5EA755391CB6529A00065002 /* SWTestResultViewController.h */,
 				5EA7553A1CB6529A00065002 /* SWTestResultViewController.m */,
+				8045C87B1D9A729000FAA8C4 /* SWQuestionStatisticsPageViewController.h */,
+				8045C87C1D9A729000FAA8C4 /* SWQuestionStatisticsPageViewController.m */,
 			);
 			name = MainContentTabOne;
 			sourceTree = "<group>";
@@ -2891,6 +2896,7 @@
 				5E4AA9EC1C2791CB004348A9 /* FlexibleAlignButton.m in Sources */,
 				80D779581C3AA5B3004C9151 /* SWUserInfo+CoreDataProperties.m in Sources */,
 				80811B871CE86ED300A4BDCF /* SWUserNameViewController.m in Sources */,
+				8045C87D1D9A729000FAA8C4 /* SWQuestionStatisticsPageViewController.m in Sources */,
 				5E8047851C19243600B0587A /* main.m in Sources */,
 				80D7796D1C3AAD7C004C9151 /* SWTableMaxIndex+CoreDataProperties.m in Sources */,
 				80E001BB1CA68A8E00ABF396 /* SWDragToMoveView.m in Sources */,

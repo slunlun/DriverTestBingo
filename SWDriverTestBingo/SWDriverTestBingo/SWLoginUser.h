@@ -41,4 +41,13 @@ typedef NS_ENUM(NSInteger, SWUserRegisterRetType)
 - (void) saveUserAnsweredQuestion:(SWQuestionItems *) answeredQuestion;
 @property(nonatomic, strong) NSString* userName;
 @property(nonatomic, strong) UIImage *userImage;
+
+// 用于统计答题数目
+- (NSInteger) increaseAnsweredQuestion;
+- (NSInteger) increaseWrongQuestoion;
+
+- (NSInteger) totalAnsweredQuestions;
+- (NSInteger) totalWrongQuestions;
+
+- (void) cleanUpAnswerStatistic;
 @end
