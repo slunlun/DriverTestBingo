@@ -7,16 +7,36 @@
 //
 
 #import "SWDriverTestApplyViewController.h"
+#import <BaiduMapAPI_Base/BMKBaseComponent.h>//引入base相关所有的头文件
 
-@interface SWDriverTestApplyViewController ()
+#import <BaiduMapAPI_Map/BMKMapComponent.h>//引入地图功能所有的头文件
 
+#import <BaiduMapAPI_Search/BMKSearchComponent.h>//引入检索功能所有的头文件
+
+@interface SWDriverTestApplyViewController ()<BMKMapViewDelegate>
+@property(nonatomic, strong) BMKMapView* mapView;
 @end
 
 @implementation SWDriverTestApplyViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    
+    _mapView = [[BMKMapView alloc]initWithFrame:CGRectMake(0, 0, 320, 480)];
+    self.view = _mapView;
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [_mapView viewWillAppear];
+    _mapView.delegate = self; // 此处记得不用的时候需要置nil，否则影响内存的释放
+}
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [_mapView viewWillDisappear];
+    _mapView.delegate = nil; // 不用时，置nil
 }
 
 - (void)didReceiveMemoryWarning {

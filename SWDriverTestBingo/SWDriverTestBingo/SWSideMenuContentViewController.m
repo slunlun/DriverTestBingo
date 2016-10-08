@@ -11,6 +11,8 @@
 
 #import "SWUserInfoConfigViewController.h"
 #import "SWGoodIdeasViewController.h"
+#import "SWLoginUser.h"
+#import "SWDriverTestBigoDef.h"
 
 @interface SWSideMenuContentViewController ()
 
@@ -22,6 +24,8 @@
     [super viewDidLoad];
     
     [self.navigationController.navigationBar setTranslucent:NO];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(responseToUserInfoUpdatedNotification:) name:USER_INFO_UPDATED object:nil];
 
 }
 
@@ -37,6 +41,8 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+
 
 #pragma mark - Table view data source
 
@@ -62,7 +68,9 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if (indexPath.section == 0) {
-        SWRoundButtonTableViewCell *cell = [SWRoundButtonTableViewCell initWithTableView:tableView userInfoCellWithUserName:@"EShi" userHeadImage:[UIImage imageNamed:@"testUserHead"]];
+        NSString *cellTitle = [SWLoginUser sharedInstance].userName;
+        UIImage *cellImage = [[SWLoginUser sharedInstance] getUserHeadImage];
+        SWRoundButtonTableViewCell *cell = [SWRoundButtonTableViewCell initWithTableView:tableView userInfoCellWithUserName:cellTitle userHeadImage:cellImage];
         cell.backgroundColor = [UIColor clearColor];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
@@ -147,6 +155,18 @@
                 break;
         }
     }
+}
+
+-(void) dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+#pragma mark - Response to Notification
+-(void) responseToUserInfoUpdatedNotification:(NSNotification *) notification
+{
+    NSIndexPath *userInfoIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+    [self.tableView reloadRowsAtIndexPaths:@[userInfoIndexPath] withRowAnimation:UITableViewRowAnimationFade];
 }
 
 @end

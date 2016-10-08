@@ -20,6 +20,7 @@
 #import "SWDriverTestBigoDef.h"
 #import "SWDriverTestCustomLibCellView.h"
 #import "SWUserInfoConfigViewController.h"
+#import "SWQuestionStatisticsPageViewController.h"
 
 
 
@@ -44,7 +45,8 @@ static NSString *IMG_COL_CELL_IDENTITY = @"IMG_COL_CELL_IDENTITY";
     showSlideMenuBarButton.tintColor = [UIColor blackColor];
     self.navigationItem.leftBarButtonItem = showSlideMenuBarButton;
     
-    UIImageView *userPic = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"testUserHead"]];
+    UIImage *headImage = [[SWLoginUser sharedInstance] getUserHeadImage];
+    UIImageView *userPic = [[UIImageView alloc] initWithImage:headImage];
     userPic.frame = CGRectMake(0, 0, 35, 35);
     userPic.layer.cornerRadius = userPic.frame.size.width / 2;
     userPic.clipsToBounds = YES;
@@ -57,9 +59,8 @@ static NSString *IMG_COL_CELL_IDENTITY = @"IMG_COL_CELL_IDENTITY";
     UIBarButtonItem *userInfoBtn = [[UIBarButtonItem alloc] initWithCustomView:userPic];
     self.navigationItem.rightBarButtonItem = userInfoBtn;
     
-    // JUST FOR TEST!!!!!!
-    [SWLoginUser loginWithUserName:@"John" PassWord:@"123"];
-    [SWLoginUser sharedInstance].userImage = [UIImage imageNamed:@"testUserHead"];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(responseToUserInfoUpdatedNotification:) name:USER_INFO_UPDATED object:nil];
+
 }
 
 -(void) viewWillAppear:(BOOL)animated
@@ -142,7 +143,7 @@ static NSString *IMG_COL_CELL_IDENTITY = @"IMG_COL_CELL_IDENTITY";
             {
                 imageView.image = [UIImage imageNamed:@"wrongQuestions"];
                 titleLab.text = NSLocalizedString(@"WrongAnswers", nil);
-                subTitleLab.text = [NSString stringWithFormat:@"(%ld)", (unsigned long)[SWLoginUser getUserWrongQuestions].count];
+                subTitleLab.text = [NSString stringWithFormat:@"(%ld)", (unsigned long)[[SWLoginUser sharedInstance] getUserWrongQuestions].count];
                 subTitleLab.textColor = [UIColor orangeColor];
                 subTitleLab.font = [UIFont systemFontOfSize:12];
             }
@@ -157,7 +158,7 @@ static NSString *IMG_COL_CELL_IDENTITY = @"IMG_COL_CELL_IDENTITY";
             {
                 imageView.image = [UIImage imageNamed:@"markQuestions"];
                 titleLab.text = NSLocalizedString(@"MarkQuestions", nil);
-                subTitleLab.text = [NSString stringWithFormat:@"(%ld)", (unsigned long)[SWLoginUser getUserMarkedQuestions].count];
+                subTitleLab.text = [NSString stringWithFormat:@"(%ld)", (unsigned long)[[SWLoginUser sharedInstance] getUserMarkedQuestions].count];
                 subTitleLab.textColor = [UIColor orangeColor];
                 subTitleLab.font = [UIFont systemFontOfSize:12];
             }
@@ -268,7 +269,7 @@ static NSString *IMG_COL_CELL_IDENTITY = @"IMG_COL_CELL_IDENTITY";
         }
         SWQuestionPageViewController *pagesVC = nil;
         if (viewType == kTestQuestionViewSequence) {
-            pagesVC = [[SWQuestionPageViewController alloc] initWithContentViewsCount:self.pageDataArray.count type:kOptimizedPageController switchToPage:[SWLoginUser loadUserQuestionIndex].integerValue questinPageType:viewType];
+            pagesVC = [[SWQuestionPageViewController alloc] initWithContentViewsCount:self.pageDataArray.count type:kOptimizedPageController switchToPage:[[SWLoginUser sharedInstance] loadUserQuestionIndex].integerValue questinPageType:viewType];
         }else
         {
             pagesVC = [[SWQuestionPageViewController alloc] initWithContentViewsCount:self.pageDataArray.count type:kOptimizedPageController questinPageType:viewType];
@@ -296,7 +297,11 @@ static NSString *IMG_COL_CELL_IDENTITY = @"IMG_COL_CELL_IDENTITY";
             }
                 break;
             case 1:  // 做题统计
-            {}
+            {
+                SWQuestionStatisticsPageViewController *vc = [[SWQuestionStatisticsPageViewController alloc] initWithTotalQuestionCount:[[SWLoginUser sharedInstance] totalAnsweredQuestions] wrongQustionCount:[[SWLoginUser sharedInstance] totalWrongQuestions]];
+                AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+                [appDelegate.rootNavigationController pushViewController:vc animated:YES];
+            }
                 break;
             default:
                 break;
@@ -390,7 +395,7 @@ static NSString *IMG_COL_CELL_IDENTITY = @"IMG_COL_CELL_IDENTITY";
 
 - (NSInteger) genMarkedQuestionDatas
 {
-    NSSet * userMarkedQuestionsSet = [SWLoginUser getUserMarkedQuestions];
+    NSSet * userMarkedQuestionsSet = [[SWLoginUser sharedInstance] getUserMarkedQuestions];
     NSMutableArray *markedQuestionDatas = [[NSMutableArray alloc] init];
     for (SWQuestionItems *question in userMarkedQuestionsSet) {
         [markedQuestionDatas addObject:question];
@@ -403,7 +408,7 @@ static NSString *IMG_COL_CELL_IDENTITY = @"IMG_COL_CELL_IDENTITY";
 
 - (NSInteger) genWrongQuestionDatas
 {
-    NSSet * userWrongQuestionsSet = [SWLoginUser getUserWrongQuestions];
+    NSSet * userWrongQuestionsSet = [[SWLoginUser sharedInstance] getUserWrongQuestions];
     NSMutableArray *wrongQuestionDatas = [[NSMutableArray alloc] init];
     for (SWQuestionItems *question in userWrongQuestionsSet) {
         [wrongQuestionDatas addObject:question];
@@ -481,5 +486,14 @@ static NSString *IMG_COL_CELL_IDENTITY = @"IMG_COL_CELL_IDENTITY";
     return nil;
 }
 
+-(void) dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+#pragma mark - Response to Notification
+-(void) responseToUserInfoUpdatedNotification:(NSNotification *) notification
+{
+    ((UIImageView *)self.navigationItem.rightBarButtonItem.customView).image = [[SWLoginUser sharedInstance] getUserHeadImage];
+}
 
 @end

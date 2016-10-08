@@ -35,3 +35,12 @@
 
 "UserHeadImage" = "头像";
 "UserName" = "名字";
+
+"MyHeadImage" = "个人头像";
+"ChangeMyHeadImage" = "更换";
+"ChangeMyHeadImageError" = "更换个人头像失败，请确认头像为jpg或png格式图像";
+
+"TakePhoto" = "拍照";
+"TakeFromPhotoLibrary" ="从手机相册选取";
+"Save" = "保 存";
+"NickName" = "昵称";

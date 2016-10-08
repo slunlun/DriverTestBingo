@@ -10,22 +10,44 @@
 #import "AppDelegate.h"
 #import "SWQuestionItems+CoreDataProperties.h"
 
+typedef NS_ENUM(NSInteger, SWUserRegisterRetType)
+{
+    kUserNameExisted = 1,
+    kUserRegisterSuccessed,
+};
+
 @interface SWLoginUser : NSObject
 + (SWLoginUser *) loginWithUserName:(NSString *) userName PassWord:(NSString *) psw;
 + (SWLoginUser *) sharedInstance;
++ (SWUserRegisterRetType) registerUserWithName:(NSString *) userName PassWord:(NSString *) psw;
 
-+ (void) markQuestion:(SWQuestionItems *) markedQuestion;
-+ (void) unmarkQuestion:(SWQuestionItems *) markedQuestion;
-+ (NSSet *) getUserMarkedQuestions;
+- (void) markQuestion:(SWQuestionItems *) markedQuestion;
+- (void) unmarkQuestion:(SWQuestionItems *) markedQuestion;
+- (NSSet *) getUserMarkedQuestions;
 
-+ (void) addWrongQuestion:(SWQuestionItems *) wrongQuestion;
-+ (void) removeWrongQuestion:(SWQuestionItems *) wrongQuestion;
-+ (NSSet *) getUserWrongQuestions;
+- (void) addWrongQuestion:(SWQuestionItems *) wrongQuestion;
+- (void) removeWrongQuestion:(SWQuestionItems *) wrongQuestion;
+- (NSSet *) getUserWrongQuestions;
 
-+ (void) savaUserQuestionStatus:(NSNumber *) questionIndex;
-+ (NSNumber *) loadUserQuestionIndex;
+- (void) savaUserQuestionStatus:(NSNumber *) questionIndex;
+- (NSNumber *) loadUserQuestionIndex;
 
-+(void) saveUserAnsweredQuestion:(SWQuestionItems *) answeredQuestion;
+- (BOOL) updateUserHeadImage:(UIImage *) headImage;
+- (BOOL) updateUserName:(NSString *) userName;
+
+- (UIImage *) getUserHeadImage;
+- (NSString *) getUserName;
+
+- (void) saveUserAnsweredQuestion:(SWQuestionItems *) answeredQuestion;
 @property(nonatomic, strong) NSString* userName;
 @property(nonatomic, strong) UIImage *userImage;
+
+// 用于统计答题数目
+- (NSInteger) increaseAnsweredQuestion;
+- (NSInteger) increaseWrongQuestoion;
+
+- (NSInteger) totalAnsweredQuestions;
+- (NSInteger) totalWrongQuestions;
+
+- (void) cleanUpAnswerStatistic;
 @end

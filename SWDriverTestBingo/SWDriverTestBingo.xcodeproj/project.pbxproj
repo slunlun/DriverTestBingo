@@ -21,7 +21,7 @@
 		5E8047961C19243600B0587A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5E8047941C19243600B0587A /* LaunchScreen.storyboard */; };
 		5E8047A41C194FCD00B0587A /* SWDrag2ShowMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E8047A31C194FCD00B0587A /* SWDrag2ShowMenuViewController.m */; };
 		5E8047C81C197E7C00B0587A /* SWSideMenuContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E8047C71C197E7C00B0587A /* SWSideMenuContentViewController.m */; };
-		5E8047CE1C197F0500B0587A /* SWMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E8047CD1C197F0500B0587A /* SWMainViewController.m */; };
+		5E8047CE1C197F0500B0587A /* SWMainViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5E8047CD1C197F0500B0587A /* SWMainViewController.mm */; };
 		5E8047D11C19851800B0587A /* SWMainContentTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E8047D01C19851800B0587A /* SWMainContentTabBarController.m */; };
 		5E8047D51C1987B400B0587A /* SWDriverTestMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E8047D41C1987B400B0587A /* SWDriverTestMainViewController.m */; };
 		5E8826A81C328616007225E2 /* SWUserInfoConfigViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E8826A71C328616007225E2 /* SWUserInfoConfigViewController.m */; };
@@ -39,13 +39,33 @@
 		5EFA71461C472EF2007F88D0 /* SWDriverTestCustomLibCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EFA71451C472EF2007F88D0 /* SWDriverTestCustomLibCellView.m */; };
 		8033EB501C316CBD00299527 /* SWRoundButtonTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8033EB4E1C316CBD00299527 /* SWRoundButtonTableViewCell.m */; };
 		8033EB511C316CBD00299527 /* SWRoundButtonTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8033EB4F1C316CBD00299527 /* SWRoundButtonTableViewCell.xib */; };
+		8045C87D1D9A729000FAA8C4 /* SWQuestionStatisticsPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8045C87C1D9A729000FAA8C4 /* SWQuestionStatisticsPageViewController.m */; };
 		805109101C1C5B8300CB1D18 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 805109121C1C5B8300CB1D18 /* Localizable.strings */; };
 		8052BEF71C3D39C900D7994E /* SWLoginUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 8052BEF61C3D39C800D7994E /* SWLoginUser.m */; };
 		8076A1D11CA7B01C00E42728 /* NSTimer+SWCountDownTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8076A1D01CA7B01C00E42728 /* NSTimer+SWCountDownTimer.m */; };
 		8076A1D41CA7B45600E42728 /* SWMessageBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 8076A1D31CA7B45600E42728 /* SWMessageBox.m */; };
+		80811B871CE86ED300A4BDCF /* SWUserNameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 80811B861CE86ED300A4BDCF /* SWUserNameViewController.m */; };
 		8089F0DA1C81C99E00FB2E4E /* SWDriverTestBingo.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 8089F0D91C81C99E00FB2E4E /* SWDriverTestBingo.sqlite */; };
 		808AC43E1C8C34AC00A05F6D /* SWTestQuestionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 808AC43C1C8C34AC00A05F6D /* SWTestQuestionCell.m */; };
 		808AC43F1C8C34AC00A05F6D /* SWTestQuestionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 808AC43D1C8C34AC00A05F6D /* SWTestQuestionCell.xib */; };
+		80B0C36B1D9E4A22008F73CA /* BaiduMapAPI_Base.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80B0C36A1D9E4A22008F73CA /* BaiduMapAPI_Base.framework */; };
+		80B0C36D1D9E4A33008F73CA /* BaiduMapAPI_Cloud.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80B0C36C1D9E4A33008F73CA /* BaiduMapAPI_Cloud.framework */; };
+		80B0C36F1D9E4A3C008F73CA /* BaiduMapAPI_Location.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80B0C36E1D9E4A3C008F73CA /* BaiduMapAPI_Location.framework */; };
+		80B0C3711D9E4A44008F73CA /* BaiduMapAPI_Map.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80B0C3701D9E4A44008F73CA /* BaiduMapAPI_Map.framework */; };
+		80B0C3731D9E4A49008F73CA /* BaiduMapAPI_Radar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80B0C3721D9E4A49008F73CA /* BaiduMapAPI_Radar.framework */; };
+		80B0C3751D9E4A51008F73CA /* BaiduMapAPI_Search.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80B0C3741D9E4A51008F73CA /* BaiduMapAPI_Search.framework */; };
+		80B0C3771D9E4A58008F73CA /* BaiduMapAPI_Utils.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80B0C3761D9E4A58008F73CA /* BaiduMapAPI_Utils.framework */; };
+		80B0C3791D9E4ABB008F73CA /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80B0C3781D9E4ABB008F73CA /* CoreLocation.framework */; };
+		80B0C37B1D9E4AD6008F73CA /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80B0C37A1D9E4AD6008F73CA /* QuartzCore.framework */; };
+		80B0C37D1D9E4AE7008F73CA /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80B0C37C1D9E4AE7008F73CA /* OpenGLES.framework */; };
+		80B0C37F1D9E4AFA008F73CA /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80B0C37E1D9E4AFA008F73CA /* SystemConfiguration.framework */; };
+		80B0C3811D9E4B08008F73CA /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80B0C3801D9E4B08008F73CA /* CoreGraphics.framework */; };
+		80B0C3831D9E4B13008F73CA /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80B0C3821D9E4B13008F73CA /* Security.framework */; };
+		80B0C3851D9E4B26008F73CA /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 80B0C3841D9E4B26008F73CA /* libsqlite3.0.tbd */; };
+		80B0C3871D9E4B37008F73CA /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80B0C3861D9E4B36008F73CA /* CoreTelephony.framework */; };
+		80B0C3891D9E4B4C008F73CA /* libstdc++.6.0.9.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 80B0C3881D9E4B4C008F73CA /* libstdc++.6.0.9.tbd */; };
+		80B0C38B1D9E4BBF008F73CA /* mapapi.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 80B0C38A1D9E4BBF008F73CA /* mapapi.bundle */; };
+		80BA5A3B1CF06431005D3A74 /* SWLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 80BA5A3A1CF06431005D3A74 /* SWLoginViewController.m */; };
 		80CE62FD1C1BD32B0076816A /* SWDriverTestCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 80CE62FC1C1BD32B0076816A /* SWDriverTestCellView.m */; };
 		80D7794C1C3AA50D004C9151 /* SWQuestionStatus+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 80D7793B1C3AA50D004C9151 /* SWQuestionStatus+CoreDataProperties.m */; };
 		80D7794D1C3AA50D004C9151 /* SWQuestionStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 80D7793D1C3AA50D004C9151 /* SWQuestionStatus.m */; };
@@ -61,6 +81,7 @@
 		80D7796D1C3AAD7C004C9151 /* SWTableMaxIndex+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 80D7796A1C3AAD7C004C9151 /* SWTableMaxIndex+CoreDataProperties.m */; };
 		80D7796E1C3AAD7C004C9151 /* SWTableMaxIndex.m in Sources */ = {isa = PBXBuildFile; fileRef = 80D7796C1C3AAD7C004C9151 /* SWTableMaxIndex.m */; };
 		80E001BB1CA68A8E00ABF396 /* SWDragToMoveView.m in Sources */ = {isa = PBXBuildFile; fileRef = 80E001BA1CA68A8E00ABF396 /* SWDragToMoveView.m */; };
+		80F1B9BB1CD5E8A10077A175 /* SWUserHeadImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 80F1B9BA1CD5E8A10077A175 /* SWUserHeadImageViewController.m */; };
 		80F29C431C8738A70062F096 /* 1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 80F299FD1C8738A40062F096 /* 1.jpg */; };
 		80F29C441C8738A70062F096 /* 2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 80F299FE1C8738A40062F096 /* 2.jpg */; };
 		80F29C451C8738A70062F096 /* 3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 80F299FF1C8738A40062F096 /* 3.jpg */; };
@@ -674,7 +695,7 @@
 		5E8047C61C197E7C00B0587A /* SWSideMenuContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWSideMenuContentViewController.h; sourceTree = "<group>"; };
 		5E8047C71C197E7C00B0587A /* SWSideMenuContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWSideMenuContentViewController.m; sourceTree = "<group>"; };
 		5E8047CC1C197F0500B0587A /* SWMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWMainViewController.h; sourceTree = "<group>"; };
-		5E8047CD1C197F0500B0587A /* SWMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWMainViewController.m; sourceTree = "<group>"; };
+		5E8047CD1C197F0500B0587A /* SWMainViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SWMainViewController.mm; sourceTree = "<group>"; };
 		5E8047CF1C19851800B0587A /* SWMainContentTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWMainContentTabBarController.h; sourceTree = "<group>"; };
 		5E8047D01C19851800B0587A /* SWMainContentTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWMainContentTabBarController.m; sourceTree = "<group>"; };
 		5E8047D31C1987B400B0587A /* SWDriverTestMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SWDriverTestMainViewController.h; path = MainContentTabOne/SWDriverTestMainViewController.h; sourceTree = "<group>"; };
@@ -706,6 +727,8 @@
 		8033EB4D1C316CBD00299527 /* SWRoundButtonTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRoundButtonTableViewCell.h; sourceTree = "<group>"; };
 		8033EB4E1C316CBD00299527 /* SWRoundButtonTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRoundButtonTableViewCell.m; sourceTree = "<group>"; };
 		8033EB4F1C316CBD00299527 /* SWRoundButtonTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SWRoundButtonTableViewCell.xib; sourceTree = "<group>"; };
+		8045C87B1D9A729000FAA8C4 /* SWQuestionStatisticsPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWQuestionStatisticsPageViewController.h; sourceTree = "<group>"; };
+		8045C87C1D9A729000FAA8C4 /* SWQuestionStatisticsPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWQuestionStatisticsPageViewController.m; sourceTree = "<group>"; };
 		805109111C1C5B8300CB1D18 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		8052BEF51C3D39C800D7994E /* SWLoginUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWLoginUser.h; sourceTree = "<group>"; };
 		8052BEF61C3D39C800D7994E /* SWLoginUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWLoginUser.m; sourceTree = "<group>"; };
@@ -713,10 +736,31 @@
 		8076A1D01CA7B01C00E42728 /* NSTimer+SWCountDownTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTimer+SWCountDownTimer.m"; sourceTree = "<group>"; };
 		8076A1D21CA7B45600E42728 /* SWMessageBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWMessageBox.h; sourceTree = "<group>"; };
 		8076A1D31CA7B45600E42728 /* SWMessageBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWMessageBox.m; sourceTree = "<group>"; };
+		80811B851CE86ED300A4BDCF /* SWUserNameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWUserNameViewController.h; sourceTree = "<group>"; };
+		80811B861CE86ED300A4BDCF /* SWUserNameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWUserNameViewController.m; sourceTree = "<group>"; };
 		8089F0D91C81C99E00FB2E4E /* SWDriverTestBingo.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = SWDriverTestBingo.sqlite; sourceTree = "<group>"; };
 		808AC43B1C8C34AC00A05F6D /* SWTestQuestionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWTestQuestionCell.h; sourceTree = "<group>"; };
 		808AC43C1C8C34AC00A05F6D /* SWTestQuestionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWTestQuestionCell.m; sourceTree = "<group>"; };
 		808AC43D1C8C34AC00A05F6D /* SWTestQuestionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SWTestQuestionCell.xib; sourceTree = "<group>"; };
+		80B0C36A1D9E4A22008F73CA /* BaiduMapAPI_Base.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BaiduMapAPI_Base.framework; path = baiduMapSDK/BaiduMapAPI_Base.framework; sourceTree = "<group>"; };
+		80B0C36C1D9E4A33008F73CA /* BaiduMapAPI_Cloud.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BaiduMapAPI_Cloud.framework; path = baiduMapSDK/BaiduMapAPI_Cloud.framework; sourceTree = "<group>"; };
+		80B0C36E1D9E4A3C008F73CA /* BaiduMapAPI_Location.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BaiduMapAPI_Location.framework; path = baiduMapSDK/BaiduMapAPI_Location.framework; sourceTree = "<group>"; };
+		80B0C3701D9E4A44008F73CA /* BaiduMapAPI_Map.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BaiduMapAPI_Map.framework; path = baiduMapSDK/BaiduMapAPI_Map.framework; sourceTree = "<group>"; };
+		80B0C3721D9E4A49008F73CA /* BaiduMapAPI_Radar.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BaiduMapAPI_Radar.framework; path = baiduMapSDK/BaiduMapAPI_Radar.framework; sourceTree = "<group>"; };
+		80B0C3741D9E4A51008F73CA /* BaiduMapAPI_Search.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BaiduMapAPI_Search.framework; path = baiduMapSDK/BaiduMapAPI_Search.framework; sourceTree = "<group>"; };
+		80B0C3761D9E4A58008F73CA /* BaiduMapAPI_Utils.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BaiduMapAPI_Utils.framework; path = baiduMapSDK/BaiduMapAPI_Utils.framework; sourceTree = "<group>"; };
+		80B0C3781D9E4ABB008F73CA /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		80B0C37A1D9E4AD6008F73CA /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		80B0C37C1D9E4AE7008F73CA /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		80B0C37E1D9E4AFA008F73CA /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		80B0C3801D9E4B08008F73CA /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		80B0C3821D9E4B13008F73CA /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		80B0C3841D9E4B26008F73CA /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
+		80B0C3861D9E4B36008F73CA /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		80B0C3881D9E4B4C008F73CA /* libstdc++.6.0.9.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.6.0.9.tbd"; path = "usr/lib/libstdc++.6.0.9.tbd"; sourceTree = SDKROOT; };
+		80B0C38A1D9E4BBF008F73CA /* mapapi.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = mapapi.bundle; path = baiduMapSDK/BaiduMapAPI_Map.framework/Resources/mapapi.bundle; sourceTree = "<group>"; };
+		80BA5A391CF06431005D3A74 /* SWLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWLoginViewController.h; sourceTree = "<group>"; };
+		80BA5A3A1CF06431005D3A74 /* SWLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWLoginViewController.m; sourceTree = "<group>"; };
 		80CE62FB1C1BD32B0076816A /* SWDriverTestCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWDriverTestCellView.h; sourceTree = "<group>"; };
 		80CE62FC1C1BD32B0076816A /* SWDriverTestCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWDriverTestCellView.m; sourceTree = "<group>"; };
 		80D7793A1C3AA50D004C9151 /* SWQuestionStatus+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SWQuestionStatus+CoreDataProperties.h"; sourceTree = "<group>"; };
@@ -748,6 +792,8 @@
 		80E001B91CA68A8E00ABF396 /* SWDragToMoveView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWDragToMoveView.h; sourceTree = "<group>"; };
 		80E001BA1CA68A8E00ABF396 /* SWDragToMoveView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWDragToMoveView.m; sourceTree = "<group>"; };
 		80ECE7931C204EBE00B6EBF5 /* SWRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRootViewController.h; sourceTree = "<group>"; };
+		80F1B9B91CD5E8A10077A175 /* SWUserHeadImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWUserHeadImageViewController.h; sourceTree = "<group>"; };
+		80F1B9BA1CD5E8A10077A175 /* SWUserHeadImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWUserHeadImageViewController.m; sourceTree = "<group>"; };
 		80F299FD1C8738A40062F096 /* 1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 1.jpg; sourceTree = "<group>"; };
 		80F299FE1C8738A40062F096 /* 2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 2.jpg; sourceTree = "<group>"; };
 		80F299FF1C8738A40062F096 /* 3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 3.jpg; sourceTree = "<group>"; };
@@ -1341,6 +1387,22 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				80B0C3891D9E4B4C008F73CA /* libstdc++.6.0.9.tbd in Frameworks */,
+				80B0C3871D9E4B37008F73CA /* CoreTelephony.framework in Frameworks */,
+				80B0C3851D9E4B26008F73CA /* libsqlite3.0.tbd in Frameworks */,
+				80B0C3831D9E4B13008F73CA /* Security.framework in Frameworks */,
+				80B0C3811D9E4B08008F73CA /* CoreGraphics.framework in Frameworks */,
+				80B0C37F1D9E4AFA008F73CA /* SystemConfiguration.framework in Frameworks */,
+				80B0C37D1D9E4AE7008F73CA /* OpenGLES.framework in Frameworks */,
+				80B0C37B1D9E4AD6008F73CA /* QuartzCore.framework in Frameworks */,
+				80B0C3791D9E4ABB008F73CA /* CoreLocation.framework in Frameworks */,
+				80B0C36D1D9E4A33008F73CA /* BaiduMapAPI_Cloud.framework in Frameworks */,
+				80B0C36F1D9E4A3C008F73CA /* BaiduMapAPI_Location.framework in Frameworks */,
+				80B0C3751D9E4A51008F73CA /* BaiduMapAPI_Search.framework in Frameworks */,
+				80B0C3731D9E4A49008F73CA /* BaiduMapAPI_Radar.framework in Frameworks */,
+				80B0C36B1D9E4A22008F73CA /* BaiduMapAPI_Base.framework in Frameworks */,
+				80B0C3711D9E4A44008F73CA /* BaiduMapAPI_Map.framework in Frameworks */,
+				80B0C3771D9E4A58008F73CA /* BaiduMapAPI_Utils.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1368,6 +1430,8 @@
 		5E8047771C19243500B0587A = {
 			isa = PBXGroup;
 			children = (
+				80B0C38A1D9E4BBF008F73CA /* mapapi.bundle */,
+				80B0C3691D9E49E1008F73CA /* Framework */,
 				80F299FC1C87387C0062F096 /* ImageResource */,
 				5E80479D1C194C1500B0587A /* SWUILib */,
 				5E8047821C19243600B0587A /* SWDriverTestBingo */,
@@ -1386,6 +1450,7 @@
 		5E8047821C19243600B0587A /* SWDriverTestBingo */ = {
 			isa = PBXGroup;
 			children = (
+				80BA5A381CF0640E005D3A74 /* LoginViewController */,
 				8052BEF41C3D39B400D7994E /* UserInfo */,
 				80D779351C3AA49A004C9151 /* CoreData */,
 				5E8826A51C3285E4007225E2 /* SideMenu */,
@@ -1401,7 +1466,7 @@
 				5E8047831C19243600B0587A /* Supporting Files */,
 				5E8047CC1C197F0500B0587A /* SWMainViewController.h */,
 				5ECBD9121C3F4D6A00A656DE /* SWDriverTestBigoDef.h */,
-				5E8047CD1C197F0500B0587A /* SWMainViewController.m */,
+				5E8047CD1C197F0500B0587A /* SWMainViewController.mm */,
 				5E8047CF1C19851800B0587A /* SWMainContentTabBarController.h */,
 				5E8047D01C19851800B0587A /* SWMainContentTabBarController.m */,
 				80ECE7931C204EBE00B6EBF5 /* SWRootViewController.h */,
@@ -1464,6 +1529,8 @@
 				80F6C7641C25307E00A7E9DB /* SWQuestionPageViewController.m */,
 				5EA755391CB6529A00065002 /* SWTestResultViewController.h */,
 				5EA7553A1CB6529A00065002 /* SWTestResultViewController.m */,
+				8045C87B1D9A729000FAA8C4 /* SWQuestionStatisticsPageViewController.h */,
+				8045C87C1D9A729000FAA8C4 /* SWQuestionStatisticsPageViewController.m */,
 			);
 			name = MainContentTabOne;
 			sourceTree = "<group>";
@@ -1479,6 +1546,10 @@
 				5E8826AA1C328634007225E2 /* SWGoodIdeasViewController.m */,
 				5E9D50E91CB7B9F40052C921 /* SWUserNameImageConfigTableViewController.h */,
 				5E9D50EA1CB7B9F40052C921 /* SWUserNameImageConfigTableViewController.m */,
+				80F1B9B91CD5E8A10077A175 /* SWUserHeadImageViewController.h */,
+				80F1B9BA1CD5E8A10077A175 /* SWUserHeadImageViewController.m */,
+				80811B851CE86ED300A4BDCF /* SWUserNameViewController.h */,
+				80811B861CE86ED300A4BDCF /* SWUserNameViewController.m */,
 			);
 			name = SideMenu;
 			sourceTree = "<group>";
@@ -1556,6 +1627,38 @@
 				808AC43D1C8C34AC00A05F6D /* SWTestQuestionCell.xib */,
 			);
 			name = TestQuestionCell;
+			sourceTree = "<group>";
+		};
+		80B0C3691D9E49E1008F73CA /* Framework */ = {
+			isa = PBXGroup;
+			children = (
+				80B0C3881D9E4B4C008F73CA /* libstdc++.6.0.9.tbd */,
+				80B0C3861D9E4B36008F73CA /* CoreTelephony.framework */,
+				80B0C3841D9E4B26008F73CA /* libsqlite3.0.tbd */,
+				80B0C3821D9E4B13008F73CA /* Security.framework */,
+				80B0C3801D9E4B08008F73CA /* CoreGraphics.framework */,
+				80B0C37E1D9E4AFA008F73CA /* SystemConfiguration.framework */,
+				80B0C37C1D9E4AE7008F73CA /* OpenGLES.framework */,
+				80B0C37A1D9E4AD6008F73CA /* QuartzCore.framework */,
+				80B0C3781D9E4ABB008F73CA /* CoreLocation.framework */,
+				80B0C3761D9E4A58008F73CA /* BaiduMapAPI_Utils.framework */,
+				80B0C3741D9E4A51008F73CA /* BaiduMapAPI_Search.framework */,
+				80B0C3721D9E4A49008F73CA /* BaiduMapAPI_Radar.framework */,
+				80B0C3701D9E4A44008F73CA /* BaiduMapAPI_Map.framework */,
+				80B0C36E1D9E4A3C008F73CA /* BaiduMapAPI_Location.framework */,
+				80B0C36C1D9E4A33008F73CA /* BaiduMapAPI_Cloud.framework */,
+				80B0C36A1D9E4A22008F73CA /* BaiduMapAPI_Base.framework */,
+			);
+			name = Framework;
+			sourceTree = "<group>";
+		};
+		80BA5A381CF0640E005D3A74 /* LoginViewController */ = {
+			isa = PBXGroup;
+			children = (
+				80BA5A391CF06431005D3A74 /* SWLoginViewController.h */,
+				80BA5A3A1CF06431005D3A74 /* SWLoginViewController.m */,
+			);
+			name = LoginViewController;
 			sourceTree = "<group>";
 		};
 		80D779351C3AA49A004C9151 /* CoreData */ = {
@@ -2774,6 +2877,7 @@
 				80F29C461C8738A70062F096 /* 4.jpg in Resources */,
 				80F29CEC1C8738A70062F096 /* 220.jpg in Resources */,
 				80F29D0A1C8738A70062F096 /* 266.jpg in Resources */,
+				80B0C38B1D9E4BBF008F73CA /* mapapi.bundle in Resources */,
 				80F29D6B1C8738A70062F096 /* 579.jpg in Resources */,
 				80F29C6D1C8738A70062F096 /* 44.jpg in Resources */,
 				80F29DCC1C8738A70062F096 /* 793.jpg in Resources */,
@@ -2850,6 +2954,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				80BA5A3B1CF06431005D3A74 /* SWLoginViewController.m in Sources */,
 				808AC43E1C8C34AC00A05F6D /* SWTestQuestionCell.m in Sources */,
 				5E8826AB1C328634007225E2 /* SWGoodIdeasViewController.m in Sources */,
 				80D779531C3AA50D004C9151 /* SWQuestionItems.m in Sources */,
@@ -2866,6 +2971,8 @@
 				80F6C7651C25307E00A7E9DB /* SWQuestionPageViewController.m in Sources */,
 				5E4AA9EC1C2791CB004348A9 /* FlexibleAlignButton.m in Sources */,
 				80D779581C3AA5B3004C9151 /* SWUserInfo+CoreDataProperties.m in Sources */,
+				80811B871CE86ED300A4BDCF /* SWUserNameViewController.m in Sources */,
+				8045C87D1D9A729000FAA8C4 /* SWQuestionStatisticsPageViewController.m in Sources */,
 				5E8047851C19243600B0587A /* main.m in Sources */,
 				80D7796D1C3AAD7C004C9151 /* SWTableMaxIndex+CoreDataProperties.m in Sources */,
 				80E001BB1CA68A8E00ABF396 /* SWDragToMoveView.m in Sources */,
@@ -2875,7 +2982,7 @@
 				5E9D50E61CB7897D0052C921 /* SWImageLabelTableViewCell.m in Sources */,
 				8052BEF71C3D39C900D7994E /* SWLoginUser.m in Sources */,
 				5E8047A41C194FCD00B0587A /* SWDrag2ShowMenuViewController.m in Sources */,
-				5E8047CE1C197F0500B0587A /* SWMainViewController.m in Sources */,
+				5E8047CE1C197F0500B0587A /* SWMainViewController.mm in Sources */,
 				80D779641C3AA61F004C9151 /* SWWrongItems+CoreDataProperties.m in Sources */,
 				80D7795F1C3AA5F8004C9151 /* SWMarkItems.m in Sources */,
 				80D779591C3AA5B3004C9151 /* SWUserInfo.m in Sources */,
@@ -2889,6 +2996,7 @@
 				5E0E8C5E1C23E09E005DDB00 /* SWDriverTestQuestionView.m in Sources */,
 				5E0E8C621C23E48F005DDB00 /* SWDriverTestQuestion.m in Sources */,
 				5E94FE3D1C8D7C6700BD2DBE /* SWQuestionStatusHeaderViewController.m in Sources */,
+				80F1B9BB1CD5E8A10077A175 /* SWUserHeadImageViewController.m in Sources */,
 				80D779651C3AA61F004C9151 /* SWWrongItems.m in Sources */,
 				80D7795E1C3AA5F8004C9151 /* SWMarkItems+CoreDataProperties.m in Sources */,
 				5E8047C81C197E7C00B0587A /* SWSideMenuContentViewController.m in Sources */,
@@ -3016,12 +3124,20 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/baiduMapSDK",
+				);
 				INFOPLIST_FILE = SWDriverTestBingo/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.eren.SWDriverTestBingo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -3029,12 +3145,20 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/baiduMapSDK",
+				);
 				INFOPLIST_FILE = SWDriverTestBingo/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.eren.SWDriverTestBingo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

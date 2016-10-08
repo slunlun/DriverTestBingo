@@ -8,7 +8,9 @@
 
 #import "SWUserNameImageConfigTableViewController.h"
 #import "SWLoginUser.h"
-
+#import "SWUserHeadImageViewController.h"
+#import "SWUserNameViewController.h"
+#import "SWDriverTestBigoDef.h"
 @interface SWUserNameImageConfigTableViewController ()
 
 @end
@@ -26,6 +28,9 @@ static NSString  *DETAIL_CELL_IDENTITY = @"DETAIL_CELL_IDENTITY";
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     self.navigationController.navigationBarHidden = NO;
     self.tableView  = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(responseToUserInfoUpdatedNotification:) name:USER_INFO_UPDATED object:nil];
+
 }
 
 - (void)didReceiveMemoryWarning {
@@ -33,6 +38,10 @@ static NSString  *DETAIL_CELL_IDENTITY = @"DETAIL_CELL_IDENTITY";
     // Dispose of any resources that can be recreated.
 }
 
+-(void) viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+}
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -90,6 +99,30 @@ static NSString  *DETAIL_CELL_IDENTITY = @"DETAIL_CELL_IDENTITY";
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     return 10.0;
+}
+
+- (void) tableView:(UITableView *) tableView didSelectRowAtIndexPath:(nonnull NSIndexPath *)indexPath
+{
+    if (indexPath.row == 0) { // Change user image
+        
+        SWUserHeadImageViewController *vc = [[SWUserHeadImageViewController alloc] init];
+        [self.navigationController pushViewController:vc animated:YES];
+        
+    }else if (indexPath.row == 1) // Change user name
+    {
+        SWUserNameViewController *vc = [[SWUserNameViewController alloc] init];
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+}
+
+-(void) dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+#pragma mark - Response to Notification
+-(void) responseToUserInfoUpdatedNotification:(NSNotification *) notification
+{
+    [self.tableView reloadData];
 }
 
 @end

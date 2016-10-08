@@ -347,6 +347,8 @@ static NSString *QUESTION_RIGHT_ANSWER_CELL_IDENTITY = @"QUESTION_RIGHT_ANSWER_C
     if (self.questionViewType != kTestQuestionViewGlance) {
         if (indexPath.section == SECTION_QUESTION_ANSWERS) {
             
+            // update user answer question num
+            [[SWLoginUser sharedInstance] increaseAnsweredQuestion];
             self.didUserSelectedAnswer = YES;
             // store selected status into displaydata, when use display again, can rebulid the UI
             self.displayData.questionSelectedIndex = [NSNumber numberWithInteger:(indexPath.row + 1)];
@@ -354,7 +356,7 @@ static NSString *QUESTION_RIGHT_ANSWER_CELL_IDENTITY = @"QUESTION_RIGHT_ANSWER_C
             // only kTestQuestionViewSequence need store user select into database
             if (self.questionViewType == kTestQuestionViewSequence) {
                 self.question.questionSelectedIndex = [NSNumber numberWithInteger:(indexPath.row + 1)];
-                [SWLoginUser saveUserAnsweredQuestion:self.question];
+                [[SWLoginUser sharedInstance] saveUserAnsweredQuestion:self.question];
             }
             
             
@@ -363,7 +365,7 @@ static NSString *QUESTION_RIGHT_ANSWER_CELL_IDENTITY = @"QUESTION_RIGHT_ANSWER_C
                 self.didSelectedRightAnswer = YES;
                 cell.textLabel.textColor = [UIColor greenColor];
                 if (self.questionViewType == kTestQuestionViewWrongQuestions) {
-                    [SWLoginUser removeWrongQuestion:self.question];
+                    [[SWLoginUser sharedInstance] removeWrongQuestion:self.question];
                 }
                 NSIndexPath *explansPath = [NSIndexPath indexPathForRow:0 inSection:SECTION_RIGHT_ANSWER];
                 [tableView insertRowsAtIndexPaths:@[explansPath] withRowAnimation:YES];
@@ -380,7 +382,7 @@ static NSString *QUESTION_RIGHT_ANSWER_CELL_IDENTITY = @"QUESTION_RIGHT_ANSWER_C
                 NSIndexPath *explansPath = [NSIndexPath indexPathForRow:1 inSection:SECTION_RIGHT_ANSWER];
                 [tableView insertRowsAtIndexPaths:@[rightIndexPath, explansPath] withRowAnimation:YES];
                 // Auto store into user's wrong lib
-                [SWLoginUser addWrongQuestion:self.question];
+                [[SWLoginUser sharedInstance] addWrongQuestion:self.question];
                 
                 // notify others user select wrong answer
                 NSDictionary *userInfo = @{SELECTED_ANSWER__USERINFO_IS_RIGHT_KEY:@"WRONG"};

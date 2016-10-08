@@ -11,8 +11,10 @@
 #import "SWUserInfo+CoreDataProperties.h"
 #import "SWCommonUtils.h"
 #import "SWDriverTestBigoDef.h"
+#import "SWLoginUser.h"
+#import <BaiduMapAPI_Base/BMKBaseComponent.h>
 @interface AppDelegate ()
-
+@property(nonatomic, strong) BMKMapManager *mapManager;
 @end
 
 @implementation AppDelegate
@@ -20,6 +22,13 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
    [self initUserInfo];
+    
+    _mapManager = [[BMKMapManager alloc]init];
+    // 如果要关注网络及授权验证事件，请设定     generalDelegate参数
+    BOOL ret = [_mapManager start:@"5urwAz4iaCfhxcYcNDomXoUQlelBQVlz"  generalDelegate:nil];
+    if (!ret) {
+        NSLog(@"manager start failed!");
+    }
     return YES;
 }
 
@@ -138,15 +147,19 @@
 #pragma mark - JUST FOR TEST
 - (void) initUserInfo
 {
+    // JUST FOR TEST!!!!!!
+    SWLoginUser *userInfo = [SWLoginUser loginWithUserName:@"John" PassWord:@"123"];
+    if (userInfo == nil) {
+        [SWLoginUser registerUserWithName:@"John" PassWord:@"123"];
+        [SWLoginUser loginWithUserName:@"John" PassWord:@"123"];
+    }
+    
     if(![[NSUserDefaults standardUserDefaults] boolForKey:@"firstStart"]){
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"firstStart"];
         NSLog(@"第一次启动");
         
-        // userInfo
-        SWUserInfo *userInfo = [NSEntityDescription insertNewObjectForEntityForName:@"SWUserInfo" inManagedObjectContext:[self managedObjectContext]];
-        userInfo.userName = @"John";
-        userInfo.userID = [SWCommonUtils getTableMaxIndex:@"SWUserInfo"];
         
+
         
         // questionItem
 //        for (int i = 1; i < 600; i++) {

@@ -67,4 +67,52 @@
     }
     
 }
+
++(NSString *) appDocumentFolderPath
+{
+    NSString *docPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    return docPath;
+}
+
+
++(BOOL) createSubDirectory:(NSString *) directoryName atPath:(NSString *) parentPath;
+{
+    if (directoryName && parentPath) {
+        NSString *directoryPath = [parentPath stringByAppendingPathComponent:directoryName];
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        if (![fileManager fileExistsAtPath:directoryPath isDirectory:nil]) {
+            return [fileManager createDirectoryAtPath:directoryPath withIntermediateDirectories:YES attributes:nil error:nil];
+        }else // if directory existed, just return YES
+        {
+            return YES;
+        }
+    }
+    return NO;
+}
+
++(BOOL) saveFile:(NSData *) fileData ToPath:(NSString *) filePath withMode:(SWFileSaveMode) saveMode
+{
+    if (fileData && filePath) {
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        if (saveMode == kSaveFileIfNotExist) {
+            BOOL isDirectory = nil;
+            BOOL isExist = NO;
+            isExist = [fileManager fileExistsAtPath:filePath isDirectory:&isDirectory];
+            if (isExist) {
+                if (isDirectory) { // filePath should be file path not directory path
+                    return NO;
+                }else  // filePath have exist the file and saveMode is kSaveFileIfNotExist, just return YES
+                {
+                    return YES;
+                }
+                
+            }
+        }
+        
+        return [fileData writeToFile:filePath atomically:YES];
+    }
+    
+    return NO;
+   
+}
 @end
