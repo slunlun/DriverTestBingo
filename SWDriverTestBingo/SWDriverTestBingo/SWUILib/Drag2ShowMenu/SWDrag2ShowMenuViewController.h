@@ -11,6 +11,7 @@
 @interface SWDrag2ShowMenuViewController : UIViewController
 @property(nonatomic, weak) UIViewController *contentViewController;
 @property(nonatomic, weak) UIViewController *menuContentViewController;
+@property(nonatomic) BOOL shouldResponseUserAction;
 
 @property(nonatomic) CGFloat menuViewWidth;
 @property(nonatomic) CGFloat menuViewSlideInWidth;

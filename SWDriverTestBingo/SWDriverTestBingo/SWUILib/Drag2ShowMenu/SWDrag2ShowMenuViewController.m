@@ -52,6 +52,7 @@ const NSInteger contentViewTag = 3001;
         
         _menuViewSlideInWidth = defaultSlideInWidth;
         _menuViewWidth = defaultMenuWidth;
+        _shouldResponseUserAction = YES;
         
         _contentViewController = contentViewController;
         _menuContentViewController = sideMenuViewController;
@@ -69,6 +70,7 @@ const NSInteger contentViewTag = 3001;
         
         
         _panGestureRec = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(moveViewWithGesture:)];
+        _panGestureRec.delegate = self;
         [_contentViewController.view addGestureRecognizer:_panGestureRec];
         
         //为contentView设置阴影   
@@ -181,11 +183,20 @@ const NSInteger contentViewTag = 3001;
 #pragma mark UIGestureRecognizerDelegate
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
 {
-    if (self.slideMenuShown) {
-        return YES;
-    }else
-    {
-        return NO;
+    if ([gestureRecognizer isKindOfClass:[UITapGestureRecognizer class]]) {
+        if (self.slideMenuShown) {
+            return YES;
+        }else
+        {
+            
+            return NO;
+        }
     }
+    
+    if ([gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]]) {
+        return self.shouldResponseUserAction;
+    }
+
+    return NO;
 }
 @end
